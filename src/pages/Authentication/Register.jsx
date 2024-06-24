@@ -1,59 +1,104 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
-
-// Formik Validation
+import { useDropzone } from 'react-dropzone';
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
-// action
-import { registerUser, apiError } from "../../store/actions";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
-
-import { Link } from "react-router-dom";
-
-// import images
+import { signup } from "../../service/apiUser";
 import profileImg from "../../assets/images/profile-img.png";
-import logoImg from "../../assets/images/logo.svg";
+import logoImg from "../../assets/images/CNOT_logo.svg";
+import { registerUser, apiError } from "../../store/actions";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Register = props => {
+const Register = (props) => {
   document.title = "Register | Skote - Vite React Admin & Dashboard Template";
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const [certificate, setCertificate] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(""); // State to manage success message
+  const [errorMessage, setErrorMessage] = useState(""); // State to manage error messages
+
+  const tunisianRegions = [
+    "Ariana", "Beja", "Ben Arous", "Bizerte", "Gabes", "Gafsa",
+    "Jendouba", "Kairouan", "Kasserine", "Kebili", "Kef", "Mahdia",
+    "Manouba", "Medenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid",
+    "Siliana", "Sousse", "Tataouine", "Tozeur", "Tunis", "Zaghouan"
+  ];
+
+  const validationSchemaStep1 = Yup.object({
+    name: Yup.string().required("Please Enter Your Name"),
+    email: Yup.string().email("Invalid email").required("Please Enter Your Email"),
+    password: Yup.string().required("Please Enter Your Password").min(8, "Password must be at least 8 characters"),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required("Please confirm your password"),
+  });
+
+  const validationSchemaStep2 = Yup.object({
+    address: Yup.string().required("Please Enter Your Address"),
+    tel: Yup.string().required("Please Enter Your Phone Number"),
+    certificate: Yup.mixed().required("Please Upload Your Certificate"),
+  });
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
-
     initialValues: {
+      name: '',
       email: '',
-      username: '',
       password: '',
+      confirmPassword: '',
+      address: '',
+      tel: '',
     },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      username: Yup.string().required("Please Enter Your Username"),
-      password: Yup.string().required("Please Enter Your Password"),
-    }),
-    onSubmit: (values) => {
-      dispatch(registerUser(values));
+    validationSchema: currentStep === 0 ? validationSchemaStep1 : validationSchemaStep2,
+    onSubmit: async (values) => {
+      if (currentStep === 0) {
+        setCurrentStep(1);
+      } else {
+        const formData = new FormData();
+        formData.append("name", values.name);
+        formData.append("email", values.email);
+        formData.append("password", values.password);
+        formData.append("address", values.address);
+        formData.append("tel", values.tel);
+        formData.append("certificate", certificate);
+
+        try {
+          await signup(formData);
+          setSuccessMessage('Register User Successfully');
+          setErrorMessage(""); // Clear any previous error messages
+          validation.resetForm();
+          setTimeout(() => navigate('/login'), 3000); // Redirect to login after 3 seconds
+        } catch (error) {
+          setErrorMessage(error); // Set the full error message
+          setSuccessMessage(""); // Clear any previous success messages
+        }
+      }
     }
   });
 
-  const { user, registrationError, loading } = useSelector(state => ({
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'application/pdf, image/*',
+    onDrop: (acceptedFiles) => {
+      setCertificate(acceptedFiles[0]);
+      validation.setFieldValue("certificate", acceptedFiles[0]);
+    },
+  });
+
+  const { user, registrationError } = useSelector(state => ({
     user: state.Account.user,
     registrationError: state.Account.registrationError,
-    loading: state.Account.loading,
   }));
 
   useEffect(() => {
     dispatch(apiError(""));
-  }, []);
+  }, [dispatch]);
 
   return (
     <React.Fragment>
-
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
           <i className="bx bx-home h2" />
@@ -85,7 +130,7 @@ const Register = props => {
                           <img
                             src={logoImg}
                             alt=""
-                            className="rounded-circle"
+                            className=""
                             height="34"
                           />
                         </span>
@@ -101,77 +146,175 @@ const Register = props => {
                         return false;
                       }}
                     >
-                      {user && user ? (
+                      {successMessage && (
                         <Alert color="success">
-                          Register User Successfully
+                          {successMessage}
                         </Alert>
-                      ) : null}
+                      )}
 
-                      {registrationError && registrationError ? (
-                        <Alert color="danger">{registrationError}</Alert>
-                      ) : null}
+                      {errorMessage && (
+                        <Alert color="danger">
+                          {Array.isArray(errorMessage) ? (
+                            <ul>
+                              {errorMessage.map((error, index) => (
+                                <li key={index}>{error}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <span>{errorMessage}</span>
+                          )}
+                        </Alert>
+                      )}
 
-                      <div className="mb-3">
-                        <Label className="form-label">Email</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          className="form-control"
-                          placeholder="Enter email"
-                          type="email"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.email || ""}
-                          invalid={
-                            validation.touched.email && validation.errors.email ? true : false
-                          }
-                        />
-                        {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
-                        ) : null}
-                      </div>
+                      {currentStep === 0 ? (
+                        <>
+                          <div className="mb-3">
+                            <Label className="form-label">Name</Label>
+                            <Input
+                              id="name"
+                              name="name"
+                              className="form-control"
+                              placeholder="Enter name"
+                              type="text"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.name || ""}
+                              invalid={
+                                validation.touched.name && validation.errors.name ? true : false
+                              }
+                            />
+                            {validation.touched.name && validation.errors.name ? (
+                              <FormFeedback type="invalid">{validation.errors.name}</FormFeedback>
+                            ) : null}
+                          </div>
+                          <div className="mb-3">
+                            <Label className="form-label">Email</Label>
+                            <Input
+                              id="email"
+                              name="email"
+                              className="form-control"
+                              placeholder="Enter email"
+                              type="email"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.email || ""}
+                              invalid={
+                                validation.touched.email && validation.errors.email ? true : false
+                              }
+                            />
+                            {validation.touched.email && validation.errors.email ? (
+                              <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                            ) : null}
+                          </div>
+                          <div className="mb-3">
+                            <Label className="form-label">Password</Label>
+                            <Input
+                              name="password"
+                              type="password"
+                              placeholder="Enter Password"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.password || ""}
+                              invalid={
+                                validation.touched.password && validation.errors.password ? true : false
+                              }
+                            />
+                            {validation.touched.password && validation.errors.password ? (
+                              <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
+                            ) : null}
+                          </div>
+                          <div className="mb-3">
+                            <Label className="form-label">Confirm Password</Label>
+                            <Input
+                              name="confirmPassword"
+                              type="password"
+                              placeholder="Confirm Password"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.confirmPassword || ""}
+                              invalid={
+                                validation.touched.confirmPassword && validation.errors.confirmPassword ? true : false
+                              }
+                            />
+                            {validation.touched.confirmPassword && validation.errors.confirmPassword ? (
+                              <FormFeedback type="invalid">{validation.errors.confirmPassword}</FormFeedback>
+                            ) : null}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="mb-3">
+                            <Label className="form-label">Address</Label>
+                            <Input
+                              type="select"
+                              name="address"
+                              value={validation.values.address}
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              invalid={
+                                validation.touched.address && validation.errors.address ? true : false
+                              }
+                            >
+                              <option value="">Select your region</option>
+                              {tunisianRegions.map(region => (
+                                <option key={region} value={region}>{region}</option>
+                              ))}
+                            </Input>
+                            {validation.touched.address && validation.errors.address ? (
+                              <FormFeedback type="invalid">{validation.errors.address}</FormFeedback>
+                            ) : null}
+                          </div>
+                          <div className="mb-3">
+                            <Label className="form-label">Phone Number</Label>
+                            <Input
+                              id="tel"
+                              name="tel"
+                              className="form-control"
+                              placeholder="Enter phone number"
+                              type="tel"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.tel || ""}
+                              invalid={
+                                validation.touched.tel && validation.errors.tel ? true : false
+                              }
+                            />
+                            {validation.touched.tel && validation.errors.tel ? (
+                              <FormFeedback type="invalid">{validation.errors.tel}</FormFeedback>
+                            ) : null}
+                          </div>
+                          <div className="mb-3">
+                            <Label className="form-label">Certificate</Label>
+                            <div {...getRootProps()} className="dropzone mb-3">
+                              <input {...getInputProps()} />
+                              {certificate ? (
+                                <p>{certificate.name}</p>
+                              ) : (
+                                <p>Drag 'n' drop some files here, or click to select files</p>
+                              )}
+                            </div>
+                            {validation.touched.certificate && validation.errors.certificate ? (
+                              <FormFeedback type="invalid">{validation.errors.certificate}</FormFeedback>
+                            ) : null}
+                          </div>
+                        </>
+                      )}
 
-                      <div className="mb-3">
-                        <Label className="form-label">Username</Label>
-                        <Input
-                          name="username"
-                          type="text"
-                          placeholder="Enter username"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.username || ""}
-                          invalid={
-                            validation.touched.username && validation.errors.username ? true : false
-                          }
-                        />
-                        {validation.touched.username && validation.errors.username ? (
-                          <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                        ) : null}
-                      </div>
-                      <div className="mb-3">
-                        <Label className="form-label">Password</Label>
-                        <Input
-                          name="password"
-                          type="password"
-                          placeholder="Enter Password"
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          value={validation.values.password || ""}
-                          invalid={
-                            validation.touched.password && validation.errors.password ? true : false
-                          }
-                        />
-                        {validation.touched.password && validation.errors.password ? (
-                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                        ) : null}
-                      </div>
-
-                      <div className="mt-4">
+                      <div className="mt-4 d-flex justify-content-end">
+                        {currentStep === 1 && (
+                          <button
+                            type="button"
+                            className="btn btn-secondary me-2"
+                            onClick={() => setCurrentStep(0)}
+                          >
+                            <FontAwesomeIcon icon={faArrowLeft} /> Back
+                          </button>
+                        )}
                         <button
-                          className="btn btn-primary btn-block "
+                          className="btn btn-primary"
                           type="submit"
                         >
-                          Register
+                          {currentStep === 0 ? 'Next' : 'Register'}
                         </button>
                       </div>
 

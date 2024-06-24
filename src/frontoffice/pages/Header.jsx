@@ -1,136 +1,177 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <header className="header">
-      <nav className="navbar container">
-        <div className="order-0">
-          <a href="index.html">
-            <img
-              src="assets/images/logo.svg"
-              height="30"
-              width="147"
-              alt="logo"
-            />
-          </a>
+    <header style={styles.header}>
+      <div style={styles.container}>
+        <a href="#" style={styles.logoContainer}>
+          <img
+            src="../../assets/images/CNOT_logo.svg"
+            height="10"
+            width="40"
+            alt="logo"
+          />
+          <span style={styles.logoText}>Cnot Perform</span>
+        </a>
+        <nav style={isDesktop ? styles.nav : styles.navHidden}>
+          <a href="#" style={styles.navLink}>Home</a>
+          <a href="#" style={styles.navLink}>About</a>
+          <a href="#" style={styles.navLink}>Services</a>
+          <a href="#" style={styles.navLink}>Contact</a>
+          <a href="/login" style={styles.navButton}>Sign In</a>
+          <a href="/register" style={styles.navButton}>Sign Up</a>
+        </nav>
+        <div style={!isDesktop ? styles.menuButtonContainer : styles.navHidden}>
+          <button onClick={toggleMenu} style={styles.menuButton}>
+            <MenuIcon style={styles.icon} />
+            <span style={styles.srOnly}>Toggle navigation menu</span>
+          </button>
         </div>
-        <input id="nav-toggle" type="checkbox" className="hidden" />
-        <label
-          id="show-button"
-          htmlFor="nav-toggle"
-          className="order-1 flex cursor-pointer items-center lg:order-1 lg:hidden"
-        >
-          <svg className="h-6 fill-current" viewBox="0 0 20 20">
-            <title>Menu Open</title>
-            <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
-          </svg>
-        </label>
-        <label
-          id="hide-button"
-          htmlFor="nav-toggle"
-          className="order-2 hidden cursor-pointer items-center lg:order-1"
-        >
-          <svg className="h-6 fill-current" viewBox="0 0 20 20">
-            <title>Menu Close</title>
-            <polygon
-              points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-              transform="rotate(45 10 10)"
-            ></polygon>
-          </svg>
-        </label>
-        <ul
-          id="nav-menu"
-          className="navbar-nav order-2 hidden w-full flex-[0_0_100%] lg:order-1 lg:flex lg:w-auto lg:flex-auto lg:justify-center lg:space-x-5"
-        >
-          <li className="nav-item">
-            <a href="" className="nav-link active">
-              Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="about.html" className="nav-link">
-              About
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="blog.html" className="nav-link">
-              Blog
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="features.html" className="nav-link">
-              Features
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="how-it-works.html" className="nav-link">
-              How It Works
-            </a>
-          </li>
-          <li className="nav-item nav-dropdown group relative">
-            <span className="nav-link inline-flex items-center">
-              Pages
-              <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </span>
-            <ul className="nav-dropdown-list hidden group-hover:block lg:invisible lg:absolute lg:block lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100">
-              <li className="nav-dropdown-item">
-                <a href="career.html" className="nav-dropdown-link">
-                  Career
-                </a>
-              </li>
-              <li className="nav-dropdown-item">
-                <a href="career-single.html" className="nav-dropdown-link">
-                  Career Single
-                </a>
-              </li>
-              <li className="nav-dropdown-item">
-                <a href="integrations.html" className="nav-dropdown-link">
-                  Integrations
-                </a>
-              </li>
-              <li className="nav-dropdown-item">
-                <a href="integration-single.html" className="nav-dropdown-link">
-                  Integration Single
-                </a>
-              </li>
-              <li className="nav-dropdown-item">
-                <a href="pricing.html" className="nav-dropdown-link">
-                  Pricing
-                </a>
-              </li>
-              <li className="nav-dropdown-item">
-                <a href="changelogs.html" className="nav-dropdown-link">
-                  Changelogs
-                </a>
-              </li>
-              <li className="nav-dropdown-item">
-                <a href="terms-conditions.html" className="nav-dropdown-link">
-                  Terms & Conditions
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li className="nav-item">
-            <a href="contact.html" className="nav-link">
-              Contact
-            </a>
-          </li>
-          <li className="nav-item mt-3.5 lg:hidden">
-            <a className="btn btn-white btn-sm border-border" href="/login">
-              Sing Up Now
-            </a>
-          </li>
-        </ul>
-        <div className="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-          <a className="btn btn-white btn-sm" href="/login">
-            Sing Up Now
-          </a>
+      </div>
+      {isMenuOpen && !isDesktop && (
+        <div style={styles.mobileMenu}>
+          <nav style={styles.mobileNav}>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>Home</a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>About</a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>Services</a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>Contact</a>
+            <a href="/login" style={styles.navLink} onClick={toggleMenu}>Sign In</a>
+            <a href="/register" style={styles.navLink} onClick={toggleMenu}>Sign Up</a>
+          </nav>
         </div>
-      </nav>
+      )}
     </header>
   );
 };
+
+const styles = {
+  header: {
+    position: "fixed",
+    top: 0,
+    zIndex: 50,
+    width: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.8)", // Updated for transparency
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+  },
+  container: {
+    display: "flex",
+    height: "4rem",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "0 1rem",
+    maxWidth: "1200px",
+    margin: "0 auto",
+  },
+  logoContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    textDecoration: "none",
+  },
+  logoText: {
+    fontSize: "1.125rem",
+    fontWeight: "600",
+    color: "#000",
+  },
+  nav: {
+    display: "flex",
+    gap: "1.5rem",
+    fontSize: "0.875rem",
+    fontWeight: "500",
+    alignItems: "center",
+  },
+  navHidden: {
+    display: "none",
+  },
+  navLink: {
+    textDecoration: "none",
+    color: "#333",
+    transition: "color 0.2s",
+  },
+  navButton: {
+    textDecoration: "none",
+    color: "#333",
+    backgroundColor: "#f0f0f0",
+    padding: "0.5rem 1rem",
+    borderRadius: "0.25rem",
+    transition: "background-color 0.2s, color 0.2s",
+    marginLeft: "0.5rem",
+  },
+  menuButtonContainer: {
+    display: "block",
+  },
+  menuButton: {
+    padding: "0.5rem",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+  },
+  srOnly: {
+    position: "absolute",
+    width: "1px",
+    height: "1px",
+    padding: 0,
+    margin: "-1px",
+    overflow: "hidden",
+    clip: "rect(0, 0, 0, 0)",
+    border: 0,
+  },
+  icon: {
+    width: "1.5rem",
+    height: "1.5rem",
+  },
+  mobileMenu: {
+    position: "absolute",
+    top: "4rem",
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+  },
+  mobileNav: {
+    display: "grid",
+    gap: "1rem",
+    padding: "1rem",
+  },
+};
+
+function MenuIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  );
+}
 
 export default Header;

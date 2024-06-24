@@ -606,7 +606,7 @@ select {
   overflow-x: hidden;
   --tw-bg-opacity: 1;
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
-  background-image: url("/images/body-bg.svg");
+  background-image: url("../images/body-bg.svg");
   background-size: cover;
   background-repeat: no-repeat;
   font-family: Poppins, sans-serif;
@@ -2317,10 +2317,10 @@ input#nav-toggle:checked ~ #nav-menu {
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-    background-image: linear-gradient(184.78deg, #fa709a 7.64%, #fee140 120.07%);
+    background-image: linear-gradient(184.78deg, #2a0ec9 7.64%, #b942f0 120.07%);
 }
 .btn-primary:hover {
-  --tw-shadow: 0px 5px 30px rgba(252,167,111,0.5);
+  --tw-shadow: 0px 5px 30px rgba(6, 23, 128, 0.5);
   --tw-shadow-colored: 0px 5px 30px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
@@ -2365,7 +2365,7 @@ input#nav-toggle:checked ~ #nav-menu {
   transition-duration: 150ms;
   --tw-content: "";
   content: var(--tw-content);
-    background-image: linear-gradient(184.78deg, #fa709a 7.64%, #fee140 120.07%);
+    background-image: linear-gradient(184.78deg, #2a0ec9 7.64%, #b942f0 120.07%);
 }
 .btn-outline-white {
   border-radius: 50px;

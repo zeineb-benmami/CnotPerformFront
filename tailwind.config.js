@@ -25,9 +25,9 @@ if (theme.fonts.font_family.secondary) {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/pages/**/*.html",
-    "./src/partials/**/*.html",
-    "./src/scripts/**/*.js",
+    "./src/frontoffice/pages/**/*.jsx",
+    "./src/frontoffice/pages/scripts/**/*.js",
+  
   ],
   safelist: [{ pattern: /^swiper-/ }],
   theme: {
