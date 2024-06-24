@@ -15,7 +15,7 @@ import {
   Label,
 } from "reactstrap";
 import profile from "../../assets/images/profile-img.png";
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/CNOT_logo.svg";
 import axios from 'axios';
 
 const Login = () => {
@@ -80,7 +80,7 @@ const Login = () => {
                           <img
                             src={logo}
                             alt=""
-                            className="rounded-circle"
+                            className=""
                             height="34"
                           />
                         </span>
