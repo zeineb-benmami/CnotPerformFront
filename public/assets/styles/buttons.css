@@ -57,7 +57,7 @@
 
 .btn-primary:hover {
 
-    --tw-shadow: 0px 5px 30px rgba(252,167,111,0.5);
+    --tw-shadow: 0px 5px 30px rgba(111, 120, 252, 0.5);
 
     --tw-shadow-colored: 0px 5px 30px var(--tw-shadow-color);
 
@@ -99,7 +99,7 @@
 
     color: rgb(255 255 255 / var(--tw-text-opacity));
 
-    --tw-shadow: 0px 5px 30px rgba(252,167,111,0.5);
+    --tw-shadow: 0px 5px 30px rgba(116, 111, 252, 0.755);
 
     --tw-shadow-colored: 0px 5px 30px var(--tw-shadow-color);
 
