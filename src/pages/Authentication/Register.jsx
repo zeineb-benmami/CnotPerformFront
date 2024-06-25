@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { signup } from "../../service/apiUser";
-import profileImg from "../../assets/images/profile-img.png";
+import profileImg from "../../../public/assets/images/4.png";
 import logoImg from "../../assets/images/CNOT_logo.svg";
 import { registerUser, apiError } from "../../store/actions";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -113,8 +113,8 @@ const Register = (props) => {
                   <Row>
                     <Col className="col-7">
                       <div className="text-primary p-4">
-                        <h5 className="text-primary">Free Register</h5>
-                        <p>Get your free Skote account now.</p>
+                        <h5 className="text-primary">Creation de compte</h5>
+                        <p>Ajoutez Votre Féderation</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -125,16 +125,17 @@ const Register = (props) => {
                 <CardBody className="pt-0">
                   <div>
                     <Link to="/">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logoImg}
-                            alt=""
-                            className=""
-                            height="34"
-                          />
-                        </span>
-                      </div>
+                    <div className="avatar-md profile-user-wid mb-4">
+  <span className="avatar-title rounded-circle bg-light">
+    <img
+      src={logoImg}
+      alt=""
+      className=""
+      height="35" // Adjust the height to make the logo smaller
+      width="35"  // Adjust the width to maintain aspect ratio and make the logo smaller
+    />
+  </span>
+</div>
                     </Link>
                   </div>
                   <div className="p-2">

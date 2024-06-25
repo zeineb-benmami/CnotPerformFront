@@ -14,7 +14,7 @@ import {
   FormFeedback,
   Label,
 } from "reactstrap";
-import profile from "../../assets/images/profile-img.png";
+import profile from "../../../public/assets/images/4.png";
 import logo from "../../assets/images/CNOT_logo.svg";
 import axios from 'axios';
 
@@ -63,8 +63,8 @@ const Login = () => {
                   <Row>
                     <Col xs={7}>
                       <div className="text-primary p-4">
-                        <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
+                        <h5 className="text-primary">Bienvenue !</h5>
+                        <p>Connectez pour continuer</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -73,18 +73,19 @@ const Login = () => {
                   </Row>
                 </div>
                 <CardBody className="pt-0">
-                  <div>
+                <div>
                     <Link to="/" className="auth-logo-light">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logo}
-                            alt=""
-                            className=""
-                            height="34"
-                          />
-                        </span>
-                      </div>
+                    <div className="avatar-md profile-user-wid mb-4">
+  <span className="avatar-title rounded-circle bg-light">
+    <img
+      src={logo}
+      alt=""
+      className=""
+      height="35" // Adjust the height to make the logo smaller
+      width="35"  // Adjust the width to maintain aspect ratio and make the logo smaller
+    />
+  </span>
+</div>
                     </Link>
                   </div>
                   <div className="p-2">
