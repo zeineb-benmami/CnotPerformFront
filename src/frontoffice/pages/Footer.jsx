@@ -4,26 +4,27 @@ import './plugins/font-awesome/v6/brands.css';
 import './plugins/font-awesome/v6/solid.css';
 import './plugins/font-awesome/v6/fontawesome.css';
 import './styles/main.css';
+
 const Footer = () => {
   return (
-    <footer className="footer bg-theme-light/50">
-      <div className="container">
-        <div className="row gx-5 pb-10 pt-[52px]">
-          <div className="col-12 mt-12 md:col-6 lg:col-3">
+    <footer style={styles.footer}>
+      <div style={styles.container}>
+        <div style={styles.row}>
+          <div style={styles.column}>
             <a href="index.html">
-              <img src="assets/images/logo.svg" alt="" />
+              <img src="assets/images/logo.svg" alt="Logo" style={styles.logo} />
             </a>
-            <p className="mt-6">
+            <p style={styles.paragraph}>
               Lorem ipsum dolor sit sed dmi amet, consectetur adipiscing. Cdo
               tellus, sed condimentum volutpat.
             </p>
           </div>
-          <div className="col-12 mt-12 md:col-6 lg:col-3">
-            <h6>Socials</h6>
-            <p>themefisher@gmail.com</p>
-            <ul className="social-icons mt-4 lg:mt-6">
-              <li>
-                <a href="#">
+          <div style={styles.column}>
+            <h6 style={styles.heading}>Socials</h6>
+            <p style={styles.paragraph}>themefisher@gmail.com</p>
+            <ul style={styles.socialIcons}>
+              <li style={styles.iconItem}>
+                <a href="#" style={styles.iconLink}>
                   <svg
                     width="19"
                     height="21"
@@ -38,8 +39,8 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li style={styles.iconItem}>
+                <a href="#" style={styles.iconLink}>
                   <svg
                     width="19"
                     height="15"
@@ -54,8 +55,8 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li style={styles.iconItem}>
+                <a href="#" style={styles.iconLink}>
                   <svg
                     width="19"
                     height="16"
@@ -70,8 +71,8 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li style={styles.iconItem}>
+                <a href="#" style={styles.iconLink}>
                   <svg
                     width="19"
                     height="18"
@@ -88,37 +89,118 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="col-12 mt-12 md:col-6 lg:col-3">
-            <h6>Quick Links</h6>
-            <ul>
+          <div style={styles.column}>
+            <h6 style={styles.heading}>Quick Links</h6>
+            <ul style={styles.linkList}>
               <li>
-                <a href="about.html">About</a>
+                <a href="about.html" style={styles.link}>About</a>
               </li>
               <li>
-                <a href="#">Category</a>
+                <a href="#" style={styles.link}>Category</a>
               </li>
               <li>
-                <a href="#">Testimonial</a>
+                <a href="#" style={styles.link}>Testimonial</a>
               </li>
               <li>
-                <a href="contact.html">Contact</a>
+                <a href="contact.html" style={styles.link}>Contact</a>
               </li>
             </ul>
           </div>
-          <div className="col-12 mt-12 md:col-6 lg:col-3">
-            <h6>Location & Contact</h6>
-            <p>2118 Thornridge Cir. Syracuse, Connecticut 35624</p>
-            <p>(704) 555-0127</p>
+          <div style={styles.column}>
+            <h6 style={styles.heading}>Location & Contact</h6>
+            <p style={styles.paragraph}>2118 Thornridge Cir. Syracuse, Connecticut 35624</p>
+            <p style={styles.paragraph}>(704) 555-0127</p>
           </div>
         </div>
       </div>
-      <div className="container max-w-[1440px]">
-        <div className="footer-copyright mx-auto border-t border-border pb-10 pt-7 text-center">
-          <p>Designed And Developed by CNOT PERFORM</p>
+      <div style={styles.containerMax}>
+        <div style={styles.copyright}>
+          <p>Designed And Developed by Themefisher | Distributed by ThemeWagon</p>
         </div>
       </div>
     </footer>
   );
+};
+
+const styles = {
+  footer: {
+    backgroundColor: 'rgba(247, 247, 247, 0.5)',
+    paddingTop: '52px',
+    paddingBottom: '10px',
+    textAlign: 'center',
+  },
+  container: {
+    width: '100%',
+    maxWidth: '1440px',
+    margin: '0 auto',
+    padding: '0 15px',
+  },
+  row: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingBottom: '52px',
+    borderBottom: '1px solid #eaeaea',
+  },
+  column: {
+    flex: '1 1 25%',
+    maxWidth: '25%',
+    padding: '0 15px',
+    marginBottom: '24px',
+    textAlign: 'left',
+  },
+  logo: {
+    width: '147px',
+    height: '30px',
+  },
+  heading: {
+    fontSize: '1rem',
+    fontWeight: '700',
+    marginBottom: '20px',
+  },
+  paragraph: {
+    fontSize: '0.875rem',
+    color: '#666',
+    lineHeight: '1.6',
+    marginBottom: '10px',
+  },
+  socialIcons: {
+    display: 'flex',
+    listStyle: 'none',
+    paddingLeft: '0',
+    marginTop: '16px',
+    marginBottom: '0',
+  },
+  iconItem: {
+    marginRight: '10px',
+  },
+  iconLink: {
+    display: 'block',
+    width: '19px',
+    height: '19px',
+  },
+  linkList: {
+    listStyle: 'none',
+    paddingLeft: '0',
+    margin: '0',
+  },
+  link: {
+    fontSize: '0.875rem',
+    color: '#222',
+    textDecoration: 'none',
+    lineHeight: '2',
+  },
+  containerMax: {
+    maxWidth: '1440px',
+    margin: '0 auto',
+  },
+  copyright: {
+    borderTop: '1px solid #eaeaea',
+    paddingTop: '16px',
+    paddingBottom: '16px',
+    fontSize: '0.875rem',
+    color: '#666',
+  },
 };
 
 export default Footer;

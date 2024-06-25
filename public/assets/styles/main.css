@@ -2317,7 +2317,7 @@ input#nav-toggle:checked ~ #nav-menu {
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-    background-image: linear-gradient(184.78deg, #2a0ec9 7.64%, #b942f0 120.07%);
+    background-image: linear-gradient(184.78deg, #c15ef2 7.64%, #6b0fb6 120.07%);
 }
 .btn-primary:hover {
   --tw-shadow: 0px 5px 30px rgba(6, 23, 128, 0.5);
@@ -2365,7 +2365,7 @@ input#nav-toggle:checked ~ #nav-menu {
   transition-duration: 150ms;
   --tw-content: "";
   content: var(--tw-content);
-    background-image: linear-gradient(184.78deg, #2a0ec9 7.64%, #b942f0 120.07%);
+    background-image: linear-gradient(184.78deg, #c15ef2 7.64%, #6b0fb6 120.07%);
 }
 .btn-outline-white {
   border-radius: 50px;

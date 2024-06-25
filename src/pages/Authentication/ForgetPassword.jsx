@@ -26,8 +26,8 @@ import { useFormik } from "formik";
 import { userForgetPassword } from "../../store/actions";
 
 // import images
-import profile from "../../assets/images/profile-img.png";
-import logo from "../../assets/images/logo.svg";
+import profile from "../../../public/assets/images/4.png";
+import logo from "../../assets/images/CNOT_logo.svg";
 
 const ForgetPasswordPage = (props) => {
   //meta title
@@ -67,7 +67,7 @@ const ForgetPasswordPage = (props) => {
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-                <div className="bg-primary bg-softbg-soft-primary">
+                <div className="bg-primary bg-soft">
                   <Row>
                     <Col xs={7}>
                       <div className="text-primary p-4">
@@ -83,16 +83,17 @@ const ForgetPasswordPage = (props) => {
                 <CardBody className="pt-0">
                   <div>
                     <Link to="/">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logo}
-                            alt=""
-                            className="rounded-circle"
-                            height="34"
-                          />
-                        </span>
-                      </div>
+                    <div className="avatar-md profile-user-wid mb-4">
+  <span className="avatar-title rounded-circle bg-light">
+    <img
+      src={logo}
+      alt=""
+      className=""
+      height="35" // Adjust the height to make the logo smaller
+      width="35"  // Adjust the width to maintain aspect ratio and make the logo smaller
+    />
+  </span>
+</div>
                     </Link>
                   </div>
                   <div className="p-2">

@@ -4,39 +4,55 @@ import './plugins/font-awesome/v6/brands.css';
 import './plugins/font-awesome/v6/solid.css';
 import './plugins/font-awesome/v6/fontawesome.css';
 import './styles/main.css';
+
+const reviews = [
+  {
+    name: "Courtney Henry",
+    company: "microsoft corp",
+    text: "Our platform helps build secure onboarding authentica experiences & engage your users. We build .",
+    image: "assets/images/users/user-5.png",
+    rating: 4,
+  }
+];
+
 const Home = () => {
   return (
     <div>
-      <section className="section banner relative">
-        <div className="container">
-          <div className="row items-center">
-            <div className="lg:col-6">
-              <h1 className="banner-title">
-                Scale design & dev operations with Avocode Enterprise
+      
+      {/* Full-screen Image */}
+      <div style={styles.fullScreenImageContainer}>
+        <img
+          style={styles.fullScreenImage}
+          src="assets/images/sport.jpg" // Change the src to your image path
+          alt="Full-Screen Banner"
+        />
+      </div>
+     <section style={styles.section}>
+        <div style={styles.container}>
+          <div style={styles.row}>
+            <div style={styles.content}>
+              <h1 style={styles.title}>
+               Contexte & objectifs
               </h1>
-              <p className="mt-6">
-                A fully integrated suite of authentication & authoriz products,
-                Stytch’s platform removes the headache of.
+              <p style={styles.subtitle}>
+              CNOT Perform révolutionne l'entraînement sportif grâce à l'Intelligence Artificielle. Suivez vos performances en temps réel, analysez vos données pour identifier vos points forts et faibles, recevez des conseils personnalisés et prévenez les blessures. Rejoignez-nous pour améliorer vos performances sportives et atteindre vos objectifs.
+
               </p>
-              <a className="btn btn-white mt-8" href="#">
-                Download The Theme
-              </a>
+            
             </div>
-            <div className="lg:col-6">
+            <div style={styles.imageContainer}>
               <img
-                className="w-full object-contain"
-                src="assets/images/banner-img.png"
-                width="603"
-                height="396"
-                alt=""
+                style={styles.image}
+                src="assets/images/2.jpg"
+                alt="Banner Image"
               />
             </div>
           </div>
         </div>
         <img
-          className="banner-shape absolute -top-28 right-0 -z-[1] w-full max-w-[30%]"
+          style={styles.shape}
           src="assets/images/banner-shape.svg"
-          alt=""
+          alt="Decorative Shape"
         />
       </section>
       <section className="section key-feature relative">
@@ -48,21 +64,17 @@ const Home = () => {
         <div className="container">
           <div className="row justify-between text-center lg:text-start">
             <div className="lg:col-5">
-              <h2>The Highlighting Part Of Our Solution</h2>
+              <h2>Liste Des Fonctionnalité</h2>
             </div>
             <div className="mt-6 lg:col-5 lg:mt-0">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                egestas Werat viverra id et aliquet. vulputate egestas
-                sollicitudin .
-              </p>
+             
             </div>
           </div>
           <div className="key-feature-grid mt-10 grid grid-cols-2 gap-7 md:grid-cols-3 xl:grid-cols-4">
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Live Caption</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">Suivi des performances en temps réel</h3>
+                <p>: la plateforme permettra aux sportifs de suivre leurs performances en temps réel</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -74,8 +86,9 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Smart Reply</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">Analyse des données</h3>
+                <p>: la plateforme utilisera l'IA pour analyser les données collectées et identifier les points forts et
+                les points faibles des sportifs</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -87,8 +100,8 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Sound Amplifier</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">Conseils personnalisés</h3>
+                <p>la plateforme fournira des conseils personnalisés aux sportifs pour améliorer leurs performances</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -100,8 +113,10 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Gesture Navigation</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">Prevention des blessures</h3>
+                <p>la plateforme identifiera les risques potentiels de blessures et fournira des conseils pour les
+prévenir
+</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -113,8 +128,8 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Dark Theme</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">utilisation de IA</h3>
+                <p>utilisation de l'intellidence artificielle conversationnelle.</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -126,8 +141,8 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Privacy Controls</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">Une plateforme IA</h3>
+                <p>Une plateforme IA qui permet aux sportifs de trouver des partenaires d'entrainement.</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -139,8 +154,9 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Location Controls</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">L'utilisation de l'analyse vidéo</h3>
+                <p> L'analyse vidéo peut fournir des informations précieuses sur les performances des
+                athlètes</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -152,8 +168,9 @@ const Home = () => {
             </div>
             <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
               <div>
-                <h3 className="h4 text-xl lg:text-2xl">Security Updates</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <h3 className="h4 text-xl lg:text-2xl">L'utilisation de IA conversationnelle</h3>
+                <p>L'intelligence artificielle conversationnelle peut être
+                utilisée pour interagir avec les athlètes</p>
               </div>
               <span className="icon mt-4">
                 <img
@@ -163,158 +180,56 @@ const Home = () => {
                 />
               </span>
             </div>
-            <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
-              <div>
-                <h3 className="h4 text-xl lg:text-2xl">Focus Mode</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-              </div>
-              <span className="icon mt-4">
-                <img
-                  className="objec-contain"
-                  src="assets/images/icons/feature-icon-9.svg"
-                  alt=""
-                />
-              </span>
-            </div>
-            <div className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg">
-              <div>
-                <h3 className="h4 text-xl lg:text-2xl">Family Link</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-              </div>
-              <span className="icon mt-4">
-                <img
-                  className="objec-contain"
-                  src="assets/images/icons/feature-icon-10.svg"
-                  alt=""
-                />
-              </span>
-            </div>
+            
           </div>
         </div>
       </section>
-      <section className="section services">
-        <div className="container">
-          <div
-            className="tab row gx-5 items-center"
-            data-tab-group="integration-tab"
-          >
-            <div className="lg:col-7 lg:order-2">
-              <div className="tab-content" data-tab-content>
-                <div className="tab-content-panel active" data-tab-panel="0">
-                  <img
-                    className="w-full object-contain"
-                    src="assets/images/sells-by-country.png"
-                  />
-                </div>
-                <div className="tab-content-panel" data-tab-panel="1">
-                  <img
-                    className="w-full object-contain"
-                    src="assets/images/collaboration.png"
-                  />
-                </div>
-                <div className="tab-content-panel" data-tab-panel="2">
-                  <img
-                    className="w-full object-contain"
-                    src="assets/images/sells-by-country.png"
-                  />
-                </div>
-              </div>
+    
+      <section >
+        <div style={styles.container}>
+          <div style={styles.row}>
+            
+            <div style={styles.imageContainer}>
+              <img
+                style={styles.image}
+                src="assets/images/3.jpg"
+                alt="Banner Image"
+              />
             </div>
-            <div className="mt-6 lg:col-5 lg:order-1 lg:mt-0">
-              <div className="text-container">
-                <h2 className="lg:text-4xl">
-                  Prevent failure from to impacting your reputation
-                </h2>
-                <p className="mt-4">
-                  Our platform helps you build secure onboarding authentication
-                  experiences that retain and engage your users. We build the
-                  infrastructure, you can.
-                </p>
-                <ul className="tab-nav -ml-4 mt-8 border-b-0" data-tab-nav>
-                  <li className="tab-nav-item active" data-tab="0">
-                    <img
-                      className="mr-3"
-                      src="assets/images/icons/drop.svg"
-                      alt=""
-                    />
-                    Habit building essential choose habit
-                  </li>
-                  <li className="tab-nav-item" data-tab="1">
-                    <img
-                      className="mr-3"
-                      src="assets/images/icons/brain.svg"
-                      alt=""
-                    />
-                    Get an overview of Habit Calendars.
-                  </li>
-                  <li className="tab-nav-item" data-tab="2">
-                    <img
-                      className="mr-3"
-                      src="assets/images/icons/timer.svg"
-                      alt=""
-                    />
-                    Start building with Habitify platform
-                  </li>
-                </ul>
-              </div>
+            <div style={styles.content}>
+              <h1 style={styles.title}>
+              Révolutionner l'Entraînement Sportif avec l'Intelligence Artificielle              </h1>
+              <p style={styles.subtitle}>
+              Découvrez comment CNOT Perform transforme l'entraînement sportif grâce à l'Intelligence Artificielle. Suivez vos performances en temps réel et analysez vos données pour identifier vos forces et faiblesses
+              </p>
+             
             </div>
           </div>
-          <div className="row gx-5 mt-12 items-center lg:mt-0">
-            <div className="lg:col-7">
-              <div className="relative">
-                <img
-                  className="w-full object-contain"
-                  src="assets/images/collaboration.png"
-                />
-                <img
-                  className="absolute bottom-6 left-1/2 -z-[1] -translate-x-1/2"
-                  src="assets/images/shape.svg"
-                  alt=""
-                />
-              </div>
+        </div>
+        <img
+          style={styles.shape}
+          src="assets/images/3.jpg"
+          alt="Decorative Shape"
+        />
+
+        
+      </section>
+      <section >
+        <div style={styles.container}>
+          <div style={styles.row}>
+            <div style={styles.content}>
+              <h1 style={styles.title}>
+                Scale design & dev operations with Avocode Enterprise
+              </h1>
+              <p style={styles.subtitle}>
+                A fully integrated suite of authentication & authorization products,
+                Stytch’s platform removes the headache of.
+              </p>
+              <a style={styles.button} href="#">
+                Download The Theme
+              </a>
             </div>
-            <div className="mt-6 lg:col-5 lg:mt-0">
-              <div className="text-container">
-                <h2 className="lg:text-4xl">
-                  Accept payments any country in this whole universe
-                </h2>
-                <p className="mt-4">
-                  Donec sollicitudin molestie malesda. Donec sollitudin molestie
-                  malesuada. Mauris pellentesque nec, egestas non nisi. Cras
-                  ultricies ligula sed
-                </p>
-                <ul className="mt-6 text-dark lg:-ml-4">
-                  <li className="mb-2 flex items-center rounded px-4">
-                    <img
-                      className="mr-3"
-                      src="assets/images/icons/checkmark-circle.svg"
-                      alt=""
-                    />
-                    Supporting more than 119 country world
-                  </li>
-                  <li className="mb-2 flex items-center rounded px-4">
-                    <img
-                      className="mr-3"
-                      src="assets/images/icons/checkmark-circle.svg"
-                      alt=""
-                    />
-                    Open transaction with more than currencies
-                  </li>
-                  <li className="flex items-center rounded px-4">
-                    <img
-                      className="mr-3"
-                      src="assets/images/icons/checkmark-circle.svg"
-                      alt=""
-                    />
-                    Customer Service with 79 languages
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="row gx-5 mt-12 items-center lg:mt-0">
-            <div className="lg:col-7 lg:order-2">
-              <div className="video pb-5 pr-9">
+            <div className="video pb-5 pr-9">
                 <div className="video-thumbnail overflow-hidden rounded-2xl">
                   <img
                     className="w-full object-contain"
@@ -329,7 +244,7 @@ const Home = () => {
                   <iframe
                     className="h-full w-full"
                     allowfullscreen=""
-                    src="https://www.youtube.com/embed/g3-VxLQO7do?autoplay=1"
+                    src="https://www.youtube.com/watch?v=R_k6939hFLY"
                   ></iframe>
                 </div>
                 <img
@@ -338,133 +253,29 @@ const Home = () => {
                   alt=""
                 />
               </div>
-            </div>
-            <div className="mt-6 lg:col-5 lg:order-1 lg:mt-0">
-              <div className="text-container">
-                <h2 className="lg:text-4xl">
-                  Accountability that works for you
-                </h2>
-                <p className="mt-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                  egestas Werat viverra id et aliquet. vulputate egestas
-                  sollicitudin .
-                </p>
-                <button className="btn btn-white mt-6">know about us</button>
-              </div>
-            </div>
           </div>
         </div>
+        <img
+          style={styles.shape}
+          src="assets/images/banner-shape.svg"
+          alt="Decorative Shape"
+        />
       </section>
-      <section className="reviews">
-        <div className="container">
-          <div className="row justify-between">
-            <div className="lg:col-6">
-              <h2>Our customers have nice things to say about us</h2>
+      <section style={{ padding: '60px 0', backgroundColor: '#f9f9f9' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ flexBasis: '50%', maxWidth: '50%' }}>
+              <h2 style={{ fontSize: '2.25rem', fontWeight: '700', marginBottom: '1rem' }}>Rejoignez-nous dès aujourd'hui </h2>
             </div>
-            <div className="lg:col-4">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                egestas Werat viverra id et aliquet. vulputate egestas
-                sollicitudin .
-              </p>
+            <div style={{ flexBasis: '33.333333%', maxWidth: '33.333333%' }}>
+              <p style={{ fontSize: '1rem', lineHeight: '1.5', color: '#666' }}>
+              Rejoignez-nous dès aujourd'hui et profitez d'une nouvelle ère de performance sportive grâce à CNOT Perform. Atteignez vos objectifs plus rapidement et de manière plus intelligente avec l'aide de l'Intelligence Artificielle              </p>
             </div>
           </div>
-          <div className="row mt-10">
-            <div className="col-12">
-              <div className="swiper reviews-carousel">
-                <div className="swiper-wrapper">
-                  <div className="swiper-slide">
-                    <div className="review">
-                      <div className="review-author-avatar bg-gradient">
-                        <img src="assets/images/users/user-5.png" alt="" />
-                      </div>
-                      <h4 className="mb-2">Courtney Henry</h4>
-                      <p className="mb-4 text-[#666]">microsoft corp</p>
-                      <p>
-                        Our platform helps build secure onboarding authentica
-                        experiences & engage your users. We build .
-                      </p>
-                      <div className="review-rating mt-6 flex items-center justify-center space-x-2.5">
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star-white.svg" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="review">
-                      <div className="review-author-avatar bg-gradient">
-                        <img src="assets/images/users/user-2.png" alt="" />
-                      </div>
-                      <h4 className="mb-2">Ronald Richards</h4>
-                      <p className="mb-4 text-[#666]">meta limited</p>
-                      <p>
-                        Our platform helps build secure onboarding authentica
-                        experiences & engage your users. We build .
-                      </p>
-                      <div className="review-rating mt-6 flex items-center justify-center space-x-2.5">
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star-white.svg" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="review">
-                      <div className="review-author-avatar bg-gradient">
-                        <img src="assets/images/users/user-6.png" alt="" />
-                      </div>
-                      <h4 className="mb-2">Bessie Cooper</h4>
-                      <p className="mb-4 text-[#666]">apple inc ltd</p>
-                      <p>
-                        Our platform helps build secure onboarding authentica
-                        experiences & engage your users. We build .
-                      </p>
-                      <div className="review-rating mt-6 flex items-center justify-center space-x-2.5">
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star.svg" alt="" />
-                        <img src="assets/images/icons/star-white.svg" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="swiper-pagination reviews-carousel-pagination !bottom-0"></div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </section>
-      <section className="px-5 py-20 xl:py-[120px]">
-        <div className="container">
-          <div className="bg-gradient row justify-center rounded-b-[80px] rounded-t-[20px] px-[30px] pb-[75px] pt-16">
-            <div className="lg:col-11">
-              <div className="row">
-                <div className="lg:col-7">
-                  <h2 className="h1 text-white">
-                    Helping teams in the world with focus
-                  </h2>
-                  <a className="btn btn-white mt-8" href="#">
-                    Download The Theme
-                  </a>
-                </div>
-                <div className="mt-8 lg:col-5 lg:mt-0">
-                  <p className="text-white">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Morbi egestas Werat viverra id et aliquet. vulputate egestas
-                    sollicitudin .
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     
       <div className="fixed left-0 top-0 z-50 flex w-[30px] items-center justify-center bg-gray-200 py-[2.5px] text-[12px] uppercase text-black sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200 2xl:bg-pink-200">
         <span className="block sm:hidden">all</span>
         <span className="hidden sm:block md:hidden">sm</span>
@@ -477,4 +288,102 @@ const Home = () => {
   );
 };
 
+const styles = {
+  section: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '50px 0',
+    marginTop: '80px', // Increased margin-top to create space from navbar
+    '@media (max-width: 768px)': {
+      padding: '20px 0',
+    }
+  },
+  container: {
+    width: '90%',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    '@media (max-width: 768px)': {
+      width: '100%',
+      padding: '0 10px',
+    }
+  },
+  row: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+    }
+  },
+  content: {
+    flex: 1,
+    paddingRight: '50px', // Adjust the spacing based on your design needs
+    '@media (max-width: 768px)': {
+      paddingRight: '0',
+      textAlign: 'center',
+    }
+  },
+  title: {
+    fontSize: '2.5rem',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+    '@media (max-width: 768px)': {
+      fontSize: '1.5rem',
+    }
+  },
+  subtitle: {
+    fontSize: '1.25rem',
+    marginBottom: '20px',
+    '@media (max-width: 768px)': {
+      fontSize: '1rem',
+    }
+  },
+  button: {
+    padding: '10px 20px',
+    backgroundColor: '#FF6464', // Adjust button color
+    color: 'white',
+    textDecoration: 'none',
+    fontSize: '1rem',
+    borderRadius: '5px',
+    '@media (max-width: 768px)': {
+      padding: '8px 16px',
+      fontSize: '0.875rem',
+    }
+  },
+  imageContainer: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    '@media (max-width: 768px)': {
+      marginTop: '20px',
+    }
+  },
+  image: {
+    width: '100%',
+    maxWidth: '500px', // Adjust the image size
+    objectFit: 'contain',
+  },
+  shape: {
+    position: 'absolute',
+    top: '-100px',
+    right: '0',
+    maxWidth: '300px',
+    zIndex: -1,
+  },
+  fullScreenImageContainer: {
+    width: '100%',
+    height: '100vh',
+    overflow: 'hidden',
+    position: 'relative',
+    marginTop: '65px', // Add your desired margin-top value here
+  },
+  fullScreenImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+};
 export default Home;
