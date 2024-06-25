@@ -12,6 +12,8 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+
+import Calendar from "../pages/Calendar/index";
 import Home from "../frontoffice/pages/Home";
 import Header from "../frontoffice/pages/Header";
 
@@ -19,6 +21,7 @@ import Footer from "../frontoffice/pages/Footer";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
+  { path: "/calendar", component: <Calendar /> },
 
   // //profile
   { path: "/profile", component: <UserProfile /> },

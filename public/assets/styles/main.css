@@ -2232,7 +2232,7 @@ input#nav-toggle:checked ~ #nav-menu {
   background-image: linear-gradient(to top left, var(--tw-gradient-stops));
   --tw-content: "";
   content: var(--tw-content);
-    background-image: linear-gradient(184.78deg, #fa709a 7.64%, #fee140 120.07%);
+    background-image: linear-gradient(184.78deg, #4683c2 7.64%, #d85aea 120.07%);
 }
 .nav-dropdown {
   margin-right: 0px;
@@ -3269,7 +3269,7 @@ code::after {
     box-shadow: 0px 15px 34px rgba(0, 0, 0, 0.1);
   }
 .bg-gradient {
-    background-image: linear-gradient(184.78deg, #fa709a 7.64%, #fee140 120.07%);
+    background-image: linear-gradient(184.78deg, #4683c2 7.64%, #d85aea 120.07%);
   }
 @media (min-width: 540px) {
 
