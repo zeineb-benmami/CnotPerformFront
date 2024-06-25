@@ -50,8 +50,7 @@ import BootstrapTheme from "@fullcalendar/bootstrap";
 
 const Calender = (props) => {
   //meta title
-  document.title =
-    "Full Calendar | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Calendrier | CNOT PERFORM";
 
   const dispatch = useDispatch();
 
@@ -282,7 +281,7 @@ const Calender = (props) => {
       <div className="page-content">
         <Container fluid={true}>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Calendar" breadcrumbItem="Calendar" />
+          <Breadcrumbs title="Calendrier" breadcrumbItem="Calendrier" />
           <Row>
             <Col className="col-12">
               <Row>
@@ -356,7 +355,7 @@ const Calender = (props) => {
                     <ModalHeader
                       toggle={toggle}
                       tag="h5"
-                      className="py-3 px-4 border-bottom-0"
+                      className="border-bottom-0 px-4 py-3"
                     >
                       {!!isEdit ? "Edit Event" : "Add Event"}
                     </ModalHeader>
