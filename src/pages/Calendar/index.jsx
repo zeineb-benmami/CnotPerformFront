@@ -295,7 +295,7 @@ const Calender = (props) => {
                           onClick={toggleCategory}
                         >
                           <i className="mdi mdi-plus-circle-outline me-1" />
-                          Create New Event
+                          Créer un Evènement
                         </Button>
                       </div>
 
@@ -411,12 +411,19 @@ const Calender = (props) => {
                                     : false
                                 }
                               >
-                                <option value="bg-danger">Danger</option>
-                                <option value="bg-success">Success</option>
-                                <option value="bg-primary">Primary</option>
-                                <option value="bg-info">Info</option>
-                                <option value="bg-dark">Dark</option>
-                                <option value="bg-warning">Warning</option>
+                                <option value="bg-danger">
+                                  Valeurs olympiques
+                                </option>
+                                <option value="bg-success">Entourage</option>
+                                <option value="bg-primary">
+                                  Universalité des jeux olympiques
+                                </option>
+                                <option value="bg-secondary">
+                                  Gestion des CNO
+                                </option>
+                                <option value="bg-warning">
+                                  Développement du Sport
+                                </option>
                               </Input>
                               {validation.touched.category &&
                               validation.errors.category ? (
@@ -468,7 +475,7 @@ const Calender = (props) => {
                     centered
                   >
                     <ModalHeader toggle={toggleCategory} tag="h5">
-                      Add Event
+                      Ajouter un Evènement
                     </ModalHeader>
                     <ModalBody className="p-4">
                       <Form
@@ -522,12 +529,19 @@ const Calender = (props) => {
                                     : false
                                 }
                               >
-                                <option value="bg-danger">Danger</option>
-                                <option value="bg-success">Success</option>
-                                <option value="bg-primary">Primary</option>
-                                <option value="bg-info">Info</option>
-                                <option value="bg-dark">Dark</option>
-                                <option value="bg-warning">Warning</option>
+                                <option value="bg-danger">
+                                  Valeurs olympiques
+                                </option>
+                                <option value="bg-success">Entourage</option>
+                                <option value="bg-primary">
+                                  Universalité des jeux olympiques
+                                </option>
+                                <option value="bg-secondary">
+                                  Gestion des CNO
+                                </option>
+                                <option value="bg-warning">
+                                  Développement du Sport
+                                </option>
                               </Input>
                               {categoryValidation.touched.category &&
                               categoryValidation.errors.category ? (

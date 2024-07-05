@@ -54,24 +54,29 @@ const events = [
 const calenderDefaultCategories = [
   {
     id: 1,
-    title: "New Event Planning",
+    title: "Entourage",
     type: "bg-success",
   },
   {
     id: 2,
-    title: "Meeting",
+    title: "Universalité des jeux olympiques",
     type: "bg-info",
   },
   {
     id: 3,
-    title: "Generating Reports",
+    title: "Développement du Sport",
     type: "bg-warning",
   },
   {
     id: 4,
-    title: "Create New theme",
+    title: "Valeurs olympiques",
     type: "bg-danger",
   },
-]
+  {
+    id: 5,
+    title: "Gestion des CNO",
+    type: "bg-secondary",
+  },
+];
 
-export { calenderDefaultCategories, events }
+export { calenderDefaultCategories, events };

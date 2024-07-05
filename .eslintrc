@@ -2,9 +2,10 @@
   "rules": {
     "no-undef": "off"
   },
-  "extends": [
-    "plugin:react/recommended"
-  ],
+  "root": true,
+  "env": { "browser": true, "es2020": true },
+  "node": true,
+  "extends": ["plugin:react/recommended"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
