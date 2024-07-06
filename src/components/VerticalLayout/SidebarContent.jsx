@@ -180,6 +180,12 @@ const SidebarContent = (props) => {
             <li className="menu-title">{props.t("Apps")}</li>
 
             <li>
+              <Link to="/federation">
+                <i className="bx bxs-user-detail"></i>
+                <span>{props.t("Féderations")}</span>
+              </Link>
+            </li>
+            <li>
               <Link to="/calendar">
                 <i className="bx bx-calendar"></i>
                 <span>{props.t("Calendar")}</span>
@@ -344,23 +350,7 @@ const SidebarContent = (props) => {
               </ul>
             </li>
 
-            <li>
-              <Link to="/#" className="has-arrow ">
-                <i className="bx bxs-user-detail"></i>
-                <span>{props.t("Contacts")}</span>
-              </Link>
-              <ul className="sub-menu">
-                <li>
-                  <Link to="#">{props.t("User Grid")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("User List")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Profile")}</Link>
-                </li>
-              </ul>
-            </li>
+           
 
             <li>
               <Link to="/#" className="has-arrow">
