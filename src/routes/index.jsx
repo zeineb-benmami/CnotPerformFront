@@ -18,6 +18,12 @@ import Home from "../frontoffice/pages/Home";
 import Header from "../frontoffice/pages/Header";
 
 import Footer from "../frontoffice/pages/Footer";
+import EmailInbox from "../pages/Email/email-inbox";
+import EmailRead from "../pages/Email/email-read";
+import EmailBasicTemplte from "../pages/Email/email-basic-templte";
+import EmailAlertTemplte from "../pages/Email/email-template-alert";
+import EmailTemplateBilling from "../pages/Email/email-template-billing";
+
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -25,6 +31,13 @@ const authProtectedRoutes = [
 
   // //profile
   { path: "/profile", component: <UserProfile /> },
+
+  //email
+  { path: "/email-inbox", component: <EmailInbox /> },
+  { path: "/email-read/:id", component: <EmailRead /> },
+  { path: "/email-template-basic", component: <EmailBasicTemplte /> },
+  { path: "/email-template-alert", component: <EmailAlertTemplte /> },
+  { path: "/email-template-billing", component: <EmailTemplateBilling /> },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name

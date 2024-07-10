@@ -269,26 +269,10 @@ const SidebarContent = (props) => {
               </Link>
               <ul className="sub-menu">
                 <li>
-                  <Link to="#">{props.t("Inbox")}</Link>
+                  <Link to="/email-inbox">{props.t("Inbox")}</Link>
                 </li>
                 <li>
-                  <Link to="#">{props.t("Read Email")} </Link>
-                </li>
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <span key="t-email-templates">{props.t("Templates")}</span>
-                  </Link>
-                  <ul className="sub-menu">
-                    <li>
-                      <Link to="#">{props.t("Basic Action")}</Link>
-                    </li>
-                    <li>
-                      <Link to="#">{props.t("Alert Email")} </Link>
-                    </li>
-                    <li>
-                      <Link to="#">{props.t("Billing Email")} </Link>
-                    </li>
-                  </ul>
+                  <Link to="#">{props.t("Set up mail account")} </Link>
                 </li>
               </ul>
             </li>
