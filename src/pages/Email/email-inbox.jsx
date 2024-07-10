@@ -30,7 +30,7 @@ import { map } from "lodash";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { getEmails, getMailAccount, verifPassword } from "../../service/mailService";
+import { bookmarkEmail, getEmails, getMailAccount, verifPassword } from "../../service/mailService";
 import {
   getMailsLists as onGetMailsLists,
   getSelectedMails as onGetSelectedMails,
@@ -137,14 +137,6 @@ const EmailInbox = (props) => {
 
   const handleSelect = (selectedItems) => {
     dispatch(onGetSelectedMails(selectedItems));
-  };
-
-  const hasStarred = (mail) => {
-    const updateTodo = {
-      id: mail.id,
-      starred: !mail.starred,
-    };
-    dispatch(onUpdateMail(updateTodo));
   };
 
   const toggleModal = () => setModal(!modal);
@@ -379,49 +371,55 @@ const EmailInbox = (props) => {
                       />
                       <ul className="message-list">
                         {map(mailslists, (mail, key) => (
+                          
                           <li key={key} className={mail.unread ? "unread" : ""}>
-                            <div className="col-mail col-mail-1">
-                              <div className="checkbox-wrapper-mail">
-                                <Input
-                                  type="checkbox"
-                                  value={mail.id}
-                                  id={mail.id}
-                                  name="emailcheckbox"
-                                  onChange={(e) => console.log(e.target.value)}
-                                  onClick={(e) => handleSelect(e.target.value)}
-                                  checked={selectedmails.includes(mail.id)}
-                                />
-                                <Label
-                                  htmlFor={mail.id}
-                                  className="toggle"
-                                />
-                              </div>
-                              <Link to="#" className="title">
-                                {mail.from}
-                              </Link>
-                              {mail.bookmarked ? (
-                                <span
-                                  className="star-toggle fas fa-star text-warning"
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => hasStarred(mail)}
-                                />
-                              ) : (
-                                <span
-                                  className="star-toggle far fa-star"
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => hasStarred(mail)}
-                                />
-                              )}
+                          <div className="col-mail col-mail-1">
+                            <div className="checkbox-wrapper-mail">
+                              <Input
+                                type="checkbox"
+                                value={mail.id}
+                                id={mail.id}
+                                name="emailcheckbox"
+                                onChange={(e) => console.log(e.target.value)}
+                                onClick={(e) => handleSelect(e.target.value)}
+                                checked={selectedmails.includes(mail._id)}
+                              />
+                              <Label htmlFor={mail.id} className="toggle" />
                             </div>
-                            <div className="col-mail col-mail-2">
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html: mail.body,
+                            <Link to="#" className="title">
+                              {mail.from}
+                            </Link>
+                            {mail.bookmarked ? (
+                              <span
+                                className="star-toggle fas fa-star text-warning"
+                                style={{ cursor: "pointer" }}
+                              />
+                            ) : (
+                              <span
+                                className="star-toggle far fa-star"
+                                style={{ cursor: "pointer" }}
+                                onClick={async () => {
+                                  await bookmarkEmail(mail._id);
+                                  fetchEmails({ mailaddress: mailAccount, password: password });
                                 }}
-                              ></div>
-                              <div className="date">{mail.date}</div>
+                              />
+                            )}
+                          </div>
+                          <div className="col-mail col-mail-2">
+                            <div className="subject">
+                              <span
+                              >{mail.subject.length > 25 ? `${mail.subject.substring(0, 30)}...` : mail.subject}</span>
                             </div>
-                          </li>
+                            <div className="date">{new Date(mail.date).toLocaleString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',  
+                                hour12: true
+                              })}</div>
+                          </div>
+                        </li>
                         ))}
                       </ul>
                     </>

@@ -84,62 +84,6 @@ const EmailSideBar = props => {
             Family
           </Link>
         </div>
-
-        <h6 className="mt-4">Chat</h6>
-
-        <div className="mt-2">
-          <Link to="#" className="d-flex">
-            <img
-              className="d-flex me-3 rounded-circle"
-              src={avatar2}
-              alt="skote"
-              height="36"
-            />
-            <div className="flex-grow-1 chat-user-box">
-              <p className="user-title m-0">Scott Median</p>
-              <p className="text-muted">Hello</p>
-            </div>
-          </Link>
-
-          <Link to="#" className="d-flex">
-            <img
-              className="d-flex me-3 rounded-circle"
-              src={avatar3}
-              alt="skote"
-              height="36"
-            />
-            <div className="chat-user-box">
-              <p className="user-title m-0">Julian Rosa</p>
-              <p className="text-muted">What about our next..</p>
-            </div>
-          </Link>
-
-          <Link to="#" className="d-flex">
-            <img
-              className="d-flex me-3 rounded-circle"
-              src={avatar4}
-              alt="skote"
-              height="36"
-            />
-            <div className="chat-user-box">
-              <p className="user-title m-0">David Medina</p>
-              <p className="text-muted">Yeah everything is fine</p>
-            </div>
-          </Link>
-
-          <Link to="#" className="d-flex">
-            <img
-              className="d-flex me-3 rounded-circle"
-              src={avatar6}
-              alt="skote"
-              height="36"
-            />
-            <div className="chat-user-box">
-              <p className="user-title m-0">Jay Baker</p>
-              <p className="text-muted">Wow that&apos;s great</p>
-            </div>
-          </Link>
-        </div>
       </Card>
 
       <Modal

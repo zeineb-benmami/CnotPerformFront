@@ -1,22 +1,47 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 
-//Import Image
+// Import Image
 import avatar2 from "../../assets/images/users/avatar-2.jpg";
 import img3 from "../../assets/images/small/img-3.jpg";
 import img4 from "../../assets/images/small/img-4.jpg";
 
-//Import Breadcrumb
+// Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
-//Import Email Sidebar
+// Import Email Sidebar
 import EmailSideBar from "./email-sidebar";
+import { getEmailById } from "../../service/mailService";
 
 const EmailRead = () => {
+  const { id } = useParams();
+  const [mail, setMail] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
-   //meta title
-  document.title="Read Email | Skote - Vite React Admin & Dashboard Template";
+  // Meta title
+  useEffect(() => {
+    document.title = "Read Email";
+  }, []);
+
+  const fetchEmailById = async (id) => {
+    try {
+      const result = await getEmailById(id);
+      setMail(result.data);
+    } catch (error) {
+      console.log("Error fetching email:", error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
+    }
+  };
+
+  useEffect(() => {
+    fetchEmailById(id);
+  }, [id]);
+
+  if (loading) {
+    return <p>Loading...</p>; // Show loading indicator while fetching email
+  }
 
   return (
     <React.Fragment>
@@ -31,43 +56,46 @@ const EmailRead = () => {
               <EmailSideBar />
 
               <div className="email-rightbar mb-3">
-                <Card>                
+                <Card>
                   <CardBody>
                     <div className="d-flex mb-4">
-                      <img
-                        className="d-flex me-3 rounded-circle avatar-sm"
-                        src={avatar2}
-                        alt="skote"
-                      />
+<div className="position-relative h-40 w-25 rounded-circle overflow-hidden">
+  <div className="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center w-25 h-75 bg-dark rounded-circle">
+    <span className="font-weight-medium text-white">
+      {mail.from ? mail.from.charAt(0) : ''}
+    </span>
+  </div>
+</div>
+
+
                       <div className="flex-grow-1">
                         <h5 className="font-size-14 mt-1">
-                          Humberto D. Champion
+                          {mail && mail.from} {/* Check if mail is not null */}
                         </h5>
-                        <small className="text-muted">support@domain.com</small>
+                        <small className="text-muted">
+                          {mail &&
+                            new Date(mail.date).toLocaleString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            })}
+                        </small>
                       </div>
                     </div>
 
                     <h4 className="mt-0 font-size-16">
-                      This Week&apos;s Top Stories
+                      {mail.subject}
                     </h4>
 
-                    <p>Dear Lorem Ipsum,</p>
-                    <p>
-                      Praesent dui ex, dapibus eget mauris ut, finibus
-                      vestibulum enim. Quisque arcu leo, facilisis in fringilla
-                      id, luctus in tortor. Nunc vestibulum est quis orci varius
-                      viverra. Curabitur dictum volutpat massa vulputate
-                      molestie. In at felis ac velit maximus convallis.
-                    </p>
-                    <p>
-                      Sed elementum turpis eu lorem interdum, sed porttitor eros
-                      commodo. Nam eu venenatis tortor, id lacinia diam. Sed
-                      aliquam in dui et porta. Sed bibendum orci non tincidunt
-                      ultrices. Vivamus fringilla, mi lacinia dapibus
-                      condimentum, ipsum urna lacinia lacus, vel tincidunt mi
-                      nibh sit amet lorem.
-                    </p>
-                    <p>Sincerly,</p>
+                            <div 
+                            dangerouslySetInnerHTML={{
+                              __html: mail.body,
+                              }}>
+
+                            </div>
                     <hr />
 
                     <Row>
@@ -101,10 +129,7 @@ const EmailRead = () => {
                       </Col>
                     </Row>
 
-                    <Link
-                      to="#"
-                      className="btn btn-secondary  mt-4"
-                    >
+                    <Link to="#" className="btn btn-secondary mt-4">
                       <i className="mdi mdi-reply"></i> Reply
                     </Link>
                   </CardBody>
@@ -115,7 +140,7 @@ const EmailRead = () => {
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default EmailRead
+export default EmailRead;

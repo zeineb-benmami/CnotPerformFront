@@ -34,7 +34,7 @@ const authProtectedRoutes = [
 
   //email
   { path: "/email-inbox", component: <EmailInbox /> },
-  { path: "/email-read", component: <EmailRead /> },
+  { path: "/email-read/:id", component: <EmailRead /> },
   { path: "/email-template-basic", component: <EmailBasicTemplte /> },
   { path: "/email-template-alert", component: <EmailAlertTemplte /> },
   { path: "/email-template-billing", component: <EmailTemplateBilling /> },
