@@ -5,6 +5,8 @@ import "./plugins/font-awesome/v6/solid.css";
 import "./plugins/font-awesome/v6/fontawesome.css";
 import "./styles/main.css";
 
+import Events from "../landing/Planning/events";
+
 const Home = () => {
   document.title = "Accueil | CNOT PERFORM";
   return (
@@ -202,6 +204,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <Events />
 
       <section>
         <div style={styles.container}>

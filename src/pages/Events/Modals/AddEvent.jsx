@@ -21,6 +21,8 @@ import {
 //Import Date Picker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { addEvent } from "../../../service/event-service";
+import { uploadPhotoToEvent } from "../../../service/photo-service";
 
 const AddEvent = ({ show, handleClose }) => {
   const [startDate, setstartDate] = useState(new Date());
@@ -55,6 +57,41 @@ const AddEvent = ({ show, handleClose }) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    handleAddEvent();
+  };
+
+  const handleAddEvent = async () => {
+    try {
+      const result = await addEvent(eventItem);
+      if (result.status === 201) {
+        if (selectedFiles.length > 0) {
+          handleUploadPhoto(result.data.data.message);
+        }
+        handleClose();
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleUploadPhoto = async (id) => {
+    try {
+      const result = await uploadPhotoToEvent(id, selectedFiles[0]);
+      if (result.status === 200) {
+        alert(result.data.data.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <Modal isOpen={show} toggle={handleClose} centered={true} size="xl">
       <ModalHeader>Créer un Evènement</ModalHeader>
@@ -63,25 +100,22 @@ const AddEvent = ({ show, handleClose }) => {
           <Col lg="6">
             <Form>
               <FormGroup className="mb-4" row>
-                <Label
-                  htmlFor="projectname"
-                  className="col-form-label col-lg-2"
-                >
+                <Label htmlFor="title" className="col-form-label col-lg-2">
                   Titre
                 </Label>
                 <Col lg="10">
                   <Input
-                    id="projectname"
-                    name="projectname"
+                    id="title"
+                    name="title"
                     type="text"
                     className="form-control"
-                    placeholder="Enter Project Name..."
+                    placeholder="Enter title..."
                   />
                 </Col>
               </FormGroup>
               <FormGroup className="mb-4" row>
                 <Label
-                  htmlFor="projectdesc"
+                  htmlFor="description"
                   className="col-form-label col-lg-2"
                 >
                   Description
@@ -89,9 +123,9 @@ const AddEvent = ({ show, handleClose }) => {
                 <Col lg="10">
                   <textarea
                     className="form-control"
-                    id="projectdesc"
+                    id="description"
                     rows="3"
-                    placeholder="Enter Project Description..."
+                    placeholder="Enter Description..."
                   />
                 </Col>
               </FormGroup>
@@ -105,6 +139,8 @@ const AddEvent = ({ show, handleClose }) => {
                   <Row>
                     <Col md={6} className="pr-0">
                       <DatePicker
+                        id="startDate"
+                        name="startDate"
                         className="form-control"
                         selected={startDate}
                         onChange={startDateChange}
@@ -113,6 +149,8 @@ const AddEvent = ({ show, handleClose }) => {
                     <Col md={6} className="pl-0">
                       {" "}
                       <DatePicker
+                        id="endDate"
+                        name="endDate"
                         className="form-control"
                         selected={endDate}
                         onChange={endDateChange}
@@ -123,36 +161,27 @@ const AddEvent = ({ show, handleClose }) => {
               </FormGroup>
 
               <FormGroup className="mb-4" row>
-                <label
-                  htmlFor="projectbudget"
-                  className="col-form-label col-lg-2"
-                >
+                <label htmlFor="budget" className="col-form-label col-lg-2">
                   Budget
                 </label>
                 <Col md={6}>
                   <Input
-                    id="projectbudget"
-                    name="projectbudget"
+                    id="budget"
+                    name="budget"
                     type="number"
-                    placeholder="Enter Project Budget..."
+                    placeholder="Enter Budget..."
                     className="form-control"
                   />
                 </Col>
               </FormGroup>
 
               <FormGroup className="mb-4" row>
-                <label htmlFor="projectp" className="col-form-label col-lg-2">
-                  Participants
-                </label>
-                <Col md={6}>
-                  <Input
-                    id="projectp"
-                    name="projectp"
-                    type="number"
-                    placeholder="Enter Project Budget..."
-                    className="form-control"
-                  />
-                </Col>
+                <Label for="participants">Participants</Label>
+                <Input id="participants" name="participants" type="select">
+                  <option>FEDERATION NATATION</option>
+                  <option>FEDERATION BASKET</option>
+                  <option>FEDERATION football</option>
+                </Input>
               </FormGroup>
             </Form>
           </Col>
@@ -176,7 +205,9 @@ const AddEvent = ({ show, handleClose }) => {
                           <div className="mb-3">
                             <i className="display-4 text-muted bx bxs-cloud-upload" />
                           </div>
-                          <h4>Drop files here or click to upload.</h4>
+                          <h4>
+                            Déposer vos fichiers ici ou bien cliquer sur upload.
+                          </h4>
                         </div>
                       </div>
                     </div>
@@ -223,7 +254,9 @@ const AddEvent = ({ show, handleClose }) => {
         </Row>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary">Ajouter</Button>{" "}
+        <Button color="primary" onClick={handleSubmit}>
+          Ajouter
+        </Button>{" "}
         <Button color="secondary" onClick={handleClose}>
           Annuler
         </Button>

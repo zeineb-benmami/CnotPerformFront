@@ -43,28 +43,14 @@ const AboutUs = () => {
                 </p>
 
                 <div className="d-flex flex-wrap gap-2">
-                  <Link to="#" className="btn btn-success">
+                  <Link
+                    to="#"
+                    className="btn btn-primary"
+                    style={{ borderRadius: "25px" }}
+                  >
                     Read More
                   </Link>
-                  <Link to="#" className="btn btn-outline-primary">
-                    How It work
-                  </Link>
                 </div>
-
-                <Row className="mt-4">
-                  <Col lg="4" xs="6">
-                    <div className="mt-4">
-                      <h4>$ 6.2 M</h4>
-                      <p>Invest amount</p>
-                    </div>
-                  </Col>
-                  <Col lg="4" xs="6">
-                    <div className="mt-4">
-                      <h4>16245</h4>
-                      <p>Users</p>
-                    </div>
-                  </Col>
-                </Row>
               </div>
             </Col>
 

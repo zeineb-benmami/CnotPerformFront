@@ -41,6 +41,12 @@ const Header = () => {
             Services
           </a>
           <a href="#" style={styles.navLink}>
+            Events
+          </a>
+          <a href="#" style={styles.navLink}>
+            Galerie
+          </a>
+          <a href="#" style={styles.navLink}>
             Contact
           </a>
           <a href="/login" style={styles.navButton}>
@@ -68,6 +74,12 @@ const Header = () => {
             </a>
             <a href="#" style={styles.navLink} onClick={toggleMenu}>
               Services
+            </a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>
+              Events
+            </a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>
+              Galerie
             </a>
             <a href="#" style={styles.navLink} onClick={toggleMenu}>
               Contact

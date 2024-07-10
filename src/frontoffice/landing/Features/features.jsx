@@ -35,7 +35,7 @@ const Features = () => {
             <Col md="6" sm="8">
               <div>
                 <img
-                  src={feature1}
+                  src="assets/images/2.jpg"
                   alt=""
                   className="img-fluid d-block mx-auto"
                 />
@@ -65,7 +65,7 @@ const Features = () => {
             <Col md="6" sm="8" className="ms-md-auto">
               <div className="me-md-0 mt-4">
                 <img
-                  src={feature2}
+                  src="assets/images/3.jpg"
                   alt=""
                   className="img-fluid d-block mx-auto"
                 />
