@@ -386,7 +386,7 @@ const EmailInbox = (props) => {
                               />
                               <Label htmlFor={mail.id} className="toggle" />
                             </div>
-                            <Link to="#" className="title">
+                            <Link to={`/email-read/${mail._id}`} className="title">
                               {mail.from}
                             </Link>
                             {mail.bookmarked ? (
