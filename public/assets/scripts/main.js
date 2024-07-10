@@ -17,7 +17,7 @@
   // });
 
   //sticky header
-  const header = document.querySelector(".header");
+  /*const header = document.querySelector(".header");
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
     if (scrollY > 0) {
@@ -25,7 +25,7 @@
     } else {
       header.classList.remove("header-sticky");
     }
-  });
+  });*/
 
   //reviews-carousel
   new Swiper(".reviews-carousel", {

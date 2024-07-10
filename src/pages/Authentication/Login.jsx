@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import profile from "../../../public/assets/images/4.png";
 import logo from "../../assets/images/CNOT_logo.svg";
-import axios from 'axios';
+import axios from "axios";
 
 const Login = () => {
   document.title = "Login | Skote - Vite React Admin & Dashboard Template";
@@ -25,9 +25,12 @@ const Login = () => {
 
   const signin = async (user) => {
     try {
-      const response = await axios.post('http://localhost:3000/users/signin', user);
-      localStorage.setItem('authUser', JSON.stringify(response.data));
-      navigate('/dashboard');
+      const response = await axios.post(
+        "http://localhost:3000/users/signin",
+        user
+      );
+      localStorage.setItem("authUser", JSON.stringify(response.data));
+      navigate("/dashboard");
     } catch (err) {
       setError(err.response ? err.response.data.error : err.message);
     }
@@ -39,7 +42,9 @@ const Login = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Email invalide").required("Email est obligatoire"),
+      email: Yup.string()
+        .email("Email invalide")
+        .required("Email est obligatoire"),
       password: Yup.string().required("Motde passe est obligatoire"),
     }),
     onSubmit: (values) => {
@@ -54,38 +59,38 @@ const Login = () => {
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages my-5 pt-sm-5">
+      <div className="account-pages pt-sm-5 my-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-                <div className="bg-primary bg-soft">
+                <div className="bg-soft bg-primary">
                   <Row>
                     <Col xs={7}>
-                      <div className="text-primary p-4">
+                      <div className="p-4 text-primary">
                         <h5 className="text-primary">Bienvenue !</h5>
                         <p>Connectez pour continuer</p>
                       </div>
                     </Col>
-                    <Col className="col-5 align-self-end">
+                    <Col className="align-self-end col-5">
                       <img src={profile} alt="" className="img-fluid" />
                     </Col>
                   </Row>
                 </div>
                 <CardBody className="pt-0">
-                <div>
+                  <div>
                     <Link to="/" className="auth-logo-light">
-                    <div className="avatar-md profile-user-wid mb-4">
-  <span className="avatar-title rounded-circle bg-light">
-    <img
-      src={logo}
-      alt=""
-      className=""
-      height="35" // Adjust the height to make the logo smaller
-      width="35"  // Adjust the width to maintain aspect ratio and make the logo smaller
-    />
-  </span>
-</div>
+                      <div className="avatar-md profile-user-wid mb-4">
+                        <span className="avatar-title rounded-circle bg-light">
+                          <img
+                            src={logo}
+                            alt=""
+                            className=""
+                            height="35" // Adjust the height to make the logo smaller
+                            width="35" // Adjust the width to maintain aspect ratio and make the logo smaller
+                          />
+                        </span>
+                      </div>
                     </Link>
                   </div>
                   <div className="p-2">
@@ -137,17 +142,19 @@ const Login = () => {
                               : false
                           }
                         />
-                        {validation.touched.password && validation.errors.password ? (
+                        {validation.touched.password &&
+                        validation.errors.password ? (
                           <FormFeedback type="invalid">
                             {validation.errors.password}
                           </FormFeedback>
                         ) : null}
                       </div>
 
-                      <div className="mt-3 d-grid">
+                      <div className="d-grid mt-3">
                         <button
                           className="btn btn-primary btn-block"
                           type="submit"
+                          style={{ borderRadius: "25px" }}
                         >
                           Se Connecter
                         </button>
@@ -165,8 +172,12 @@ const Login = () => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                vous n'avez pas un compte ? {" "}
-                  <Link to="/register" className="fw-medium text-primary">
+                  vous n'avez pas un compte ?{" "}
+                  <Link
+                    to="/register"
+                    className="fw-medium text-primary"
+                    style={{ borderRadius: "25px" }}
+                  >
                     {" "}
                     S'inscrire{" "}
                   </Link>{" "}

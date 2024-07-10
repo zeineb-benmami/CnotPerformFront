@@ -14,7 +14,13 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 
 import Calendar from "../pages/Calendar/index";
+
+import Events from "../pages/Events/projects-grid";
+
+import Liste from "../pages/Events/projects-list";
 import Home from "../frontoffice/pages/Home";
+
+import Landing from "../frontoffice/landing/index";
 import Header from "../frontoffice/pages/Header";
 
 import Footer from "../frontoffice/pages/Footer";
@@ -28,6 +34,9 @@ import EmailTemplateBilling from "../pages/Email/email-template-billing";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
   { path: "/calendar", component: <Calendar /> },
+
+  { path: "/events", component: <Events /> },
+  { path: "/liste", component: <Liste /> },
 
   // //profile
   { path: "/profile", component: <UserProfile /> },
@@ -56,6 +65,14 @@ const publicRoutes = [
         <Header />
         <Home />
         <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/landing",
+    component: (
+      <>
+        <Landing />
       </>
     ),
   },
