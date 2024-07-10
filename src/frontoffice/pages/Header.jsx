@@ -22,22 +22,33 @@ const Header = () => {
   return (
     <header style={styles.header}>
       <div style={styles.container}>
-        <a href="#" style={styles.logoContainer}>
+        <a href="/landing" style={styles.logoContainer}>
           <img
             src="../../assets/images/CNOT_logo.svg"
-            height="10"
-            width="40"
+            height="20"
+            width="60"
             alt="logo"
           />
-          <span style={styles.logoText}>Cnot Perform</span>
         </a>
         <nav style={isDesktop ? styles.nav : styles.navHidden}>
-          <a href="#" style={styles.navLink}>Home</a>
-          <a href="#" style={styles.navLink}>About</a>
-          <a href="#" style={styles.navLink}>Services</a>
-          <a href="#" style={styles.navLink}>Contact</a>
-          <a href="/login" style={styles.navButton}>Sign In</a>
-          <a href="/register" style={styles.navButton}>Sign Up</a>
+          <a href="#" style={styles.navLink}>
+            Home
+          </a>
+          <a href="#" style={styles.navLink}>
+            About
+          </a>
+          <a href="#" style={styles.navLink}>
+            Services
+          </a>
+          <a href="#" style={styles.navLink}>
+            Contact
+          </a>
+          <a href="/login" style={styles.navButton}>
+            Sign In
+          </a>
+          <a href="/register" style={styles.navButton}>
+            Sign Up
+          </a>
         </nav>
         <div style={!isDesktop ? styles.menuButtonContainer : styles.navHidden}>
           <button onClick={toggleMenu} style={styles.menuButton}>
@@ -49,12 +60,24 @@ const Header = () => {
       {isMenuOpen && !isDesktop && (
         <div style={styles.mobileMenu}>
           <nav style={styles.mobileNav}>
-            <a href="#" style={styles.navLink} onClick={toggleMenu}>Home</a>
-            <a href="#" style={styles.navLink} onClick={toggleMenu}>About</a>
-            <a href="#" style={styles.navLink} onClick={toggleMenu}>Services</a>
-            <a href="#" style={styles.navLink} onClick={toggleMenu}>Contact</a>
-            <a href="/login" style={styles.navLink} onClick={toggleMenu}>Sign In</a>
-            <a href="/register" style={styles.navLink} onClick={toggleMenu}>Sign Up</a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>
+              Home
+            </a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>
+              About
+            </a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>
+              Services
+            </a>
+            <a href="#" style={styles.navLink} onClick={toggleMenu}>
+              Contact
+            </a>
+            <a href="/login" style={styles.navLink} onClick={toggleMenu}>
+              Sign In
+            </a>
+            <a href="/register" style={styles.navLink} onClick={toggleMenu}>
+              Sign Up
+            </a>
           </nav>
         </div>
       )}
@@ -68,6 +91,7 @@ const styles = {
     top: 0,
     zIndex: 50,
     width: "100%",
+    height: "75px",
     backgroundColor: "rgba(255, 255, 255, 0.8)", // Updated for transparency
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
   },
@@ -81,6 +105,7 @@ const styles = {
     margin: "0 auto",
   },
   logoContainer: {
+    paddingTop: 15,
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",

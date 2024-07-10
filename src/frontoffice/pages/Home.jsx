@@ -417,7 +417,7 @@ const styles = {
     height: "100vh",
     overflow: "hidden",
     position: "relative",
-    marginTop: "65px", // Add your desired margin-top value here
+    marginTop: "75px", // Add your desired margin-top value here
   },
   fullScreenImage: {
     width: "100%",

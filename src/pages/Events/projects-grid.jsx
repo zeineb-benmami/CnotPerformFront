@@ -21,6 +21,7 @@ import { getProjects as onGetProjects } from "/src/store/actions";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import AddEvent from "./Modals/AddEvent";
+import { getEvents } from "../../service/event-service";
 
 const ProjectsGrid = (props) => {
   //meta title
@@ -47,6 +48,24 @@ const ProjectsGrid = (props) => {
     setPage(page);
   };
 
+  const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchEvents = async () => {
+      const data = await getEvents();
+      if (isMounted) setEventList(await data.data.message);
+
+      console.log(data.data.message);
+    };
+
+    fetchEvents();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <div className="page-content">
       <AddEvent show={show} handleClose={handleClose} />
@@ -56,11 +75,12 @@ const ProjectsGrid = (props) => {
           title="Evènements"
           breadcrumbItem="Cartes des évènements"
         />
-        <div className="d-grid">
+        <div className="d-grid" style={{ justifyContent: "end" }}>
           <Button
             color="primary"
             className="font-16 btn-block"
             onClick={handleShow}
+            style={{ borderRadius: "25px" }}
           >
             <i className="mdi mdi-plus-circle-outline w1/4 me-1" />
             Créer un Evènement
@@ -68,7 +88,7 @@ const ProjectsGrid = (props) => {
         </div>
         <Row>
           {/* Import Cards */}
-          <CardProject projects={projects} />
+          <CardProject events={eventList} />
         </Row>
 
         <Row>

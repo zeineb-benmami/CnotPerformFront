@@ -57,7 +57,7 @@ const AddEvent = ({ show, handleClose }) => {
   }
   return (
     <Modal isOpen={show} toggle={handleClose} centered={true} size="xl">
-      <ModalHeader>Modal title</ModalHeader>
+      <ModalHeader>Créer un Evènement</ModalHeader>
       <ModalBody className="px-5 py-3">
         <Row>
           <Col lg="6">

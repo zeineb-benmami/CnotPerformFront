@@ -1,14 +1,22 @@
-import React from "react"
-import { Container, Row, Col } from "reactstrap"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Container, Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
+
+import fb from "../../../../public/assets/images/icons/facebook-colored.svg";
+
+import gl from "../../../../public/assets/images/icons/google-colored.svg";
+
+import tw from "../../../../public/assets/images/icons/twitter-colored.svg";
+
+import yt from "../../../../public/assets/images/icons/youtube-colored.svg";
 
 //Import Components
-import FooterLink from "./footer-link"
+import FooterLink from "./footer-link";
 
 const Features = () => {
   const footerLinks = [
     {
-      title: "Company",
+      title: "Entreprise",
       links: [
         { title: "About Us", link: "#" },
         { title: "Features", link: "#" },
@@ -20,21 +28,12 @@ const Features = () => {
     {
       title: "Resources",
       links: [
-        { title: "Whitepaper", link: "#" },
         { title: "Token sales", link: "#" },
         { title: "Privacy Policy", link: "#" },
         { title: "Terms & Conditions", link: "#" },
       ],
     },
-    {
-      title: "Links",
-      links: [
-        { title: "Tokens", link: "#" },
-        { title: "Roadmap", link: "#" },
-        { title: "FAQs", link: "#" },
-      ],
-    },
-  ]
+  ];
 
   return (
     <React.Fragment>
@@ -42,9 +41,9 @@ const Features = () => {
         <Container>
           <Row>
             {footerLinks.map((footerLink, key) => (
-              <Col lg="3" sm="6" key={key}>
-                <div className="mb-4 mb-lg-0">
-                  <h5 className="mb-3 footer-list-title">{footerLink.title}</h5>
+              <Col lg="4" sm="6" key={key}>
+                <div className="mb-lg-0 mb-4">
+                  <h5 className="footer-list-title mb-3">{footerLink.title}</h5>
                   <ul className="list-unstyled footer-list-menu">
                     {footerLink.links.map((Flink, key) => (
                       <li key={key}>
@@ -55,41 +54,57 @@ const Features = () => {
                 </div>
               </Col>
             ))}
-
-            <Col lg="3" sm="6">
-              <div className="mb-4 mb-lg-0">
-                <h5 className="mb-3 footer-list-title">Latest News</h5>
-                <div className="blog-post">
-                  <Link to="#" className="post">
-                    <div className="badge badge-soft-success font-size-11 mb-3">
-                      Cryptocurrency
-                    </div>
-                    <h5 className="post-title">Donec pede justo aliquet nec</h5>
-                    <p className="mb-0">
-                      <i className="bx bx-calendar me-1"/> 04 Mar, 2020
-                    </p>
-                  </Link>
-                  <Link to="#" className="post">
-                    <div className="badge badge-soft-success font-size-11 mb-3">
-                      Cryptocurrency
-                    </div>
-                    <h5 className="post-title">In turpis, Pellentesque</h5>
-                    <p className="mb-0">
-                      <i className="bx bx-calendar me-1"/> 12 Mar, 2020
-                    </p>
-                  </Link>
-                </div>
+            <Col lg="4" sm="6">
+              <div className="mb-lg-0 mb-4">
+                <ul className="list-unstyled footer-list-menu flex flex-row gap-3">
+                  <li>
+                    <a
+                      href="https://www.facebook.com/CNOTunisie"
+                      target="_blank"
+                      title="Facebook"
+                    >
+                      <img src={fb} alt="" srcset="" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="http://www.cnot.org.tn"
+                      target="_blank"
+                      title="CNOT.ORG"
+                    >
+                      <img src={gl} alt="" srcset="" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://twitter.com/"
+                      target="_blank"
+                      title="Twitter"
+                    >
+                      <img src={tw} alt="" srcset="" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.youtube.com/"
+                      target="_blank"
+                      title="Youtube"
+                    >
+                      <img src={yt} alt="" srcset="" />
+                    </a>
+                  </li>
+                </ul>
               </div>
             </Col>
           </Row>
 
-          <hr className="footer-border my-5" />
+          <hr className="footer-border my-2" />
 
           <FooterLink />
         </Container>
       </footer>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;

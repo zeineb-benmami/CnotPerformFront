@@ -68,74 +68,35 @@ const Section = () => {
         <div className="bg-overlay bg-primary" />
         <Container>
           <Row className="align-items-center">
-            <Col lg="5">
+            <Col lg="6">
               <div className="text-white-50">
                 <h1 className="fw-semibold hero-title mb-3 text-white">
-                  Bienvenu à CNOT Perform
+                  Bienvenu à
+                </h1>
+                <h1 className="fw-semibold hero-title mb-3 text-white">
+                  CNOT Perform
                 </h1>
                 <p className="font-size-14">
                   L'Intelligence Artificielle au service du sport
                 </p>
-
-                <div className="d-flex mt-4 flex-wrap gap-2">
-                  <Link to="#" className="btn btn-success">
-                    Get Whitepaper
-                  </Link>
-                  <Link to="#" className="btn btn-light">
-                    How it work
-                  </Link>
-                </div>
               </div>
             </Col>
-            <Col lg="5" md="8" sm="10" className="ms-lg-auto">
+            <Col lg="6" md="8" sm="10" className="ms-lg-auto">
               <Card className="mt-lg-0 mb-0 mt-5 overflow-hidden">
                 <CardHeader className="text-center">
-                  <h5 className="mb-0">ICO Countdown time</h5>
+                  <h5 className="mb-0">Actualités</h5>
                 </CardHeader>
                 <CardBody>
-                  <div className="text-center">
-                    <h5>Time left to Ico :</h5>
-                    <div className="mt-4">
-                      <div className="counter-number ico-countdown">
-                        <Countdown date="2022/10/31" renderer={renderer} />
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      <Button type="button" color="success" className="w-md">
-                        Get Token
-                      </Button>
-                    </div>
-
-                    <div className="mt-5">
-                      <h4 className="font-weight-semibold">1 ETH = 2235 SKT</h4>
-                      <div className="clearfix mt-4">
-                        <h5 className="font-size-14 float-end">5234.43</h5>
-                      </div>
-                      <div className="progress progress-xl softcap-progress p-1">
-                        <div
-                          className="progress-bar bg-info"
-                          role="progressbar"
-                          style={{ width: "15%" }}
-                          aria-valuenow="15"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <div className="progress-label">15 %</div>
-                        </div>
-                        <div
-                          className="progress-bar progress-bar-striped progress-bar-animated"
-                          role="progressbar"
-                          style={{ width: "30%" }}
-                          aria-valuenow="30"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <div className="progress-label">30 %</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <iframe
+                    src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FCNOTunisie%2Fposts%2Fpfbid025heVdFnEFhTXKRFfToGRzqydPRYwCzBe5fkV3MARia5Vrw8L9XdFeQtjD3PC6uaCl&show_text=false&width=500"
+                    width="500"
+                    height="498"
+                    style={{ border: "none", overflow: "hidden" }}
+                    scrolling="no"
+                    frameBorder="0"
+                    allowFullScreen={true}
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  ></iframe>
                 </CardBody>
               </Card>
             </Col>

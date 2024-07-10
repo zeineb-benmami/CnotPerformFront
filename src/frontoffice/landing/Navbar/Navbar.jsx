@@ -7,6 +7,7 @@ import {
   NavLink,
   Container,
   Collapse,
+  Button,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
@@ -20,11 +21,11 @@ import cnotlogo from "../../../assets/images/CNOT_logo.svg";
 const navItems = [
   { id: 1, idnm: "home", navheading: "Home" },
   { id: 2, idnm: "about", navheading: "About" },
-  { id: 3, idnm: "features", navheading: "Features" },
-  { id: 3, idnm: "roadmap", navheading: "Roadmap" },
-  { id: 4, idnm: "team", navheading: "Team" },
-  { id: 5, idnm: "news", navheading: "News" },
-  { id: 6, idnm: "faqs", navheading: "FAQs" },
+  { id: 3, idnm: "features", navheading: "Services" },
+  { id: 4, idnm: "roadmap", navheading: "Roadmap" },
+  { id: 5, idnm: "news", navheading: "Events" },
+  { id: 6, idnm: "team", navheading: "Team" },
+  { id: 7, idnm: "faqs", navheading: "FAQs" },
 ];
 
 const Navbar_Page = (props) => {
@@ -44,7 +45,7 @@ const Navbar_Page = (props) => {
         }
       >
         <Container>
-          <Link className="navbar-logo" to="/">
+          <Link className="navbar-logo" to="/home">
             {props.imglight !== true ? (
               <img
                 src={cnotlogo}
@@ -91,8 +92,14 @@ const Navbar_Page = (props) => {
               </Nav>
             </ScrollspyNav>
             <div className="ms-lg-2">
-              <Link to="#" className="btn btn-outline-success w-xs">
-                Sign in
+              <Link to="/login">
+                <Button
+                  color="primary"
+                  className="font-16 btn-block"
+                  style={{ borderRadius: "25px" }}
+                >
+                  Se connecter
+                </Button>
               </Link>
             </div>
           </Collapse>

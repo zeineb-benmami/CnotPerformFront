@@ -226,11 +226,12 @@ const ProjectsList = () => {
             breadcrumbItem="Liste des évènements"
           />
           <Row>
-            <div className="d-grid">
+            <div className="d-grid" style={{ justifyContent: "end" }}>
               <Button
                 color="primary"
                 className="font-16 btn-block"
                 onClick={handleShow}
+                style={{ borderRadius: "25px" }}
               >
                 <i className="mdi mdi-plus-circle-outline me-1 w-1/4" />
                 Créer un Evènement

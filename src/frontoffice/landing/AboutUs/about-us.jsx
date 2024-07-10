@@ -22,21 +22,24 @@ const AboutUs = () => {
             <Col lg="12">
               <div className="mb-5 text-center">
                 <div className="small-title">About us</div>
-                <h4>What is ICO Token?</h4>
+                <h4>CNOT PERFORM</h4>
               </div>
             </Col>
           </Row>
           <Row className="align-items-center">
             <Col lg="5">
               <div className="text-muted">
-                <h4>Best ICO for your cryptocurrency business</h4>
+                <h4>Contexte & objectifs</h4>
                 <p>
-                  If several languages coalesce, the grammar of the resulting
-                  that of the individual new common language will be more simple
-                  and regular than the existing.
+                  CNOT Perform révolutionne l'entraînement sportif grâce à
+                  l'Intelligence Artificielle.
                 </p>
                 <p className="mb-4">
-                  It would be necessary to have uniform pronunciation.
+                  Suivez vos performances en temps réel, analysez vos données
+                  pour identifier vos points forts et faibles, recevez des
+                  conseils personnalisés et prévenez les blessures.
+                  Rejoignez-nous pour améliorer vos performances sportives et
+                  atteindre vos objectifs.
                 </p>
 
                 <div className="d-flex flex-wrap gap-2">

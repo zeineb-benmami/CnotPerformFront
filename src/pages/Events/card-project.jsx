@@ -2,43 +2,37 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 import { map } from "lodash";
-import {
-  Badge,
-  Card,
-  CardBody,
-  Col,
-  UncontrolledTooltip,
-} from "reactstrap";
+import { Badge, Card, CardBody, Col, UncontrolledTooltip } from "reactstrap";
 import images from "/src/assets/images";
 import companies from "/src/assets/images/companies";
 
-const CardProject = ({ projects }) => {
+const CardProject = ({ events }) => {
   return (
     <React.Fragment>
-      {map(projects, (project, key) => (
+      {map(events, (evt, key) => (
         <Col xl="4" sm="6" key={key}>
           <Card>
             <CardBody>
               <div className="d-flex">
                 <div className="avatar-md me-4">
-                  <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
-                    <img src={companies[project.img]} alt="" height="30" />
+                  <span className="avatar-title rounded-circle text-danger font-size-16 bg-light">
+                    <img src={companies[evt.img]} alt="" height="30" />
                   </span>
                 </div>
 
                 <div className="flex-grow-1 overflow-hidden">
                   <h5 className="text-truncate font-size-15">
                     <Link
-                      to={`/projects-overview/${project.id}`}
+                      to={`/projects-overview/${evt._id}`}
                       className="text-dark"
                     >
-                      {project.name}
+                      {evt.title}
                     </Link>
                   </h5>
-                  <p className="text-muted mb-4">{project.description}</p>
+                  <p className="text-muted mb-4">{evt.description}</p>
 
-                  <div className="avatar-group">
-                    {project.team.map((team, key) =>
+                  {/*<div className="avatar-group">
+                    {evt.team.map((team, key) =>
                       !team.img || team.img !== "Null" ? (
                         <React.Fragment key={key}>
                           <div className="avatar-group-item">
@@ -74,7 +68,7 @@ const CardProject = ({ projects }) => {
                                   className={
                                     "avatar-title rounded-circle bg-" +
                                     team.color +
-                                    " text-white" +                                   
+                                    " text-white" +
                                     " font-size-16"
                                   }
                                 >
@@ -92,26 +86,24 @@ const CardProject = ({ projects }) => {
                         </React.Fragment>
                       )
                     )}
-                  </div>
+                  </div>*/}
                 </div>
               </div>
             </CardBody>
-            <div className="px-4 py-3 border-top">
+            <div className="border-top px-4 py-3">
               <ul className="list-inline mb-0">
                 <li className="list-inline-item me-3">
-                  <Badge className={"bg-" + project.color}>
-                    {project.status}
-                  </Badge>
+                  <Badge className={"bg-" + evt.color}>{evt.status}</Badge>
                 </li>{" "}
                 <li className="list-inline-item me-3" id="dueDate">
-                  <i className="bx bx-calendar me-1" /> {project.dueDate}
+                  <i className="bx bx-calendar me-1" />{" "}
+                  {evt.endDate.substring(0, 10)}
                   <UncontrolledTooltip placement="top" target="dueDate">
                     Due Date
                   </UncontrolledTooltip>
                 </li>{" "}
                 <li className="list-inline-item me-3" id="comments">
-                  <i className="bx bx-comment-dots me-1" />{" "}
-                  {project.commentsCount}
+                  <i className="bx bx-comment-dots me-1" /> {evt.participants}
                   <UncontrolledTooltip placement="top" target="comments">
                     Comments
                   </UncontrolledTooltip>
@@ -126,7 +118,7 @@ const CardProject = ({ projects }) => {
 };
 
 CardProject.propTypes = {
-  projects: PropTypes.array,
+  events: PropTypes.array,
 };
 
 export default CardProject;
