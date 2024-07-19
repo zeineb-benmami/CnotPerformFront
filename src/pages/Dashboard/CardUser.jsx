@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
-import { useSelector, useDispatch } from 'react-redux';
-import { dashboardBlogVisitorData } from '../../store/actions';
+import { useSelector, useDispatch } from "react-redux";
+import { dashboardBlogVisitorData } from "../../store/actions";
+import { getEvents } from "../../service/event-service";
 
 const CardUser = ({ dataColors }) => {
   const apexCardUserChartColors = getChartColorsArray(dataColors);
@@ -19,18 +20,38 @@ const CardUser = ({ dataColors }) => {
     dispatch(dashboardBlogVisitorData("year"));
   }, [dispatch]);
 
-  const { visitor } = useSelector(state => ({
-    visitor: state.DashboardBlog.visitor
+  const { visitor } = useSelector((state) => ({
+    visitor: state.DashboardBlog.visitor,
   }));
+
+  const [events, setEvents] = useState([]);
+  let summ = 0;
+
+  useEffect(() => {
+    try {
+      const fetchEvents = async () => {
+        const data = await getEvents();
+        setEvents(data.data.message);
+        summ = data.data.message.reduce(
+          (acc, event) => acc + event.participants,
+          0
+        );
+      };
+      fetchEvents();
+    } catch (err) {
+      alert(err.message);
+    }
+    return () => {};
+  }, []);
 
   const series = [
     {
       name: "Current",
-      data: (visitor.Currentdata || []),
+      data: visitor.Currentdata || [],
     },
     {
       name: "Previous",
-      data: (visitor.Previousdata || []),
+      data: visitor.Previousdata || [],
     },
   ];
 
@@ -61,7 +82,7 @@ const CardUser = ({ dataColors }) => {
       },
     },
     xaxis: {
-      categories: (visitor.categories || []),
+      categories: visitor.categories || [],
     },
 
     markers: {
@@ -88,12 +109,12 @@ const CardUser = ({ dataColors }) => {
               <CardBody>
                 <div className="d-flex flex-wrap">
                   <div className="me-3">
-                    <p className="text-muted mb-2">Total Post</p>
-                    <h5 className="mb-0">120</h5>
+                    <p className="text-muted mb-2">Total Evènts</p>
+                    <h5 className="mb-0">{events?.length}</h5>
                   </div>
 
                   <div className="avatar-sm ms-auto">
-                    <div className="avatar-title bg-light rounded-circle text-primary font-size-20">
+                    <div className="avatar-title rounded-circle font-size-20 bg-light text-primary">
                       <i className="bx bxs-book-bookmark"></i>
                     </div>
                   </div>
@@ -112,7 +133,7 @@ const CardUser = ({ dataColors }) => {
                   </div>
 
                   <div className="avatar-sm ms-auto">
-                    <div className="avatar-title bg-light rounded-circle text-primary font-size-20">
+                    <div className="avatar-title rounded-circle font-size-20 bg-light text-primary">
                       <i className="bx bxs-note"></i>
                     </div>
                   </div>
@@ -125,12 +146,12 @@ const CardUser = ({ dataColors }) => {
               <CardBody>
                 <div className="d-flex flex-wrap">
                   <div className="me-3">
-                    <p className="text-muted mb-2">Comments</p>
-                    <h5 className="mb-0">4,235</h5>
+                    <p className="text-muted mb-2">Participants</p>
+                    <h5 className="mb-0">{summ}</h5>
                   </div>
 
                   <div className="avatar-sm ms-auto">
-                    <div className="avatar-title bg-light rounded-circle text-primary font-size-20">
+                    <div className="avatar-title rounded-circle font-size-20 bg-light text-primary">
                       <i className="bx bxs-message-square-dots"></i>
                     </div>
                   </div>
@@ -143,19 +164,35 @@ const CardUser = ({ dataColors }) => {
         <Card>
           <CardBody>
             <div className="d-flex flex-wrap">
-              <h5 className="card-title me-2">Visitors</h5>
+              <h5 className="card-title me-2">Bourses</h5>
               <div className="ms-auto">
                 <div className="toolbar d-flex flex-wrap gap-2 text-end">
-                  <button type="button" className="btn btn-light btn-sm" onClick={() => visitorDurationData('all')}>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm"
+                    onClick={() => visitorDurationData("all")}
+                  >
                     ALL
                   </button>{" "}
-                  <button type="button" className="btn btn-light btn-sm" onClick={() => visitorDurationData('onemonth')}>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm"
+                    onClick={() => visitorDurationData("onemonth")}
+                  >
                     1M
                   </button>{" "}
-                  <button type="button" className="btn btn-light btn-sm" onClick={() => visitorDurationData('sixmonth')}>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm"
+                    onClick={() => visitorDurationData("sixmonth")}
+                  >
                     6M
                   </button>{" "}
-                  <button type="button" className="btn btn-light btn-sm active" onClick={() => visitorDurationData('year')}>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm active"
+                    onClick={() => visitorDurationData("year")}
+                  >
                     1Y
                   </button>{" "}
                 </div>
@@ -214,7 +251,7 @@ const CardUser = ({ dataColors }) => {
 
 CardUser.propTypes = {
   options: PropTypes.any,
-  series: PropTypes.any
+  series: PropTypes.any,
 };
 
 export default CardUser;

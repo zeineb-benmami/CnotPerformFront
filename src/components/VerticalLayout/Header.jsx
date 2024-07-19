@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import { connect } from "react-redux";
@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 
 // Import menuDropdown
-import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown";
 import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDropdown";
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 import megamenuImg from "../../assets/images/megamenu-img.png";
@@ -35,7 +34,7 @@ import {
   changeSidebarType,
 } from "../../store/actions";
 
-const Header = props => {
+const Header = (props) => {
   const [search, setsearch] = useState(false);
   const [megaMenu, setmegaMenu] = useState(false);
   const [socialDrp, setsocialDrp] = useState(false);
@@ -82,7 +81,6 @@ const Header = props => {
       <header id="page-topbar">
         <div className="navbar-header">
           <div className="d-flex">
-
             <div className="navbar-brand-box d-lg-none d-md-block">
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
@@ -102,7 +100,7 @@ const Header = props => {
               onClick={() => {
                 tToggle();
               }}
-              className="btn btn-sm px-3 font-size-16 header-item "
+              className="btn btn-sm font-size-16 header-item px-3 "
               id="vertical-menu-btn"
             >
               <i className="fa fa-fw fa-bars" />
@@ -126,11 +124,7 @@ const Header = props => {
                 setmegaMenu(!megaMenu);
               }}
             >
-              <DropdownToggle
-                className="btn header-item "
-                caret
-                tag="button"
-              >
+              <DropdownToggle className="btn header-item " caret tag="button">
                 {" "}
                 {props.t("Mega Menu")} <i className="mdi mdi-chevron-down" />
               </DropdownToggle>
@@ -259,7 +253,7 @@ const Header = props => {
                           <img
                             src={megamenuImg}
                             alt=""
-                            className="img-fluid mx-auto d-block"
+                            className="img-fluid d-block mx-auto"
                           />
                         </div>
                       </Col>
@@ -284,7 +278,7 @@ const Header = props => {
               <div
                 className={
                   search
-                    ? "dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 show"
+                    ? "dropdown-menu dropdown-menu-lg dropdown-menu-end show p-0"
                     : "dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                 }
                 aria-labelledby="page-header-search-dropdown"
@@ -308,8 +302,6 @@ const Header = props => {
                 </form>
               </div>
             </div>
-
-            <LanguageDropdown />
 
             <Dropdown
               className="d-none d-lg-inline-block ms-1"
@@ -386,9 +378,9 @@ const Header = props => {
 
             <NotificationDropdown />
             <ProfileMenu />
-            
+
             <div
-               onClick={() => {
+              onClick={() => {
                 props.showRightSidebarAction(!props.showRightSidebar);
               }}
               className="dropdown d-inline-block"
@@ -414,16 +406,12 @@ Header.propTypes = {
   showRightSidebar: PropTypes.any,
   showRightSidebarAction: PropTypes.func,
   t: PropTypes.any,
-  toggleLeftmenu: PropTypes.func
+  toggleLeftmenu: PropTypes.func,
 };
 
-const mapStatetoProps = state => {
-  const {
-    layoutType,
-    showRightSidebar,
-    leftMenu,
-    leftSideBarType,
-  } = state.Layout;
+const mapStatetoProps = (state) => {
+  const { layoutType, showRightSidebar, leftMenu, leftSideBarType } =
+    state.Layout;
   return { layoutType, showRightSidebar, leftMenu, leftSideBarType };
 };
 

@@ -4,7 +4,7 @@ import { map, get } from "lodash";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import img1 from "../../../assets/images/companies/img-1.png";
 
-const ProjectDetail = ({ project }) => {
+const ProjectDetail = ({ event }) => {
   return (
     <Card>
       <CardBody>
@@ -12,26 +12,16 @@ const ProjectDetail = ({ project }) => {
           <img src={img1} alt="" className="avatar-sm me-4" />
 
           <div className="flex-grow-1 overflow-hidden">
-            <h5 className="text-truncate font-size-15">Skote Dashboard UI</h5>
-            <p className="text-muted">Separate existence is a myth. For science, music, sport, etc.</p>
+            <h5 className="text-truncate font-size-15">{event?.title}</h5>
+            <p className="text-muted">
+              Separate existence is a myth. For science, music, sport, etc.
+            </p>
           </div>
         </div>
 
-        <h5 className="font-size-15 mt-4">Project Details :</h5>
+        <h5 className="font-size-15 mt-4">Event Details :</h5>
 
-        <p className="text-muted">
-          {get(project, "projectDetails.description")}
-        </p>
-
-        <div className="text-muted mt-4">
-          {project.projectDetails &&
-            map(project.projectDetails.points, (point, index) => (
-              <p key={index}>
-                <i className="mdi mdi-chevron-right text-primary me-1" />{" "}
-                {point}
-              </p>
-            ))}
-        </div>
+        <p className="text-muted">{event?.description}</p>
 
         <Row className="task-dates">
           <Col sm="4" xs="6">
@@ -39,7 +29,9 @@ const ProjectDetail = ({ project }) => {
               <h5 className="font-size-14">
                 <i className="bx bx-calendar me-1 text-primary" /> Start Date
               </h5>
-              <p className="text-muted mb-0">08 Sept, 2019</p>
+              <p className="text-muted mb-0">
+                {event?.startDate.substring(0, 10)}
+              </p>
             </div>
           </Col>
 
@@ -49,7 +41,9 @@ const ProjectDetail = ({ project }) => {
                 <i className="bx bx-calendar-check me-1 text-primary" /> Due
                 Date
               </h5>
-              <p className="text-muted mb-0">12 Oct, 2019</p>
+              <p className="text-muted mb-0">
+                {event?.endDate.substring(0, 10)}
+              </p>
             </div>
           </Col>
         </Row>

@@ -1,20 +1,20 @@
 const events = [
   {
     id: 1,
-    title: "Brithday Party",
+    title: "Entourage",
     start: new Date().setDate(new Date().getDate() + 1),
     className: "bg-success text-white",
   },
   {
     id: 2,
-    title: "Meeting",
+    title: "Entourage",
     start: new Date(),
     end: new Date(),
     className: "bg-success text-white",
   },
   {
     id: 3,
-    title: "Click For Google",
+    title: "Gestion des CNO",
     start: new Date().setDate(new Date().getDate() + 18),
     className: "bg-dark text-white",
   },
@@ -26,13 +26,13 @@ const events = [
   },
   {
     id: 5,
-    title: "Repeating Event",
+    title: "Universalité des jeux olympiques",
     start: new Date().setDate(new Date().getDate() - 3),
     className: "bg-info text-white",
   },
   {
     id: 6,
-    title: "Lunch",
+    title: "Valeurs olympiques",
     start: new Date().setDate(new Date().getDate()),
     className: "bg-danger text-white",
   },
@@ -44,7 +44,7 @@ const events = [
   },
   {
     id: 8,
-    title: "Long Event",
+    title: "Développement du Sport",
     start: new Date().setDate(new Date().getDate() - 5),
     end: new Date().setDate(new Date().getDate() - 3),
     className: "bg-warning text-white",

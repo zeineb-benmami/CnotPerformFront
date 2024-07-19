@@ -91,27 +91,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">10 Nov, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
 
@@ -134,27 +113,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">02 Nov, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
 
@@ -178,27 +136,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">24 Oct, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
 
@@ -222,27 +159,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">20 Oct, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
                     </ul>
@@ -270,27 +186,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">02 Nov, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
 
@@ -314,27 +209,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">10 Nov, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
 
@@ -358,27 +232,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">20 Oct, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
 
@@ -402,27 +255,6 @@ const Posts = (props) => {
                               <p className="text-muted mb-0">24 Oct, 2020</p>
                             </div>
                           </div>
-
-                          <UncontrolledDropdown className="ms-2">
-                            <DropdownToggle
-                              className="text-muted font-size-14"
-                              color="white"
-                              type="button"
-                            >
-                              <i className="mdi mdi-dots-horizontal"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <Link className="dropdown-item" to="#">
-                                Action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Another action
-                              </Link>
-                              <Link className="dropdown-item" to="#">
-                                Something else
-                              </Link>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
                         </div>
                       </li>
                     </ul>

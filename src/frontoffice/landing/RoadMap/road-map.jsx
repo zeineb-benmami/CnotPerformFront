@@ -75,8 +75,8 @@ const RoadMap = () => {
                         <div className="mb-1 text-primary">January, 2020</div>
                         <h5 className="mb-4">Research on project</h5>
                       </div>
-                      <div className="event-down-icon">
-                        <i className="bx bx-down-arrow-circle h1 down-arrow-icon text-primary"></i>
+                      <div className="event-up-icon">
+                        <i className="bx bx-up-arrow-circle h1 up-arrow-icon text-primary"></i>
                       </div>
 
                       <div className="mt-3 px-3">

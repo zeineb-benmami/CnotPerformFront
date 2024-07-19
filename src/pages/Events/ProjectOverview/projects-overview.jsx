@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import withRouter from "../../../components/Common/withRouter";
 import { isEmpty } from "lodash";
@@ -16,11 +16,16 @@ import Comments from "./comments";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getEvents } from "../../../service/event-service";
 
 const ProjectsOverview = (props) => {
   //meta title
-  document.title =
-    "Project Overview | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Détails évènement | CNOT PERFORM";
+
+  const { id } = useParams();
+
+  const [event, setEvent] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -38,36 +43,36 @@ const ProjectsOverview = (props) => {
     }
   }, [onGetProjectDetail]);
 
+  useEffect(() => {
+    try {
+      const fetchEvent = async () => {
+        const data = await getEvents(id);
+        setEvent(data.data.message);
+      };
+
+      fetchEvent();
+    } catch (err) {
+      console.log(err.message);
+    }
+    return () => {};
+  }, []);
+
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Projects" breadcrumbItem="Project Overview" />
+          <Breadcrumbs title="Evènements" breadcrumbItem="Détails" />
 
-          {!isEmpty(projectDetail) && (
+          {!isEmpty(event) && (
             <>
               <Row>
                 <Col lg="8">
-                  <ProjectDetail project={projectDetail} />
+                  <ProjectDetail event={event} />
                 </Col>
 
                 <Col lg="4">
-                  <TeamMembers team={projectDetail.team} />
-                </Col>
-              </Row>
-
-              <Row>
-                <Col lg="4">
-                  <OverviewChart dataColors='["--bs-primary"]' />
-                </Col>
-
-                <Col lg="4">
-                  <AttachedFiles files={projectDetail.files} />
-                </Col>
-
-                <Col lg="4">
-                  <Comments comments={projectDetail.comments} />
+                  <TeamMembers team={event?.participants} />
                 </Col>
               </Row>
             </>

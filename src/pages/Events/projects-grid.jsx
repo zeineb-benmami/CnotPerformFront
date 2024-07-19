@@ -51,31 +51,42 @@ const ProjectsGrid = (props) => {
   const [eventList, setEventList] = useState([]);
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchEvents = async () => {
-      const data = await getEvents();
-      if (isMounted) setEventList(await data.data.message);
+    try {
+      let isMounted = true;
+      const fetchEvents = async () => {
+        const data = await getEvents();
+        if (isMounted) setEventList(await data.data.message);
+      };
 
-      console.log(data.data.message);
-    };
+      fetchEvents();
 
-    fetchEvents();
-
-    return () => {
-      isMounted = false;
-    };
+      return () => {
+        isMounted = false;
+      };
+    } catch (error) {
+      alert(error.message);
+    }
   }, []);
+
+  const refreshEvents = async () => {
+    try {
+      const data = await getEvents();
+      setEventList(await data.data.message);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="page-content">
-      <AddEvent show={show} handleClose={handleClose} />
+      <AddEvent show={show} handleClose={handleClose} refresh={refreshEvents} />
       <Container fluid>
         {/* Render Breadcrumbs */}
         <Breadcrumbs
           title="Evènements"
           breadcrumbItem="Cartes des évènements"
         />
-        <div className="d-grid" style={{ justifyContent: "end" }}>
+        <div className="d-grid mb-2" style={{ justifyContent: "end" }}>
           <Button
             color="primary"
             className="font-16 btn-block"
@@ -88,7 +99,7 @@ const ProjectsGrid = (props) => {
         </div>
         <Row>
           {/* Import Cards */}
-          <CardProject events={eventList} />
+          <CardProject events={eventList} refresh={refreshEvents} />
         </Row>
 
         <Row>

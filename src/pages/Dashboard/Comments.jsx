@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -7,14 +7,14 @@ import {
   UncontrolledDropdown,
   DropdownMenu,
   DropdownToggle,
-} from "reactstrap"
+} from "reactstrap";
 
 //SimpleBar
-import SimpleBar from "simplebar-react"
+import SimpleBar from "simplebar-react";
 // import images
-import user1 from "../../assets/images/users/avatar-2.jpg"
+import user1 from "../../assets/images/users/avatar-2.jpg";
 
-const Comments = props => {
+const Comments = (props) => {
   return (
     <React.Fragment>
       <Col xl={4} lg={6}>
@@ -24,30 +24,6 @@ const Comments = props => {
               <div className="me-2">
                 <h5 className="card-title mb-3">Comments</h5>
               </div>
-              <UncontrolledDropdown className="ms-auto">
-                <DropdownToggle
-                  className="text-muted font-size-16"
-                  color="white"
-                  type="button"
-                >
-                  <i className="mdi mdi-dots-horizontal"></i>
-                </DropdownToggle>
-                <DropdownMenu direction="right">
-                  <Link className="dropdown-item" to="#">
-                    Action
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Another action
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Something else
-                  </Link>
-                  <div className="dropdown-divider"></div>
-                  <Link className="dropdown-item" to="#">
-                    Separated link
-                  </Link>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </div>
             <SimpleBar style={{ maxHeight: "300px" }}>
               <div>
@@ -143,9 +119,7 @@ const Comments = props => {
                       <div className="flex-grow-1">
                         <h5 className="font-size-14 mb-1">
                           Keith McCoy{" "}
-                          <small className="text-muted float-end">
-                            12 Aug
-                          </small>
+                          <small className="text-muted float-end">12 Aug</small>
                         </h5>
                         <p className="text-muted">
                           Donec posuere vulputate arcu. phasellus accumsan
@@ -166,7 +140,7 @@ const Comments = props => {
         </Card>
       </Col>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Comments
+export default Comments;

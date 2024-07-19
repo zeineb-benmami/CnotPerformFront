@@ -332,24 +332,31 @@ const Calender = (props) => {
 
                 <Col className="col-lg-9">
                   {/* fullcalendar control */}
-                  <FullCalendar
-                    plugins={[BootstrapTheme, dayGridPlugin, interactionPlugin]}
-                    slotDuration={"00:15:00"}
-                    handleWindowResize={true}
-                    themeSystem="bootstrap"
-                    headerToolbar={{
-                      left: "prev,next today",
-                      center: "title",
-                      right: "dayGridMonth,dayGridWeek,dayGridDay",
-                    }}
-                    events={events}
-                    editable={true}
-                    droppable={true}
-                    selectable={true}
-                    dateClick={handleDateClick}
-                    eventClick={handleEventClick}
-                    drop={onDrop}
-                  />
+
+                  <Card>
+                    <FullCalendar
+                      plugins={[
+                        BootstrapTheme,
+                        dayGridPlugin,
+                        interactionPlugin,
+                      ]}
+                      slotDuration={"00:15:00"}
+                      handleWindowResize={true}
+                      themeSystem="bootstrap"
+                      headerToolbar={{
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,dayGridWeek,dayGridDay",
+                      }}
+                      events={events}
+                      editable={true}
+                      droppable={true}
+                      selectable={true}
+                      dateClick={handleDateClick}
+                      eventClick={handleEventClick}
+                      drop={onDrop}
+                    />
+                  </Card>
 
                   {/* New/Edit event modal */}
                   <Modal isOpen={modal} className={props.className} centered>

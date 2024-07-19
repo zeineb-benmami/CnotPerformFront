@@ -17,6 +17,10 @@ import Calendar from "../pages/Calendar/index";
 
 import Events from "../pages/Events/projects-grid";
 
+import EventDetails from "../pages/Events/ProjectOverview/projects-overview";
+
+import AddEvent from "../pages/Events/projects-create";
+
 import Liste from "../pages/Events/projects-list";
 import Home from "../frontoffice/pages/Home";
 
@@ -30,6 +34,10 @@ const authProtectedRoutes = [
   { path: "/calendar", component: <Calendar /> },
 
   { path: "/events", component: <Events /> },
+
+  { path: "/events/add", component: <AddEvent /> },
+
+  { path: "/event_details/:id", component: <EventDetails /> },
   { path: "/liste", component: <Liste /> },
 
   // //profile
