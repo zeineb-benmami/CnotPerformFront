@@ -6,8 +6,8 @@ export const getPhotos = async (id) => {
   return await axios.get(`${url}/${id}`);
 };
 
-export const getPhotoByEvent = async (id) => {
-  return await axios.get(`${url}/${id}/photo`);
+export const getPhotosByEvent = async (id) => {
+  return await axios.get(`${url}/${id}/photos`);
 };
 
 export const uploadPhotoToEvent = async (id, photo) => {

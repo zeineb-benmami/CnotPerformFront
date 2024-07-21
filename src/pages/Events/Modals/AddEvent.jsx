@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -38,6 +38,8 @@ const AddEvent = ({ show, handleClose, refresh }) => {
   const [errors, setErrors] = useState({});
   const [startDate, setstartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
+
+  const [loading, setLoading] = useState(true);
 
   const startDateChange = (date) => {
     setstartDate(date);
@@ -97,20 +99,23 @@ const AddEvent = ({ show, handleClose, refresh }) => {
     setErrors(validateValues(eventItem));
   }, [eventItem]);
 
-  const [selectedFiles, setselectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-  function handleAcceptedFiles(files) {
-    files.map((file) =>
+  const handleAcceptedFiles = useCallback((acceptedFiles) => {
+    const files = acceptedFiles.map((file) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
         formattedSize: formatBytes(file.size),
       })
     );
+    setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+  }, []);
 
-    console.log(files);
-
-    setselectedFiles(files);
-  }
+  const handleDeleteFile = (fileToDelete) => {
+    setSelectedFiles((prevFiles) =>
+      prevFiles.filter((file) => file !== fileToDelete)
+    );
+  };
 
   function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return "0 Bytes";
@@ -140,7 +145,7 @@ const AddEvent = ({ show, handleClose, refresh }) => {
       const result = await addEvent(eventItem);
       if (result.status === 201) {
         if (selectedFiles.length > 0) {
-          handleUploadPhoto(result?.data.message);
+          handleUploadPhotos(result?.data.message);
         }
         handleClose();
         refresh();
@@ -150,14 +155,18 @@ const AddEvent = ({ show, handleClose, refresh }) => {
     }
   };
 
-  const handleUploadPhoto = async (id) => {
+  const handleUploadPhotos = async (id) => {
     try {
-      const formData = new FormData();
-      formData.append("filename", selectedFiles[0]);
-      const result = await uploadPhotoToEvent(id, formData);
-      if (result.status === 200) {
-        alert(result.data.message);
-      }
+      const uploadPromises = selectedFiles.map(async (file) => {
+        const formData = new FormData();
+        formData.append("filename", file);
+        const result = await uploadPhotoToEvent(id, formData);
+        if (result.status === 200) {
+          setLoading(false);
+        }
+      });
+
+      await Promise.all(uploadPromises);
     } catch (error) {
       alert(error.message);
     }
@@ -301,9 +310,7 @@ const AddEvent = ({ show, handleClose, refresh }) => {
             <Col lg="10">
               <Form>
                 <Dropzone
-                  onDrop={(acceptedFiles) => {
-                    handleAcceptedFiles(acceptedFiles);
-                  }}
+                  onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}
                 >
                   {({ getRootProps, getInputProps }) => (
                     <div className="dropzone">
@@ -325,39 +332,46 @@ const AddEvent = ({ show, handleClose, refresh }) => {
                   )}
                 </Dropzone>
                 <div className="dropzone-previews mt-3" id="file-previews">
-                  {selectedFiles.map((f, i) => {
-                    return (
-                      <Card
-                        className="dz-processing dz-image-preview dz-success dz-complete mb-0 mt-1 border shadow-none"
-                        key={i + "-file"}
-                      >
-                        <div className="p-2">
-                          <Row className="align-items-center">
-                            <Col className="col-auto">
-                              <img
-                                data-dz-thumbnail=""
-                                height="80"
-                                className="avatar-sm rounded bg-light"
-                                alt={f.name}
-                                src={f.preview}
-                              />
-                            </Col>
-                            <Col>
-                              <Link
-                                to="#"
-                                className="text-muted font-weight-bold"
-                              >
-                                {f.name}
-                              </Link>
-                              <p className="mb-0">
-                                <strong>{f.formattedSize}</strong>
-                              </p>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Card>
-                    );
-                  })}
+                  {selectedFiles.map((file, index) => (
+                    <Card
+                      className="dz-processing dz-image-preview dz-success dz-complete mb-0 mt-1 border shadow-none"
+                      key={index + "-file"}
+                    >
+                      <div className="p-2">
+                        <Row className="align-items-center">
+                          <Col className="col-auto">
+                            <img
+                              data-dz-thumbnail=""
+                              height="80"
+                              className="avatar-sm rounded bg-light"
+                              alt={file.name}
+                              src={file.preview}
+                            />
+                          </Col>
+                          <Col>
+                            <Link
+                              to="#"
+                              className="text-muted font-weight-bold"
+                            >
+                              {file.name}
+                            </Link>
+                            <p className="mb-0">
+                              <strong>{file.formattedSize}</strong>
+                            </p>
+                          </Col>
+                          <Col className="col-auto">
+                            <Button
+                              color="danger"
+                              size="sm"
+                              onClick={() => handleDeleteFile(file)}
+                            >
+                              Delete
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                  ))}
                 </div>
               </Form>
             </Col>

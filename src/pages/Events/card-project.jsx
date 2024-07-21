@@ -13,7 +13,6 @@ import {
   DropdownMenu,
   DropdownToggle,
 } from "reactstrap";
-import companies from "/src/assets/images/companies";
 import { deleteEvent } from "../../service/event-service";
 
 const CardProject = ({ events, refresh }) => {
@@ -36,16 +35,17 @@ const CardProject = ({ events, refresh }) => {
               <div className="d-flex">
                 <div className="avatar-md me-4">
                   <span className="avatar-title rounded-circle text-danger font-size-16 bg-light">
-                    <img src={evt?.imgUrl} alt="" height="30" />
+                    {evt?.imgUrl !== "" ? (
+                      <img src={evt?.imgUrl} alt="" height="30" />
+                    ) : (
+                      <img src="assets/images/icons/calender.svg" alt="" />
+                    )}
                   </span>
                 </div>
 
                 <div className="flex-grow-1 overflow-hidden">
                   <h5 className="text-truncate font-size-15">
-                    <Link
-                      to={`/event_details/${evt._id}`}
-                      className="text-dark"
-                    >
+                    <Link to={`/events/${evt._id}`} className="text-dark">
                       {evt?.title}
                     </Link>
                   </h5>

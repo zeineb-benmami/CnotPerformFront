@@ -1,9 +1,4 @@
 import React from "react";
-import "./plugins/swiper/swiper-bundle.css";
-import "./plugins/font-awesome/v6/brands.css";
-import "./plugins/font-awesome/v6/solid.css";
-import "./plugins/font-awesome/v6/fontawesome.css";
-import "./styles/main.css";
 
 import Events from "../landing/Planning/events";
 

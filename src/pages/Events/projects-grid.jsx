@@ -31,23 +31,6 @@ const ProjectsGrid = (props) => {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
-  const dispatch = useDispatch();
-
-  const { projects } = useSelector((state) => ({
-    projects: state.projects.projects,
-  }));
-
-  const [page, setPage] = useState(1);
-  const [totalPage] = useState(5);
-
-  useEffect(() => {
-    dispatch(onGetProjects());
-  }, [dispatch]);
-
-  const handlePageClick = (page) => {
-    setPage(page);
-  };
-
   const [eventList, setEventList] = useState([]);
 
   useEffect(() => {
@@ -77,6 +60,37 @@ const ProjectsGrid = (props) => {
     }
   };
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredEvents, setFilteredEvents] = useState(eventList);
+  const [page, setPage] = useState(1);
+  const eventsPerPage = 6;
+
+  // Filter events based on search query
+  useEffect(() => {
+    setFilteredEvents(
+      eventList.filter((event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, eventList]);
+
+  // Calculate total pages
+  const totalPage = Math.ceil(filteredEvents.length / eventsPerPage);
+
+  // Get current events for pagination
+  const startIndex = (page - 1) * eventsPerPage;
+  const currentEvents = filteredEvents.slice(
+    startIndex,
+    startIndex + eventsPerPage
+  );
+
+  // Handle page click
+  const handlePageClick = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPage) {
+      setPage(pageNumber);
+    }
+  };
+
   return (
     <div className="page-content">
       <AddEvent show={show} handleClose={handleClose} refresh={refreshEvents} />
@@ -86,20 +100,47 @@ const ProjectsGrid = (props) => {
           title="Evènements"
           breadcrumbItem="Cartes des évènements"
         />
-        <div className="d-grid mb-2" style={{ justifyContent: "end" }}>
-          <Button
-            color="primary"
-            className="font-16 btn-block"
-            onClick={handleShow}
-            style={{ borderRadius: "25px" }}
-          >
-            <i className="mdi mdi-plus-circle-outline w1/4 me-1" />
-            Créer un Evènement
-          </Button>
-        </div>
+
+        <Row>
+          <Col lg="6">
+            <form
+              className="app-search d-none d-lg-block"
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: "25px",
+                padding: "5px",
+                boxShadow: "0 0 10px",
+              }}
+            >
+              <div className="position-relative">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <span className="bx bx-search-alt" />
+              </div>
+            </form>
+          </Col>
+          <Col lg="6">
+            <div className="d-grid mb-2" style={{ justifyContent: "end" }}>
+              <Button
+                color="primary"
+                className="font-16 btn-block"
+                onClick={handleShow}
+                style={{ borderRadius: "25px" }}
+              >
+                <i className="mdi mdi-plus-circle-outline w1/4 me-1" />
+                Créer un Evènement
+              </Button>
+            </div>
+          </Col>
+        </Row>
         <Row>
           {/* Import Cards */}
-          <CardProject events={eventList} refresh={refreshEvents} />
+          <CardProject events={currentEvents} refresh={refreshEvents} />
         </Row>
 
         <Row>
@@ -112,7 +153,7 @@ const ProjectsGrid = (props) => {
                   onClick={() => handlePageClick(page - 1)}
                 />
               </PaginationItem>
-              {map(Array(totalPage), (item, i) => (
+              {Array.from({ length: totalPage }, (_, i) => (
                 <PaginationItem active={i + 1 === page} key={i}>
                   <PaginationLink
                     onClick={() => handlePageClick(i + 1)}

@@ -38,22 +38,6 @@ const TeamMembers = () => {
                       </Link>
                     </h5>
                   </td>
-                  <td>
-                    <div>
-                      <Link
-                        to="#"
-                        className="badge bg-soft font-size-11 me-1 bg-primary text-primary"
-                      >
-                        {item.label_1}
-                      </Link>
-                      <Link
-                        to="#"
-                        className="badge bg-soft font-size-11 bg-primary text-primary"
-                      >
-                        {item.label_2}
-                      </Link>
-                    </div>
-                  </td>
                 </tr>
               </tbody>
             ))}

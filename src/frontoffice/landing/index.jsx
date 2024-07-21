@@ -8,8 +8,6 @@ import AboutUs from "./AboutUs/about-us";
 import Features from "./Features/features";
 
 import Events from "./Planning/events";
-import RoadMap from "./RoadMap/road-map";
-import OurTeam from "./Team/our-team";
 import Blog from "./Blog/blog";
 import FAQs from "./Faqs/FAQs";
 import Footer from "./Footer/footer";
@@ -83,12 +81,10 @@ const CryptoIcoLanding = () => {
       <Features />
 
       {/* roadmap */}
-      <RoadMap />
 
       <Events />
 
       {/* our team */}
-      <OurTeam />
 
       {/* blog */}
       <Blog />

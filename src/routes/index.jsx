@@ -17,6 +17,8 @@ import Calendar from "../pages/Calendar/index";
 
 import Events from "../pages/Events/projects-grid";
 
+import EventOverview from "../pages/Events/EventDetails/EcommerceProductDetail";
+
 import EventDetails from "../pages/Events/ProjectOverview/projects-overview";
 
 import AddEvent from "../pages/Events/projects-create";
@@ -37,7 +39,10 @@ const authProtectedRoutes = [
 
   { path: "/events/add", component: <AddEvent /> },
 
+  { path: "/events/:id", component: <EventOverview /> },
+
   { path: "/event_details/:id", component: <EventDetails /> },
+
   { path: "/liste", component: <Liste /> },
 
   // //profile
