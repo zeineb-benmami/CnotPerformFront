@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   Col,
@@ -8,16 +8,37 @@ import {
   Row,
   TabContent,
   TabPane,
-} from "reactstrap"
+} from "reactstrap";
 
-import classnames from "classnames"
+import classnames from "classnames";
 
 //import images
-import small from "../../../assets/images/small/img-2.jpg"
-import small2 from "../../../assets/images/small/img-6.jpg"
+import small from "../../../../assets/images/small/img-2.jpg";
+import small2 from "../../../../assets/images/small/img-6.jpg";
+import { getEvents } from "../../../../service/event-service";
 
 const BlogList = () => {
   const [activeTab, toggleTab] = useState("1");
+
+  const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    try {
+      let isMounted = true;
+      const fetchEvents = async () => {
+        const data = await getEvents();
+        if (isMounted) setEventList(await data.data.message);
+      };
+
+      fetchEvents();
+
+      return () => {
+        isMounted = false;
+      };
+    } catch (error) {
+      alert(error.message);
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -34,7 +55,7 @@ const BlogList = () => {
                   active: activeTab === "1",
                 })}
                 onClick={() => {
-                  toggleTab("1")
+                  toggleTab("1");
                 }}
               >
                 All Post
@@ -47,7 +68,7 @@ const BlogList = () => {
                   active: activeTab === "2",
                 })}
                 onClick={() => {
-                  toggleTab("2")
+                  toggleTab("2");
                 }}
               >
                 Archive
@@ -64,7 +85,7 @@ const BlogList = () => {
                       <Row className="align-items-center">
                         <Col xs={4}>
                           <div>
-                            <h5 className="mb-0">Blog List</h5>
+                            <h5 className="mb-0">Evènements</h5>
                           </div>
                         </Col>
 
@@ -77,7 +98,7 @@ const BlogList = () => {
                                   to="#"
                                   tabIndex="-1"
                                 >
-                                  View :
+                                  Affichage :
                                 </NavLink>
                               </NavItem>
                               <NavItem>
@@ -100,97 +121,55 @@ const BlogList = () => {
 
                       <hr className="mb-4" />
 
-                      <div>
-                        <h5>
-                          <Link to="/blog-details" className="text-dark">
-                            Beautiful Day with Friends
-                          </Link>
-                        </h5>
-                        <p className="text-muted">10 Apr, 2020</p>
-
-                        <div className="position-relative mb-3">
-                          <img src={small} alt="" className="img-thumbnail" />
-                        </div>
-
-                        <ul className="list-inline">
-                          <li className="list-inline-item mr-3">
-                            <Link to="#" className="text-muted">
-                              <i className="bx bx-purchase-tag-alt align-middle text-muted me-1"></i>{" "}
-                              Project
+                      {eventList.map((evt, index) => (
+                        <div key={index}>
+                          <h5>
+                            <Link
+                              to={`/articles/${evt?._id}`}
+                              className="text-dark"
+                            >
+                              {evt?.title}
                             </Link>
-                          </li>
-                          <li className="list-inline-item mr-3">
-                            <Link to="#" className="text-muted">
-                              <i className="bx bx-comment-dots align-middle text-muted me-1"></i>{" "}
-                              12 Comments
-                            </Link>
-                          </li>
-                        </ul>
-                        <p>
-                          Neque porro quisquam est, qui dolorem ipsum quia dolor
-                          sit amet, consectetur, adipisci velit, aliquam quaerat
-                          voluptatem. Ut enim ad minima veniam, quis
-                        </p>
+                          </h5>
+                          <p className="text-muted">
+                            {evt?.startDate.substring(0, 10)}
+                          </p>
 
-                        <div>
-                          <Link to="#" className="text-primary">
-                            Read more <i className="mdi mdi-arrow-right"></i>
-                          </Link>
-                        </div>
-                      </div>
+                          <div className="position-relative mb-3">
+                            <img
+                              src={evt?.imgUrl}
+                              alt=""
+                              className="img-thumbnail"
+                            />
+                          </div>
 
-                      <hr className="my-5" />
+                          <ul className="list-inline">
+                            <li className="list-inline-item mr-3">
+                              <Link to="#" className="text-muted">
+                                <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
+                                {evt?.category}
+                              </Link>
+                            </li>
+                            <li className="list-inline-item mr-3">
+                              <Link to="#" className="text-muted">
+                                <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
+                                {evt?.participants?.length}
+                              </Link>
+                            </li>
+                          </ul>
+                          <p>{evt?.description}</p>
 
-                      <div>
-                        <h5>
-                          <Link to="/blog-details" className="text-dark">
-                            Project discussion with team
-                          </Link>
-                        </h5>
-                        <p className="text-muted">24 Mar, 2020</p>
-
-                        <div className="position-relative mb-3">
-                          <img src={small2} alt="" className="img-thumbnail" />
-
-                          <div className="blog-play-icon">
-                            <Link to="#" className="avatar-sm d-block mx-auto">
-                              <span className="avatar-title rounded-circle font-size-18">
-                                <i className="mdi mdi-play"></i>
-                              </span>
+                          <div>
+                            <Link
+                              to={`/articles/${evt?._id}`}
+                              className="text-primary"
+                            >
+                              Voir plus <i className="mdi mdi-arrow-right"></i>
                             </Link>
                           </div>
+                          <hr className="my-5" />
                         </div>
-
-                        <ul className="list-inline">
-                          <li className="list-inline-item mr-3">
-                            <Link to="#" className="text-muted">
-                              <i className="bx bx-purchase-tag-alt align-middle text-muted ms-1"></i>{" "}
-                              Development
-                            </Link>
-                          </li>
-                          <li className="list-inline-item mr-3">
-                            <Link to="#" className="text-muted">
-                              <i className="bx bx-comment-dots align-middle text-muted ms-1"></i>{" "}
-                              08 Comments
-                            </Link>
-                          </li>
-                        </ul>
-
-                        <p>
-                          At vero eos et accusamus et iusto odio dignissimos
-                          ducimus qui blanditiis praesentium voluptatum deleniti
-                          atque corrupti quos dolores similique sunt in culpa
-                          qui officia deserunt mollitia animi est
-                        </p>
-
-                        <div>
-                          <Link to="#" className="text-primary">
-                            Read more <i className="mdi mdi-arrow-right"></i>
-                          </Link>
-                        </div>
-                      </div>
-
-                      <hr className="my-5" />
+                      ))}
 
                       <div className="text-center">
                         <ul className="pagination justify-content-center pagination-rounded">
@@ -249,7 +228,7 @@ const BlogList = () => {
                           <h4>2020</h4>
                         </div>
                         <div className="ms-auto">
-                          <span className="badge badge-soft-success rounded-pill float-end ms-1 font-size-12">
+                          <span className="badge badge-soft-success rounded-pill font-size-12 float-end ms-1">
                             03
                           </span>
                         </div>
@@ -289,7 +268,7 @@ const BlogList = () => {
                           <h4>2019</h4>
                         </div>
                         <div className="ms-auto">
-                          <span className="badge badge-soft-success badge-pill float-right ms-1 font-size-12">
+                          <span className="badge badge-soft-success badge-pill font-size-12 float-right ms-1">
                             06
                           </span>
                         </div>
@@ -353,7 +332,7 @@ const BlogList = () => {
                           <h4>2018</h4>
                         </div>
                         <div className="ms-auto">
-                          <span className="badge badge-soft-success rounded-pill float-end ms-1 font-size-12">
+                          <span className="badge badge-soft-success rounded-pill font-size-12 float-end ms-1">
                             03
                           </span>
                         </div>
@@ -394,7 +373,7 @@ const BlogList = () => {
         </Card>
       </Col>
     </React.Fragment>
-  )
-}
+  );
+};
 
 export default BlogList;

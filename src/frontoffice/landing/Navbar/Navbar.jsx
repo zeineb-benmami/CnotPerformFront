@@ -71,24 +71,38 @@ const Navbar_Page = (props) => {
           </NavbarToggler>
 
           <Collapse id="topnav-menu-content" isOpen={isOpenMenu} navbar>
-            <ScrollspyNav
-              scrollTargetIds={TargetId}
-              scrollDuration="800"
-              headerBackground="true"
-              activeNavClass="active"
-              className="navbar-collapse"
-            >
+            {props.isSimple ? (
+              <ScrollspyNav
+                scrollTargetIds={TargetId}
+                scrollDuration="800"
+                headerBackground="true"
+                activeNavClass="active"
+                className="navbar-collapse"
+              >
+                <Nav className="navbar-nav ms-auto" id="topnav-menu">
+                  {navItems.map((item, key) => (
+                    <NavItem
+                      key={key}
+                      className={item.navheading === "Home" ? "active" : ""}
+                    >
+                      <NavLink href={"#" + item.idnm}>
+                        {" "}
+                        {item.navheading}
+                      </NavLink>
+                    </NavItem>
+                  ))}
+                </Nav>
+              </ScrollspyNav>
+            ) : (
               <Nav className="navbar-nav ms-auto" id="topnav-menu">
-                {navItems.map((item, key) => (
-                  <NavItem
-                    key={key}
-                    className={item.navheading === "Home" ? "active" : ""}
-                  >
-                    <NavLink href={"#" + item.idnm}> {item.navheading}</NavLink>
-                  </NavItem>
-                ))}
+                <NavItem className="Home">
+                  <NavLink href="/landing"> Home</NavLink>
+                </NavItem>
+                <NavItem className="active">
+                  <NavLink href="/articles"> Events</NavLink>
+                </NavItem>
               </Nav>
-            </ScrollspyNav>
+            )}
             <div className="ms-lg-2">
               <Link to="/login">
                 <Button
@@ -110,6 +124,8 @@ const Navbar_Page = (props) => {
 Navbar_Page.propTypes = {
   imglight: PropTypes.any,
   navClass: PropTypes.string,
+
+  isSimple: PropTypes.bool,
 };
 
 export default Navbar_Page;

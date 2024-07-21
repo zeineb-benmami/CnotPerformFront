@@ -56,7 +56,7 @@ const CryptoIcoLanding = () => {
   return (
     <React.Fragment>
       {/* import navbar */}
-      <Navbar navClass={navClass} imglight={imglight} />
+      <Navbar navClass={navClass} imglight={imglight} isSimple={true} />
 
       {showButton && (
         <button
@@ -80,14 +80,10 @@ const CryptoIcoLanding = () => {
       {/* features */}
       <Features />
 
-      {/* roadmap */}
-
-      <Events />
-
-      {/* our team */}
-
       {/* blog */}
       <Blog />
+
+      <Events />
 
       {/* faqs */}
       <FAQs />

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Card,
   Col,
@@ -7,20 +7,20 @@ import {
   Row,
   TabContent,
   TabPane,
-} from "reactstrap"
+} from "reactstrap";
 
-import classnames from "classnames"
-import img1 from "../../../assets/images/small/img-2.jpg"
-import img2 from "../../../assets/images/small/img-6.jpg"
-import img3 from "../../../assets/images/small/img-1.jpg"
-import { Link } from "react-router-dom"
+import classnames from "classnames";
+import img1 from "../../../../assets/images/small/img-2.jpg";
+import img2 from "../../../../assets/images/small/img-6.jpg";
+import img3 from "../../../../assets/images/small/img-1.jpg";
+import { Link } from "react-router-dom";
 
 const BlogGrid = () => {
-  const [activeTab, toggleTab] = useState("1")
+  const [activeTab, toggleTab] = useState("1");
 
-  const toggle = tab => {
-    if (activeTab !== tab) toggleTab(tab)
-  }
+  const toggle = (tab) => {
+    if (activeTab !== tab) toggleTab(tab);
+  };
   return (
     <React.Fragment>
       <Col xl={9} lg={8}>
@@ -36,7 +36,7 @@ const BlogGrid = () => {
                   active: activeTab === "1",
                 })}
                 onClick={() => {
-                  toggleTab("1")
+                  toggleTab("1");
                 }}
               >
                 All Post
@@ -49,7 +49,7 @@ const BlogGrid = () => {
                   active: activeTab === "2",
                 })}
                 onClick={() => {
-                  toggleTab("2")
+                  toggleTab("2");
                 }}
               >
                 Archive
@@ -62,7 +62,7 @@ const BlogGrid = () => {
                 <Row className="justify-content-center">
                   <Col xl={8}>
                     <div>
-                      <div className="row align-items-center">
+                      <div className="align-items-center row">
                         <div className="col-4">
                           <div>
                             <h5 className="mb-0">Blog Grid</h5>
@@ -103,7 +103,7 @@ const BlogGrid = () => {
 
                       <Row>
                         <Col sn={6}>
-                          <Card className="p-1 border shadow-none">
+                          <Card className="border p-1 shadow-none">
                             <div className="p-3">
                               <h5>
                                 <Link to="/blog-details" className="text-dark">
@@ -125,13 +125,13 @@ const BlogGrid = () => {
                               <ul className="list-inline">
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-purchase-tag-alt align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
                                     Project
                                   </Link>
                                 </li>
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-comment-dots align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
                                     12 Comments
                                   </Link>
                                 </li>
@@ -152,7 +152,7 @@ const BlogGrid = () => {
                         </Col>
 
                         <Col sm={6}>
-                          <Card className="p-1 border shadow-none">
+                          <Card className="border p-1 shadow-none">
                             <div className="p-3">
                               <h5>
                                 <Link to="blog-details" className="text-dark">
@@ -184,13 +184,13 @@ const BlogGrid = () => {
                               <ul className="list-inline">
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-purchase-tag-alt align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
                                     Development
                                   </Link>
                                 </li>
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-comment-dots align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
                                     08 Comments
                                   </Link>
                                 </li>
@@ -214,7 +214,7 @@ const BlogGrid = () => {
 
                       <Row>
                         <Col sm={6}>
-                          <Card className="p-1 border shadow-none">
+                          <Card className="border p-1 shadow-none">
                             <div className="p-3">
                               <h5>
                                 <Link to="/blog-details" className="text-dark">
@@ -236,13 +236,13 @@ const BlogGrid = () => {
                               <ul className="list-inline">
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-purchase-tag-alt align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
                                     Travel
                                   </Link>
                                 </li>
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-comment-dots align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
                                     08 Comments
                                   </Link>
                                 </li>
@@ -263,7 +263,7 @@ const BlogGrid = () => {
                         </Col>
 
                         <Col sm={6}>
-                          <Card className="p-1 border shadow-none">
+                          <Card className="border p-1 shadow-none">
                             <div className="p-3">
                               <h5>
                                 <Link to="/blog-details" className="text-dark">
@@ -285,13 +285,13 @@ const BlogGrid = () => {
                               <ul className="list-inline">
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-purchase-tag-alt align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
                                     Development
                                   </Link>
                                 </li>
                                 <li className="list-inline-item me-3">
                                   <Link to="#" className="text-muted">
-                                    <i className="bx bx-comment-dots align-middle text-muted me-1"></i>{" "}
+                                    <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
                                     08 Comments
                                   </Link>
                                 </li>
@@ -372,7 +372,7 @@ const BlogGrid = () => {
                           <h4>2020</h4>
                         </div>
                         <div className="ms-auto">
-                          <span className="badge badge-soft-success badge-pill float-right ms-1 font-size-12">
+                          <span className="badge badge-soft-success badge-pill font-size-12 float-right ms-1">
                             03
                           </span>
                         </div>
@@ -412,7 +412,7 @@ const BlogGrid = () => {
                           <h4>2019</h4>
                         </div>
                         <div className="ms-auto">
-                          <span className="badge badge-soft-success badge-pill float-right ms-1 font-size-12">
+                          <span className="badge badge-soft-success badge-pill font-size-12 float-right ms-1">
                             06
                           </span>
                         </div>
@@ -476,7 +476,7 @@ const BlogGrid = () => {
                           <h4>2018</h4>
                         </div>
                         <div className="ms-auto">
-                          <span className="badge badge-soft-success badge-pill float-right ms-1 font-size-12">
+                          <span className="badge badge-soft-success badge-pill font-size-12 float-right ms-1">
                             03
                           </span>
                         </div>
@@ -517,6 +517,6 @@ const BlogGrid = () => {
         </Card>
       </Col>
     </React.Fragment>
-  )
-}
-export default BlogGrid
+  );
+};
+export default BlogGrid;

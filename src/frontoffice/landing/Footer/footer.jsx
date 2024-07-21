@@ -6,8 +6,6 @@ import fb from "../../../../public/assets/images/icons/facebook-colored.svg";
 
 import gl from "../../../../public/assets/images/icons/google-colored.svg";
 
-import tw from "../../../../public/assets/images/icons/twitter-colored.svg";
-
 import yt from "../../../../public/assets/images/icons/youtube-colored.svg";
 
 //Import Components
@@ -73,15 +71,6 @@ const Features = () => {
                       title="CNOT.ORG"
                     >
                       <img src={gl} alt="" srcset="" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://twitter.com/"
-                      target="_blank"
-                      title="Twitter"
-                    >
-                      <img src={tw} alt="" srcset="" />
                     </a>
                   </li>
                   <li>

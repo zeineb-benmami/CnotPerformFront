@@ -1,36 +1,33 @@
-import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
-//Import Images
-import blog1 from "../../../assets/images/crypto/blog/img-1.jpg";
-import blog2 from "../../../assets/images/crypto/blog/img-2.jpg";
-import blog3 from "../../../assets/images/crypto/blog/img-3.jpg";
+import { getEvents } from "../../../service/event-service";
 
 const Blog = () => {
-  const blogs = [
-    {
-      imgUrl: blog1,
-      tag: "Cryptocurrency",
-      date: "04 Mar, 2020",
-      title: "Donec pede justo, fringilla vele",
-      desc: "If several languages coalesce, the grammar of the resulting language",
-    },
-    {
-      imgUrl: blog2,
-      tag: "Cryptocurrency",
-      date: "12 Feb, 2020",
-      title: "Aenean ut eros et nisl",
-      desc: "Everyone realizes why a new common language would be desirable",
-    },
-    {
-      imgUrl: blog3,
-      tag: "Cryptocurrency",
-      date: "06 Jan, 2020",
-      title: "In turpis, pellentesque posuere",
-      desc: "To an English person, it will seem like simplified English, as a skeptical Cambridge",
-    },
-  ];
+  const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    try {
+      let isMounted = true;
+      const fetchEvents = async () => {
+        const data = await getEvents();
+        if (isMounted) setEventList(await data.data.message);
+      };
+
+      fetchEvents();
+
+      return () => {
+        isMounted = false;
+      };
+    } catch (error) {
+      alert(error.message);
+    }
+  }, []);
+
+  // Get current events for pagination
+  const startIndex = eventList?.length > 3 ? eventList.length - 3 : 0;
+  const currentEvents = eventList?.slice(startIndex, eventList?.length);
 
   return (
     <React.Fragment>
@@ -39,41 +36,55 @@ const Blog = () => {
           <Row>
             <Col lg="12">
               <div className="mb-5 text-center">
-                <div className="small-title">Blog</div>
-                <h4>Latest News</h4>
+                <div className="small-title">Evènements</div>
+                <h3>Nouvelles Récents</h3>
               </div>
             </Col>
           </Row>
 
           <Row>
-            {blogs.map((blog, key) => (
+            {currentEvents.map((evt, key) => (
               <Col xl="4" sm="6" key={key}>
                 <div className="blog-box mb-xl-0 mb-4">
                   <div className="position-relative">
                     <img
-                      src={blog.imgUrl}
+                      src={evt?.imgUrl}
                       alt=""
                       className="img-fluid d-block mx-auto rounded"
+                      style={{ maxHeight: "300px", minHeight: "280px" }}
                     />
-                    <div className="blog-badge font-size-11 badge bg-success">
-                      {blog.tag}
+                    <div className="blog-badge font-size-11 badge bg-primary">
+                      {evt?.category}
                     </div>
                   </div>
 
                   <div className="text-muted mt-4">
                     <p className="mb-2">
-                      <i className="bx bx-calendar ms-1" /> {blog.date}
+                      <i className="bx bx-calendar text-danger ms-1" />{" "}
+                      {evt?.startDate.substring(0, 10)}
                     </p>
-                    <h5 className="mb-3">{blog.title}</h5>
-                    <p>{blog.desc}</p>
+                    <h5 className="mb-3">{evt?.title}</h5>
+                    <p>{evt?.description}</p>
 
                     <div>
-                      <Link to="#">Read more</Link>
+                      <Link to={`/articles/${evt?._id}`}>Read more</Link>
                     </div>
                   </div>
                 </div>
               </Col>
             ))}
+
+            <div className="ms-lg-2 text-center">
+              <Link to="/articles">
+                <Button
+                  color="primary"
+                  className="font-16 btn-block"
+                  style={{ borderRadius: "25px" }}
+                >
+                  Afficher plus d'évènements
+                </Button>
+              </Link>
+            </div>
           </Row>
         </Container>
       </section>
