@@ -38,6 +38,7 @@ const Features = () => {
                   src="assets/images/2.jpg"
                   alt=""
                   className="img-fluid d-block mx-auto"
+                  style={{ borderRadius: "10px" }}
                 />
               </div>
             </Col>
@@ -63,11 +64,12 @@ const Features = () => {
               />
             </Col>
             <Col md="6" sm="8" className="ms-md-auto">
-              <div className="me-md-0 mt-4">
+              <div className="me-md-0 mt-4 rounded-md">
                 <img
                   src="assets/images/3.jpg"
                   alt=""
                   className="img-fluid d-block mx-auto"
+                  style={{ borderRadius: "10px" }}
                 />
               </div>
             </Col>

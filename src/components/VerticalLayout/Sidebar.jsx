@@ -30,7 +30,6 @@ const Sidebar = (props) => {
               <img
                 src={logo}
                 alt=""
-                height="19"
                 width="70"
                 style={{ display: "block", margin: "auto" }}
               />

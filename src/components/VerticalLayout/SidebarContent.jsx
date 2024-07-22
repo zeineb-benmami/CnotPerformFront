@@ -197,7 +197,7 @@ const SidebarContent = (props) => {
             </Link>
           </li>
           <li>
-            <Link to="#">
+            <Link to="/#">
               <i className="bx bx-file"></i>
               <span>{props.t("File Manager")}</span>
             </Link>

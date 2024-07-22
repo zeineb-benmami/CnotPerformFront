@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React from "react";
 
-const FeatureBox = props => {
+const FeatureBox = (props) => {
   return (
     <React.Fragment>
-      <div className="mt-4 mt-md-auto">
+      <div className="mt-md-auto mt-4">
         <div className="d-flex align-items-center mb-2">
           <div className="features-number font-weight-semibold display-4 me-3">
             {props.num}
           </div>
-          <h4 className="mb-0">{props.title}</h4>
+          <h3 className="mb-0 text-3xl">{props.title}</h3>
         </div>
-        <p className="text-muted">{props.desc}</p>
+        <h5 className="text-muted text-xl">{props.desc}</h5>
         <div className="text-muted mt-4">
           {props.features.map((feature, key) => (
             <p key={key} className={feature.id === 1 ? "mb-2" : ""}>
@@ -29,7 +29,7 @@ FeatureBox.propTypes = {
   desc: PropTypes.any,
   features: PropTypes.array,
   num: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 export default FeatureBox;

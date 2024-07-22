@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -24,10 +24,22 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addEvent } from "../../../service/event-service";
 import { uploadPhotoToEvent } from "../../../service/photo-service";
 
-const AddEvent = ({ show, handleClose }) => {
+const AddEvent = ({ show, handleClose, refresh }) => {
+  const [eventItem, setEventItem] = useState({
+    title: "",
+    description: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    budget: 0,
+    category: "Entourage",
+  });
+
+  //form errors validation
+  const [errors, setErrors] = useState({});
   const [startDate, setstartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
-  const [selectedFiles, setselectedFiles] = useState([]);
+
+  const [loading, setLoading] = useState(true);
 
   const startDateChange = (date) => {
     setstartDate(date);
@@ -37,16 +49,73 @@ const AddEvent = ({ show, handleClose }) => {
     setendDate(date);
   };
 
-  function handleAcceptedFiles(files) {
-    files.map((file) =>
+  const validateValues = (inputValues) => {
+    let errors = {};
+    if (inputValues.title.length < 2 || inputValues.title.length > 50) {
+      errors.name = "Title length must be between 2 and 50";
+    }
+    if (!startDate) {
+      errors.startDate = "Start Date is required";
+    }
+    if (!endDate || new Date(endDate) < new Date(startDate)) {
+      errors.endDate = "End Date is required & must be greater than startDate";
+    }
+    if (new Date() > new Date(startDate)) {
+      errors.startDate = "Start Date must be greater than today";
+    }
+    if (
+      Math.round(
+        (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+          (1000 * 3600 * 24)
+      ) < 3
+    ) {
+      errors.startDate =
+        "Difference in start date & end date must be more than 3 days";
+    }
+    if (
+      Math.round(
+        (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+          (1000 * 3600 * 24)
+      ) > 270
+    ) {
+      errors.endDate =
+        "Difference in start date & end date must be less than 9 months";
+    }
+    if (inputValues.description.length > 200) {
+      errors.description =
+        "Description exceeds maximum length of 200 characters";
+    }
+    return errors;
+  };
+
+  // end of form errors validation
+
+  const onValueChange = (e) => {
+    setEventItem({ ...eventItem, [e.target.name]: e.target.value });
+    setErrors(validateValues(eventItem));
+  };
+
+  useEffect(() => {
+    setErrors(validateValues(eventItem));
+  }, [eventItem]);
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleAcceptedFiles = useCallback((acceptedFiles) => {
+    const files = acceptedFiles.map((file) =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
         formattedSize: formatBytes(file.size),
       })
     );
+    setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+  }, []);
 
-    setselectedFiles(files);
-  }
+  const handleDeleteFile = (fileToDelete) => {
+    setSelectedFiles((prevFiles) =>
+      prevFiles.filter((file) => file !== fileToDelete)
+    );
+  };
 
   function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return "0 Bytes";
@@ -70,24 +139,34 @@ const AddEvent = ({ show, handleClose }) => {
 
   const handleAddEvent = async () => {
     try {
+      eventItem.startDate = startDate;
+      eventItem.endDate = endDate;
+
       const result = await addEvent(eventItem);
       if (result.status === 201) {
         if (selectedFiles.length > 0) {
-          handleUploadPhoto(result.data.data.message);
+          handleUploadPhotos(result?.data.message);
         }
         handleClose();
+        refresh();
       }
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const handleUploadPhoto = async (id) => {
+  const handleUploadPhotos = async (id) => {
     try {
-      const result = await uploadPhotoToEvent(id, selectedFiles[0]);
-      if (result.status === 200) {
-        alert(result.data.data.message);
-      }
+      const uploadPromises = selectedFiles.map(async (file) => {
+        const formData = new FormData();
+        formData.append("filename", file);
+        const result = await uploadPhotoToEvent(id, formData);
+        if (result.status === 200) {
+          setLoading(false);
+        }
+      });
+
+      await Promise.all(uploadPromises);
     } catch (error) {
       alert(error.message);
     }
@@ -109,8 +188,37 @@ const AddEvent = ({ show, handleClose }) => {
                     name="title"
                     type="text"
                     className="form-control"
-                    placeholder="Enter title..."
+                    placeholder="Enter titre..."
+                    value={eventItem.title}
+                    onChange={onValueChange}
                   />
+                </Col>
+              </FormGroup>
+              <FormGroup className="mb-4" row>
+                <Label for="category" className="col-form-label col-lg-2">
+                  Categorie
+                </Label>
+
+                <Col>
+                  <Input
+                    id="category"
+                    name="category"
+                    type="select"
+                    value={eventItem.category}
+                    onChange={onValueChange}
+                  >
+                    <option value="Entourage">Entourage</option>
+                    <option value="Universalité des jeux olympiques">
+                      Universalité des jeux olympiques
+                    </option>
+                    <option value="Développement du Sport">
+                      Développement du Sport
+                    </option>
+                    <option value="Valeurs olympiques">
+                      Valeurs olympiques
+                    </option>
+                    <option value="Gestion des CNO">Gestion des CNO</option>
+                  </Input>
                 </Col>
               </FormGroup>
               <FormGroup className="mb-4" row>
@@ -124,8 +232,11 @@ const AddEvent = ({ show, handleClose }) => {
                   <textarea
                     className="form-control"
                     id="description"
+                    name="description"
                     rows="3"
                     placeholder="Enter Description..."
+                    value={eventItem.description}
+                    onChange={onValueChange}
                   />
                 </Col>
               </FormGroup>
@@ -164,24 +275,33 @@ const AddEvent = ({ show, handleClose }) => {
                 <label htmlFor="budget" className="col-form-label col-lg-2">
                   Budget
                 </label>
-                <Col md={6}>
+                <Col>
                   <Input
                     id="budget"
                     name="budget"
                     type="number"
                     placeholder="Enter Budget..."
                     className="form-control"
+                    value={eventItem.budget}
+                    onChange={onValueChange}
                   />
                 </Col>
               </FormGroup>
 
               <FormGroup className="mb-4" row>
-                <Label for="participants">Participants</Label>
-                <Input id="participants" name="participants" type="select">
-                  <option>FEDERATION NATATION</option>
-                  <option>FEDERATION BASKET</option>
-                  <option>FEDERATION football</option>
-                </Input>
+                <Label for="participants" className="col-form-label col-lg-2">
+                  No participants
+                </Label>
+
+                <Col>
+                  <Input
+                    id="participants"
+                    name="participants"
+                    type="number"
+                    placeholder="Enter participants..."
+                    className="form-control"
+                  ></Input>
+                </Col>
               </FormGroup>
             </Form>
           </Col>
@@ -190,9 +310,7 @@ const AddEvent = ({ show, handleClose }) => {
             <Col lg="10">
               <Form>
                 <Dropzone
-                  onDrop={(acceptedFiles) => {
-                    handleAcceptedFiles(acceptedFiles);
-                  }}
+                  onDrop={(acceptedFiles) => handleAcceptedFiles(acceptedFiles)}
                 >
                   {({ getRootProps, getInputProps }) => (
                     <div className="dropzone">
@@ -214,39 +332,46 @@ const AddEvent = ({ show, handleClose }) => {
                   )}
                 </Dropzone>
                 <div className="dropzone-previews mt-3" id="file-previews">
-                  {selectedFiles.map((f, i) => {
-                    return (
-                      <Card
-                        className="dz-processing dz-image-preview dz-success dz-complete mb-0 mt-1 border shadow-none"
-                        key={i + "-file"}
-                      >
-                        <div className="p-2">
-                          <Row className="align-items-center">
-                            <Col className="col-auto">
-                              <img
-                                data-dz-thumbnail=""
-                                height="80"
-                                className="avatar-sm rounded bg-light"
-                                alt={f.name}
-                                src={f.preview}
-                              />
-                            </Col>
-                            <Col>
-                              <Link
-                                to="#"
-                                className="text-muted font-weight-bold"
-                              >
-                                {f.name}
-                              </Link>
-                              <p className="mb-0">
-                                <strong>{f.formattedSize}</strong>
-                              </p>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Card>
-                    );
-                  })}
+                  {selectedFiles.map((file, index) => (
+                    <Card
+                      className="dz-processing dz-image-preview dz-success dz-complete mb-0 mt-1 border shadow-none"
+                      key={index + "-file"}
+                    >
+                      <div className="p-2">
+                        <Row className="align-items-center">
+                          <Col className="col-auto">
+                            <img
+                              data-dz-thumbnail=""
+                              height="80"
+                              className="avatar-sm rounded bg-light"
+                              alt={file.name}
+                              src={file.preview}
+                            />
+                          </Col>
+                          <Col>
+                            <Link
+                              to="#"
+                              className="text-muted font-weight-bold"
+                            >
+                              {file.name}
+                            </Link>
+                            <p className="mb-0">
+                              <strong>{file.formattedSize}</strong>
+                            </p>
+                          </Col>
+                          <Col className="col-auto">
+                            <Button
+                              color="danger"
+                              size="sm"
+                              onClick={() => handleDeleteFile(file)}
+                            >
+                              Delete
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                  ))}
                 </div>
               </Form>
             </Col>
@@ -254,10 +379,18 @@ const AddEvent = ({ show, handleClose }) => {
         </Row>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSubmit}>
+        <Button
+          color="primary"
+          onClick={handleSubmit}
+          style={{ borderRadius: "25px" }}
+        >
           Ajouter
         </Button>{" "}
-        <Button color="secondary" onClick={handleClose}>
+        <Button
+          color="secondary"
+          onClick={handleClose}
+          style={{ borderRadius: "25px" }}
+        >
           Annuler
         </Button>
       </ModalFooter>
@@ -268,6 +401,7 @@ const AddEvent = ({ show, handleClose }) => {
 AddEvent.propTypes = {
   handleClose: PropTypes.func,
   show: PropTypes.bool,
+  refresh: PropTypes.func,
 };
 
 export default AddEvent;
