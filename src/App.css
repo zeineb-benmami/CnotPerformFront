@@ -45,3 +45,17 @@ button {
 @import '~react-phone-input-2/lib/style.css';
 
 
+/* CSS to fix the date squishing issue */
+
+.email-rightbar .message-list .col-mail .date {
+  white-space: nowrap;
+  margin-left: 15px; /* Adjust this value to create appropriate spacing */
+}
+
+.email-rightbar .message-list .col-mail .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  width: calc(100% - 100px); /* Adjust the width as needed */
+}

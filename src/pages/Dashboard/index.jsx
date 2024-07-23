@@ -15,14 +15,14 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const index = () => {
   //meta title
-  document.title = "Evènements | CNOT PERFORM";
+  document.title = "Dashboard | CNOT PERFORM";
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Dashboards" breadcrumbItem="Evènements" />
+          <Breadcrumbs title="Dashboards" breadcrumbItem="Dashboard" />
           <Row>
             {/* card user */}
             <CardUser dataColors='["--bs-primary", "--bs-warning"]' />

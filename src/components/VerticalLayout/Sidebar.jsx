@@ -16,16 +16,29 @@ const Sidebar = (props) => {
     <React.Fragment>
       <div className="vertical-menu">
         <div className="navbar-brand-box">
-          <Link to="/" className="logo logo-light ">
-            <span className="logo-lg mx-auto">
-              <img src={logo} alt="" height="19" width="70" />
+          <Link to="/" className="logo logo-light">
+            <span
+              className="logo-lg mx-auto"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%", // Adjust as needed
+                width: "100%", // Adjust as needed
+              }}
+            >
+              <img
+                src={logo}
+                alt=""
+                width="70"
+                style={{ display: "block", margin: "auto" }}
+              />
             </span>
           </Link>
         </div>
         <div data-simplebar className="h-100">
           {props.type !== "condensed" ? <SidebarContent /> : <SidebarContent />}
         </div>
-
         <div className="sidebar-background"></div>
       </div>
     </React.Fragment>

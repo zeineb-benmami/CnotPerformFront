@@ -144,20 +144,20 @@ const Login = () => {
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages my-5 pt-sm-5">
+      <div className="account-pages pt-sm-5 my-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
-                <div className="bg-primary bg-soft">
+                <div className="bg-soft bg-primary">
                   <Row>
                     <Col xs={7}>
-                      <div className="text-primary p-4">
+                      <div className="p-4 text-primary">
                         <h5 className="text-primary">Bienvenue !</h5>
                         <p>Connectez pour continuer</p>
                       </div>
                     </Col>
-                    <Col className="col-5 align-self-end">
+                    <Col className="align-self-end col-5">
                       <img src={profile} alt="" className="img-fluid" />
                     </Col>
                   </Row>
@@ -229,7 +229,8 @@ const Login = () => {
                           }
                           style={{ height: 'calc(1.5em + 0.75rem + 2px)' }}
                         />
-                        {validation.touched.password && validation.errors.password ? (
+                        {validation.touched.password &&
+                        validation.errors.password ? (
                           <FormFeedback type="invalid">
                             {validation.errors.password}
                           </FormFeedback>
@@ -281,6 +282,7 @@ const Login = () => {
                         <button
                           className="btn btn-primary btn-block"
                           type="submit"
+                          style={{ borderRadius: "25px" }}
                         >
                           Se Connecter
                         </button>

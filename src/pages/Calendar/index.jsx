@@ -293,9 +293,10 @@ const Calender = (props) => {
                           color="primary"
                           className="font-16 btn-block"
                           onClick={toggleCategory}
+                          style={{ borderRadius: "25px" }}
                         >
                           <i className="mdi mdi-plus-circle-outline me-1" />
-                          Create New Event
+                          Créer un Evènement
                         </Button>
                       </div>
 
@@ -331,24 +332,31 @@ const Calender = (props) => {
 
                 <Col className="col-lg-9">
                   {/* fullcalendar control */}
-                  <FullCalendar
-                    plugins={[BootstrapTheme, dayGridPlugin, interactionPlugin]}
-                    slotDuration={"00:15:00"}
-                    handleWindowResize={true}
-                    themeSystem="bootstrap"
-                    headerToolbar={{
-                      left: "prev,next today",
-                      center: "title",
-                      right: "dayGridMonth,dayGridWeek,dayGridDay",
-                    }}
-                    events={events}
-                    editable={true}
-                    droppable={true}
-                    selectable={true}
-                    dateClick={handleDateClick}
-                    eventClick={handleEventClick}
-                    drop={onDrop}
-                  />
+
+                  <Card>
+                    <FullCalendar
+                      plugins={[
+                        BootstrapTheme,
+                        dayGridPlugin,
+                        interactionPlugin,
+                      ]}
+                      slotDuration={"00:15:00"}
+                      handleWindowResize={true}
+                      themeSystem="bootstrap"
+                      headerToolbar={{
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,dayGridWeek,dayGridDay",
+                      }}
+                      events={events}
+                      editable={true}
+                      droppable={true}
+                      selectable={true}
+                      dateClick={handleDateClick}
+                      eventClick={handleEventClick}
+                      drop={onDrop}
+                    />
+                  </Card>
 
                   {/* New/Edit event modal */}
                   <Modal isOpen={modal} className={props.className} centered>
@@ -357,7 +365,14 @@ const Calender = (props) => {
                       tag="h5"
                       className="border-bottom-0 px-4 py-3"
                     >
-                      {!!isEdit ? "Edit Event" : "Add Event"}
+                      {(!!isEdit
+                        ? "Modifier un Event à "
+                        : "Ajouter un Event à ") +
+                        selectedDay?.date?.getDate() +
+                        "/" +
+                        (selectedDay?.date?.getMonth() + 1) +
+                        "/" +
+                        selectedDay?.date?.getFullYear()}
                     </ModalHeader>
                     <ModalBody className="p-4">
                       <Form
@@ -411,12 +426,19 @@ const Calender = (props) => {
                                     : false
                                 }
                               >
-                                <option value="bg-danger">Danger</option>
-                                <option value="bg-success">Success</option>
-                                <option value="bg-primary">Primary</option>
-                                <option value="bg-info">Info</option>
-                                <option value="bg-dark">Dark</option>
-                                <option value="bg-warning">Warning</option>
+                                <option value="bg-danger">
+                                  Valeurs olympiques
+                                </option>
+                                <option value="bg-success">Entourage</option>
+                                <option value="bg-primary">
+                                  Universalité des jeux olympiques
+                                </option>
+                                <option value="bg-secondary">
+                                  Gestion des CNO
+                                </option>
+                                <option value="bg-warning">
+                                  Développement du Sport
+                                </option>
                               </Input>
                               {validation.touched.category &&
                               validation.errors.category ? (
@@ -436,7 +458,7 @@ const Calender = (props) => {
                                 className="btn btn-danger me-2"
                                 onClick={() => setDeleteModal(true)}
                               >
-                                Delete
+                                Supprimer
                               </button>
                             )}
                           </Col>
@@ -446,14 +468,14 @@ const Calender = (props) => {
                               className="btn btn-light me-2"
                               onClick={toggle}
                             >
-                              Close
+                              Fermer
                             </button>
                             <button
                               type="submit"
                               className="btn btn-success"
                               id="btn-save-event"
                             >
-                              Save
+                              Ajouter
                             </button>
                           </Col>
                         </Row>
@@ -468,7 +490,7 @@ const Calender = (props) => {
                     centered
                   >
                     <ModalHeader toggle={toggleCategory} tag="h5">
-                      Add Event
+                      Ajouter un Evènement
                     </ModalHeader>
                     <ModalBody className="p-4">
                       <Form
@@ -481,7 +503,7 @@ const Calender = (props) => {
                         <Row>
                           <Col className="col-12">
                             <div className="mb-3">
-                              <Label className="form-label">Event Name</Label>
+                              <Label className="form-label">Titre</Label>
                               <Input
                                 name="title"
                                 type="text"
@@ -507,7 +529,7 @@ const Calender = (props) => {
                           </Col>
                           <Col className="col-12">
                             <div className="mb-3">
-                              <Label className="form-label">Category</Label>
+                              <Label className="form-label">Categorie</Label>
                               <Input
                                 type="select"
                                 name="category"
@@ -522,12 +544,19 @@ const Calender = (props) => {
                                     : false
                                 }
                               >
-                                <option value="bg-danger">Danger</option>
-                                <option value="bg-success">Success</option>
-                                <option value="bg-primary">Primary</option>
-                                <option value="bg-info">Info</option>
-                                <option value="bg-dark">Dark</option>
-                                <option value="bg-warning">Warning</option>
+                                <option value="bg-danger">
+                                  Valeurs olympiques
+                                </option>
+                                <option value="bg-success">Entourage</option>
+                                <option value="bg-primary">
+                                  Universalité des jeux olympiques
+                                </option>
+                                <option value="bg-secondary">
+                                  Gestion des CNO
+                                </option>
+                                <option value="bg-warning">
+                                  Développement du Sport
+                                </option>
                               </Input>
                               {categoryValidation.touched.category &&
                               categoryValidation.errors.category ? (
@@ -546,7 +575,7 @@ const Calender = (props) => {
                               className="btn btn-danger"
                               id="btn-delete-event"
                             >
-                              Delete
+                              Supprimer
                             </button>
                           </Col>
                           <Col className="col-6 text-end">
@@ -555,14 +584,14 @@ const Calender = (props) => {
                               className="btn btn-light me-1"
                               onClick={toggleCategory}
                             >
-                              Close
+                              Fermer
                             </button>
                             <button
                               type="submit"
                               className="btn btn-success"
                               id="btn-save-event"
                             >
-                              Save
+                              Ajouter
                             </button>
                           </Col>
                         </Row>

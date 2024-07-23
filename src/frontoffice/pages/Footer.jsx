@@ -1,9 +1,4 @@
 import React from "react";
-import './plugins/swiper/swiper-bundle.css';
-import './plugins/font-awesome/v6/brands.css';
-import './plugins/font-awesome/v6/solid.css';
-import './plugins/font-awesome/v6/fontawesome.css';
-import './styles/main.css';
 
 const Footer = () => {
   return (
@@ -12,7 +7,11 @@ const Footer = () => {
         <div style={styles.row}>
           <div style={styles.column}>
             <a href="index.html">
-              <img src="assets/images/logo.svg" alt="Logo" style={styles.logo} />
+              <img
+                src="assets/images/logo.svg"
+                alt="Logo"
+                style={styles.logo}
+              />
             </a>
             <p style={styles.paragraph}>
               Lorem ipsum dolor sit sed dmi amet, consectetur adipiscing. Cdo
@@ -93,29 +92,41 @@ const Footer = () => {
             <h6 style={styles.heading}>Quick Links</h6>
             <ul style={styles.linkList}>
               <li>
-                <a href="about.html" style={styles.link}>About</a>
+                <a href="about.html" style={styles.link}>
+                  About
+                </a>
               </li>
               <li>
-                <a href="#" style={styles.link}>Category</a>
+                <a href="#" style={styles.link}>
+                  Category
+                </a>
               </li>
               <li>
-                <a href="#" style={styles.link}>Testimonial</a>
+                <a href="#" style={styles.link}>
+                  Testimonial
+                </a>
               </li>
               <li>
-                <a href="contact.html" style={styles.link}>Contact</a>
+                <a href="contact.html" style={styles.link}>
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
           <div style={styles.column}>
             <h6 style={styles.heading}>Location & Contact</h6>
-            <p style={styles.paragraph}>2118 Thornridge Cir. Syracuse, Connecticut 35624</p>
+            <p style={styles.paragraph}>
+              2118 Thornridge Cir. Syracuse, Connecticut 35624
+            </p>
             <p style={styles.paragraph}>(704) 555-0127</p>
           </div>
         </div>
       </div>
       <div style={styles.containerMax}>
         <div style={styles.copyright}>
-          <p>Designed And Developed by Themefisher | Distributed by ThemeWagon</p>
+          <p>
+            Designed And Developed by Themefisher | Distributed by ThemeWagon
+          </p>
         </div>
       </div>
     </footer>
@@ -124,82 +135,82 @@ const Footer = () => {
 
 const styles = {
   footer: {
-    backgroundColor: 'rgba(247, 247, 247, 0.5)',
-    paddingTop: '52px',
-    paddingBottom: '10px',
-    textAlign: 'center',
+    backgroundColor: "rgba(247, 247, 247, 0.5)",
+    paddingTop: "52px",
+    paddingBottom: "10px",
+    textAlign: "center",
   },
   container: {
-    width: '100%',
-    maxWidth: '1440px',
-    margin: '0 auto',
-    padding: '0 15px',
+    width: "100%",
+    maxWidth: "1440px",
+    margin: "0 auto",
+    padding: "0 15px",
   },
   row: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingBottom: '52px',
-    borderBottom: '1px solid #eaeaea',
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingBottom: "52px",
+    borderBottom: "1px solid #eaeaea",
   },
   column: {
-    flex: '1 1 25%',
-    maxWidth: '25%',
-    padding: '0 15px',
-    marginBottom: '24px',
-    textAlign: 'left',
+    flex: "1 1 25%",
+    maxWidth: "25%",
+    padding: "0 15px",
+    marginBottom: "24px",
+    textAlign: "left",
   },
   logo: {
-    width: '147px',
-    height: '30px',
+    width: "147px",
+    height: "30px",
   },
   heading: {
-    fontSize: '1rem',
-    fontWeight: '700',
-    marginBottom: '20px',
+    fontSize: "1rem",
+    fontWeight: "700",
+    marginBottom: "20px",
   },
   paragraph: {
-    fontSize: '0.875rem',
-    color: '#666',
-    lineHeight: '1.6',
-    marginBottom: '10px',
+    fontSize: "0.875rem",
+    color: "#666",
+    lineHeight: "1.6",
+    marginBottom: "10px",
   },
   socialIcons: {
-    display: 'flex',
-    listStyle: 'none',
-    paddingLeft: '0',
-    marginTop: '16px',
-    marginBottom: '0',
+    display: "flex",
+    listStyle: "none",
+    paddingLeft: "0",
+    marginTop: "16px",
+    marginBottom: "0",
   },
   iconItem: {
-    marginRight: '10px',
+    marginRight: "10px",
   },
   iconLink: {
-    display: 'block',
-    width: '19px',
-    height: '19px',
+    display: "block",
+    width: "19px",
+    height: "19px",
   },
   linkList: {
-    listStyle: 'none',
-    paddingLeft: '0',
-    margin: '0',
+    listStyle: "none",
+    paddingLeft: "0",
+    margin: "0",
   },
   link: {
-    fontSize: '0.875rem',
-    color: '#222',
-    textDecoration: 'none',
-    lineHeight: '2',
+    fontSize: "0.875rem",
+    color: "#222",
+    textDecoration: "none",
+    lineHeight: "2",
   },
   containerMax: {
-    maxWidth: '1440px',
-    margin: '0 auto',
+    maxWidth: "1440px",
+    margin: "0 auto",
   },
   copyright: {
-    borderTop: '1px solid #eaeaea',
-    paddingTop: '16px',
-    paddingBottom: '16px',
-    fontSize: '0.875rem',
-    color: '#666',
+    borderTop: "1px solid #eaeaea",
+    paddingTop: "16px",
+    paddingBottom: "16px",
+    fontSize: "0.875rem",
+    color: "#666",
   },
 };
 
