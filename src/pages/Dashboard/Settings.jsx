@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -8,20 +8,75 @@ import {
   DropdownMenu,
   DropdownToggle,
   Row,
-} from "reactstrap"
+} from "reactstrap";
+import { getUserProfile } from "../../service/apiUser"; // Ensure the import path is correct
+import profile from "../../../public/assets/images/4.png";
 
-import avatar from "../../assets/images/users/avatar-1.jpg"
+const Settings = (props) => {
+  const [user, setUser] = useState({
+    username: "Admin",
+    profilePicture: "/path/to/default/user1.jpg", // Default image path
+    jobTitle: "Membre CNOT" // Default job title
+  });
 
-const Settings = props => {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await getUserProfile();
+        setUser({
+          username: userData.user.name || "Admin",
+          profilePicture: userData.user.image ? `http://localhost:3000/${userData.user.image}` : "/path/to/default/user1.jpg",
+          jobTitle:"Membre CNOT"// Assuming user data includes jobTitle
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <React.Fragment>
       <Col xl={4}>
-        <Card>
+
+      <Card className="overflow-hidden">
+        <div className="bg-primary bg-soft">
+          <Row>
+          <Col xs={7}>
+                      <div className="text-primary p-4">
+                        <h5 className="text-primary">Bienvenue !</h5>
+                        <p>Connectez pour continuer</p>
+                      </div>
+                    </Col>
+                    <Col className="col-5 align-self-end">
+                      <img src={profile} alt="" className="img-fluid" />
+                    </Col>
+          </Row>
+        </div>
+        <CardBody className="pt-0">
+          <Row>
+            <Col sm="4">
+              <div className="avatar-md profile-user-wid mb-4">
+              <img
+                  src={user.profilePicture}
+                  alt=""
+                  className="avatar-sm rounded-circle img-thumbnail"
+                />
+              </div>
+             
+            </Col>
+
+           
+          </Row>
+        </CardBody>
+      </Card>
+      {/*  <Card>
           <CardBody>
             <div className="d-flex">
               <div className="me-3">
                 <img
-                  src={avatar}
+                  src={user.profilePicture}
                   alt=""
                   className="avatar-sm rounded-circle img-thumbnail"
                 />
@@ -30,60 +85,39 @@ const Settings = props => {
                 <div className="d-flex">
                   <div className="flex-grow-1">
                     <div className="text-muted">
-                      <h5 className="mb-1">Henry wells</h5>
-                      <p className="mb-0">UI / UX Designer</p>
+                      <h5 className="mb-1">{user.username}</h5>
+                      <p className="mb-0">{user.jobTitle}</p>
                     </div>
                   </div>
 
-                  <UncontrolledDropdown
-                    className="ms-2"
-                  >
+                  <UncontrolledDropdown className="ms-2">
                     <DropdownToggle
                       className="btn btn-light btn-sm"
                       color="#eff2f7"
                       type="button"
                     >
-                      <i className="bx bxs-cog align-middle me-1"></i> Setting
+                      <i className="bx bxs-cog align-middle me-1"></i> Consulter
                     </DropdownToggle>
                     <DropdownMenu className="dropdown-menu-end">
                       <Link className="dropdown-item" to="#">
-                        Action
+                        Mon Profil
                       </Link>
                       <Link className="dropdown-item" to="#">
-                        Another action
+                        Les Féderations
                       </Link>
-                      <Link className="dropdown-item" to="#">
-                        Something else
-                      </Link>
+                     
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </div>
 
                 <hr />
 
-                <Row>
-                  <Col xl={4}>
-                    <div>
-                      <p className="text-muted text-truncate mb-2">
-                        Total Post
-                      </p>
-                      <h5 className="mb-0">32</h5>
-                    </div>
-                  </Col>
-                  <div className="col-4">
-                    <div>
-                      <p className="text-muted text-truncate mb-2">
-                        Subscribes
-                      </p>
-                      <h5 className="mb-0">10k</h5>
-                    </div>
-                  </div>
-                </Row>
+                
               </div>
             </div>
           </CardBody>
         </Card>
-
+*/}
         <Card>
           <CardBody>
             <div className="d-flex flex-wrap">
@@ -145,7 +179,7 @@ const Settings = props => {
                 <Col xl={10}>
                   <h4 className="text-primary">Subscribe !</h4>
                   <p className="text-muted font-size-14 mb-4">
-                    Subscribe our newletter and get notification to stay update.
+                    Subscribe our newsletter and get notification to stay updated.
                   </p>
 
                   <div className="input-group bg-light rounded">
@@ -173,7 +207,7 @@ const Settings = props => {
         </Card>
       </Col>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

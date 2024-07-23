@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import ProfileMenu from "../../components/CommonForBoth/TopbarDropdown/ProfileMenu1";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authUser'));
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,12 +51,12 @@ const Header = () => {
           <a href="#" style={styles.navLink}>
             Contact
           </a>
-          <a href="/login" style={styles.navButton}>
-            Sign In
-          </a>
-          <a href="/register" style={styles.navButton}>
-            Sign Up
-          </a>
+          {isLoggedIn ? (
+  <ProfileMenu />
+) : (
+  <a href="/login" style={styles.navButton}>Sign In</a>
+)}
+          
         </nav>
         <div style={!isDesktop ? styles.menuButtonContainer : styles.navHidden}>
           <button onClick={toggleMenu} style={styles.menuButton}>
@@ -84,12 +86,12 @@ const Header = () => {
             <a href="#" style={styles.navLink} onClick={toggleMenu}>
               Contact
             </a>
-            <a href="/login" style={styles.navLink} onClick={toggleMenu}>
-              Sign In
-            </a>
-            <a href="/register" style={styles.navLink} onClick={toggleMenu}>
-              Sign Up
-            </a>
+            {isLoggedIn ? (
+   <ProfileMenu />
+ ) : (
+   <a href="/login" style={styles.navLink} onClick={toggleMenu}>Sign In</a>
+ )}
+           
           </nav>
         </div>
       )}

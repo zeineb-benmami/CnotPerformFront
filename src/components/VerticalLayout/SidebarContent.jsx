@@ -153,6 +153,26 @@ const SidebarContent = (props) => {
 
           <li className="menu-title">{props.t("Apps")}</li>
 
+            <li>
+              <Link to="/federation">
+                <i className="bx bxs-user-detail"></i>
+                <span>{props.t("Féderations")}</span>
+              </Link>
+            </li>
+            
+
+            <li>
+              <Link to="/chatCnot">
+                <i className="bx bx-chat"></i>
+                <span>{props.t("Chat")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#">
+                <i className="bx bx-file"></i>
+                <span>{props.t("File Manager")}</span>
+              </Link>
+            </li>
           <li>
             <Link to="/calendar">
               <i className="bx bx-calendar"></i>
@@ -190,12 +210,7 @@ const SidebarContent = (props) => {
             </ul>
           </li>
 
-          <li>
-            <Link to="#">
-              <i className="bx bx-chat"></i>
-              <span>{props.t("Chat")}</span>
-            </Link>
-          </li>
+         
           <li>
             <Link to="/#">
               <i className="bx bx-file"></i>
@@ -282,6 +297,7 @@ const SidebarContent = (props) => {
             </ul>
           </li>
 
+           
           <li>
             <Link to="/#" className="has-arrow">
               <i className="bx bxs-detail" />

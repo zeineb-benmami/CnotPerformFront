@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import Authmiddleware from "./route";
 
 // Profile
 import UserProfile from "../pages/Authentication/user-profile";
@@ -12,8 +13,11 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
-
 import Calendar from "../pages/Calendar/index";
+import Federation from "../pages/Federations/contacts-grid";
+import Chat from "../pages/Chat/Chat"
+import ChatFederation from "../pages/Chat/ChatFederation"
+// Front office pages
 
 import Events from "../pages/Events/projects-grid";
 
@@ -32,18 +36,57 @@ import Home from "../frontoffice/pages/Home";
 
 import Landing from "../frontoffice/landing/index";
 import Header from "../frontoffice/pages/Header";
-
 import Footer from "../frontoffice/pages/Footer";
+import Unauthorized from "./unauthorized";
 import EmailInbox from "../pages/Email/email-inbox";
 import EmailRead from "../pages/Email/email-read";
 import EmailBasicTemplte from "../pages/Email/email-basic-templte";
 import EmailAlertTemplte from "../pages/Email/email-template-alert";
 import EmailTemplateBilling from "../pages/Email/email-template-billing";
-
+const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
-  { path: "/calendar", component: <Calendar /> },
+  
+  {
+    path: "/dashboard",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Dashboard />
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/calendar",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Calendar />
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/federation",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Federation/>
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/chatCnot",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Chat />
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/profile",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <UserProfile />
+      </Authmiddleware>
+    ),
+  },
 
   { path: "/events", component: <Events /> },
 
@@ -54,9 +97,6 @@ const authProtectedRoutes = [
   { path: "/event_details/:id", component: <EventDetails /> },
 
   { path: "/liste", component: <Liste /> },
-
-  // //profile
-  { path: "/profile", component: <UserProfile /> },
 
   //email
   { path: "/email-inbox", component: <EmailInbox /> },
@@ -74,6 +114,9 @@ const authProtectedRoutes = [
   },
 ];
 
+
+
+
 const publicRoutes = [
   {
     path: "/home",
@@ -85,6 +128,14 @@ const publicRoutes = [
       </>
     ),
   },
+  { path: "/Chat",  component: (
+    <>
+      <Header />
+      <ChatFederation />
+      <Footer />
+    </>
+  ), },
+
   {
     path: "/landing",
     component: (
@@ -101,6 +152,8 @@ const publicRoutes = [
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
+  { path: "/unauthorized", component: <Unauthorized /> },
+
 ];
 
 export { authProtectedRoutes, publicRoutes };

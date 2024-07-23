@@ -2,6 +2,24 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:3000/users";
 
+
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
+});
+
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      // Si le token est expiré, déconnecter l'utilisateur
+      localStorage.removeItem('authUser'); // Supprimer le token du localStorage
+      window.location.href = '/login'; // Rediriger vers la page de connexion
+    }
+    return Promise.reject(error);
+  }
+);
+
+
 export async function signup(userData) {
   try {
     const response = await axios.post(`${BASE_URL}/signup`, userData);
@@ -38,14 +56,7 @@ export async function addAdmin(userData) {
   }
 }
 
-/* export async function signin(userData) {
-   try {
-     const response = await axios.post(`${BASE_URL}/signin`, userData);
-     return response.data;
-   } catch (error) {
-     throw error.response.data;
-   }
- }*/
+
  export async function getUserByEmail(email) {
   try {
     const response = await axios.get(`${BASE_URL}/getuser-by-email/${email}`);
@@ -59,9 +70,7 @@ export async function addAdmin(userData) {
 export async function signin(userData) {
   try {
     const response = await axios.post(`${BASE_URL}/signin`, userData);
-    // Stockage du token JWT dans le localStorage
-   // localStorage.setItem("token", response.data.token);
-    //console.log(localStorage.getItem('token'));
+   
     return response.data;
   } catch (error) {
     throw error.response.data;
@@ -87,14 +96,15 @@ export async function getAllUsers() {
     }
   }
 
-  export async function updateUser(userData) {
+  export async function updateUser(userId, userData) {
     try {
-      const response = await axios.put(`${BASE_URL}/update`, userData);
+      const response = await axios.put(`${BASE_URL}/update/${userId}`, userData);
       return response.data;
     } catch (error) {
       throw error.response.data;
     }
   }
+  
 
 
 export async function deleteUser(userId) {
@@ -123,57 +133,12 @@ export async function getUserWaiting (userId) {
     throw error.response.data;
   }
 }
-export async function finishplayerprofile(userData) {
-  try {
-    const response = await axios.post(
-      `${BASE_URL}/finishplayerprofile`,
-      userData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    // localStorage.setItem('token', response.data.token);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
-}
 
-export async function getAllPlayers() {
-  try {
-    const response = await axios.get(`${BASE_URL}/getAllPlayers`);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
-}
-export async function getAllStaff() {
-  try {
-    const response = await axios.get(`${BASE_URL}/getAllStaff`);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
-}
-export const confirmUser = async (userId) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/confirm/${userId}`);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
-};
 
-export const refuseUser = async (userId) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/refuse/${userId}`);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
-};
+
+
+
+
 
 export async function getUserProfile() {
   try {
@@ -193,7 +158,7 @@ export async function getUserProfile() {
   }
 }
 
-export async function updateUserImage(userId, file) {
+export async function uploadProfilePicture(userId, file) {
   const formData = new FormData();
   formData.append('image', file);
 
@@ -268,6 +233,25 @@ export async function getRoleF() {
   }
 }
 
+export async function getRoleMCName() {
+  try {
+    const response = await axios.get(`${BASE_URL}/getRoleMC`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export async function getRoleFName() {
+  try {
+    const response = await axios.get(`${BASE_URL}/getNameF`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+
 export const updatePasswordAfterRecovery = async (email, newPassword) => {
   try {
     const response = await axios.put(`${BASE_URL}/update-password-recovery`, { email, newPassword });
@@ -276,5 +260,32 @@ export const updatePasswordAfterRecovery = async (email, newPassword) => {
     // Gérer les erreurs de la réponse ici
     console.error('Error updating password:', error.response);
     throw error;
+  }
+}
+
+export async function blockUser(userId) {
+  try {
+    const response = await axios.put(`${BASE_URL}/block/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export async function unBlockUser(userId) {
+  try {
+    const response = await axios.put(`${BASE_URL}/unblock/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
+export async function searchUsersByName(name) {
+  try {
+    const response = await axios.get(`${BASE_URL}/search/${name}`);
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error;
   }
 }

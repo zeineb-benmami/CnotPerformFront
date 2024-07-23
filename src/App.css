@@ -41,6 +41,10 @@ button {
   font-size: calc(10px + 2vmin);
 }
 
+@import '~flag-icon-css/css/flag-icon.min.css';
+@import '~react-phone-input-2/lib/style.css';
+
+
 /* CSS to fix the date squishing issue */
 
 .email-rightbar .message-list .col-mail .date {
