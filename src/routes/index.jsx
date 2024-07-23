@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import Authmiddleware from "./route";
 
 // Profile
 import UserProfile from "../pages/Authentication/user-profile";
@@ -12,22 +13,60 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
-
 import Calendar from "../pages/Calendar/index";
+import Federation from "../pages/Federations/contacts-grid";
+import Chat from "../pages/Chat/Chat"
+import ChatFederation from "../pages/Chat/ChatFederation"
+// Front office pages
 import Home from "../frontoffice/pages/Home";
 import Header from "../frontoffice/pages/Header";
-
 import Footer from "../frontoffice/pages/Footer";
+import Unauthorized from "./unauthorized";
+
+const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
-  { path: "/calendar", component: <Calendar /> },
-
-  // //profile
-  { path: "/profile", component: <UserProfile /> },
-
-  // this route should be at the end of all other routes
-  // eslint-disable-next-line react/display-name
+  
+  {
+    path: "/dashboard",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Dashboard />
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/calendar",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Calendar />
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/federation",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Federation/>
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/chatCnot",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <Chat />
+      </Authmiddleware>
+    ),
+  },
+  {
+    path: "/profile",
+    component: (
+      <Authmiddleware restrictedRoutes={restrictedRoutes}>
+        <UserProfile />
+      </Authmiddleware>
+    ),
+  },
   {
     path: "/",
     exact: true,
@@ -46,10 +85,20 @@ const publicRoutes = [
       </>
     ),
   },
+  { path: "/Chat",  component: (
+    <>
+      <Header />
+      <ChatFederation />
+      <Footer />
+    </>
+  ), },
+
   { path: "/logout", component: <Logout /> },
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
+  { path: "/unauthorized", component: <Unauthorized /> },
+
 ];
 
 export { authProtectedRoutes, publicRoutes };
