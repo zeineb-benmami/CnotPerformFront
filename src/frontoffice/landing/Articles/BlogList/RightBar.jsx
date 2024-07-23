@@ -14,7 +14,6 @@ const RightBar = () => {
         <Card>
           <CardBody className="p-4">
             <div className="search-box">
-              <p className="text-muted">Search</p>
               <div className="position-relative">
                 <input
                   type="text"
@@ -33,12 +32,13 @@ const RightBar = () => {
               <ul className="list-unstyled fw-medium">
                 <li>
                   <Link to="#" className="text-muted d-block py-2">
-                    <i className="mdi mdi-chevron-right me-1"></i> Design
+                    <i className="mdi mdi-chevron-right me-1"></i> Entourage
                   </Link>
                 </li>
                 <li>
                   <Link to="#" className="text-muted d-block py-2">
-                    <i className="mdi mdi-chevron-right me-1"></i> Development{" "}
+                    <i className="mdi mdi-chevron-right me-1"></i> Universalité
+                    des jeux olympiques{" "}
                     <span className="badge badge-soft-success rounded-pill font-size-12 float-end ms-1">
                       04
                     </span>
@@ -46,17 +46,20 @@ const RightBar = () => {
                 </li>
                 <li>
                   <Link to="#" className="text-muted d-block py-2">
-                    <i className="mdi mdi-chevron-right me-1"></i> Business
+                    <i className="mdi mdi-chevron-right me-1"></i> Développement
+                    du Sport
                   </Link>
                 </li>
                 <li>
                   <Link to="#" className="text-muted d-block py-2">
-                    <i className="mdi mdi-chevron-right me-1"></i> Project
+                    <i className="mdi mdi-chevron-right me-1"></i> Valeurs
+                    olympiques
                   </Link>
                 </li>
                 <li>
                   <Link to="#" className="text-muted d-block py-2">
-                    <i className="mdi mdi-chevron-right me-1"></i> Travel
+                    <i className="mdi mdi-chevron-right me-1"></i> Gestion des
+                    CNO
                     <span className="badge badge-soft-success rounded-pill font-size-12 float-end ms-1">
                       12
                     </span>

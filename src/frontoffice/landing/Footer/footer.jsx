@@ -26,7 +26,6 @@ const Features = () => {
     {
       title: "Resources",
       links: [
-        { title: "Token sales", link: "#" },
         { title: "Privacy Policy", link: "#" },
         { title: "Terms & Conditions", link: "#" },
       ],
@@ -61,7 +60,7 @@ const Features = () => {
                       target="_blank"
                       title="Facebook"
                     >
-                      <img src={fb} alt="" srcset="" />
+                      <img src={fb} alt="" />
                     </a>
                   </li>
                   <li>
@@ -70,7 +69,7 @@ const Features = () => {
                       target="_blank"
                       title="CNOT.ORG"
                     >
-                      <img src={gl} alt="" srcset="" />
+                      <img src={gl} alt="" />
                     </a>
                   </li>
                   <li>
@@ -79,7 +78,7 @@ const Features = () => {
                       target="_blank"
                       title="Youtube"
                     >
-                      <img src={yt} alt="" srcset="" />
+                      <img src={yt} alt="" />
                     </a>
                   </li>
                 </ul>

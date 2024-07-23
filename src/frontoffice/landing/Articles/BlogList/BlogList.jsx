@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  Button,
   Card,
   Col,
   NavItem,
@@ -12,22 +13,23 @@ import {
 
 import classnames from "classnames";
 
-//import images
-import small from "../../../../assets/images/small/img-2.jpg";
-import small2 from "../../../../assets/images/small/img-6.jpg";
 import { getEvents } from "../../../../service/event-service";
+import BlogGrid from "../BlogGrid/BlogGrid";
+import BlogStack from "./BlogStack";
 
 const BlogList = () => {
   const [activeTab, toggleTab] = useState("1");
 
   const [eventList, setEventList] = useState([]);
 
+  const [showGrid, setShowGrid] = useState(false);
+
   useEffect(() => {
     try {
       let isMounted = true;
       const fetchEvents = async () => {
         const data = await getEvents();
-        if (isMounted) setEventList(await data.data.message);
+        if (isMounted) setEventList(await data.data.message.reverse());
       };
 
       fetchEvents();
@@ -39,6 +41,24 @@ const BlogList = () => {
       alert(error.message);
     }
   }, []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 5; // Number of events per page
+
+  // Calculate the indices of the first and last events on the current page
+  const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+
+  // Slice the events list to get only the events for the current page
+  const currentEvents = eventList.slice(indexOfFirstEvent, indexOfLastEvent);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(eventList.length / eventsPerPage);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <React.Fragment>
@@ -102,17 +122,24 @@ const BlogList = () => {
                                 </NavLink>
                               </NavItem>
                               <NavItem>
-                                <Link
-                                  className="nav-link active"
-                                  to="/blog-list"
+                                <Button
+                                  className={`nav-link ${
+                                    !showGrid ? "active" : ""
+                                  }`}
+                                  onClick={() => setShowGrid(false)}
                                 >
                                   <i className="mdi mdi-format-list-bulleted"></i>
-                                </Link>
+                                </Button>
                               </NavItem>
                               <NavItem>
-                                <Link to="/blog-grid" className="nav-link">
+                                <Button
+                                  className={`nav-link ${
+                                    showGrid ? "active" : ""
+                                  }`}
+                                  onClick={() => setShowGrid(true)}
+                                >
                                   <i className="mdi mdi-view-grid-outline"></i>
-                                </Link>
+                                </Button>
                               </NavItem>
                             </ul>
                           </div>
@@ -120,91 +147,57 @@ const BlogList = () => {
                       </Row>
 
                       <hr className="mb-4" />
+                      {currentEvents?.length == 0 && (
+                        <h3 className=" text-center">Aucun évènement trouvé</h3>
+                      )}
 
-                      {eventList.map((evt, index) => (
-                        <div key={index}>
-                          <h5>
-                            <Link
-                              to={`/articles/${evt?._id}`}
-                              className="text-dark"
-                            >
-                              {evt?.title}
-                            </Link>
-                          </h5>
-                          <p className="text-muted">
-                            {evt?.startDate.substring(0, 10)}
-                          </p>
-
-                          <div className="position-relative mb-3">
-                            <img
-                              src={evt?.imgUrl}
-                              alt=""
-                              className="img-thumbnail"
-                            />
-                          </div>
-
-                          <ul className="list-inline">
-                            <li className="list-inline-item mr-3">
-                              <Link to="#" className="text-muted">
-                                <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
-                                {evt?.category}
-                              </Link>
-                            </li>
-                            <li className="list-inline-item mr-3">
-                              <Link to="#" className="text-muted">
-                                <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
-                                {evt?.participants?.length}
-                              </Link>
-                            </li>
-                          </ul>
-                          <p>{evt?.description}</p>
-
-                          <div>
-                            <Link
-                              to={`/articles/${evt?._id}`}
-                              className="text-primary"
-                            >
-                              Voir plus <i className="mdi mdi-arrow-right"></i>
-                            </Link>
-                          </div>
-                          <hr className="my-5" />
-                        </div>
-                      ))}
+                      {!showGrid ? (
+                        <BlogStack currentEvents={currentEvents} />
+                      ) : (
+                        <BlogGrid currentEvents={currentEvents} />
+                      )}
 
                       <div className="text-center">
                         <ul className="pagination justify-content-center pagination-rounded">
-                          <li className="page-item disabled">
-                            <Link to="#" className="page-link">
+                          <li
+                            className={`page-item ${
+                              currentPage === 1 ? "disabled" : ""
+                            }`}
+                          >
+                            <Link
+                              to="#"
+                              className="page-link"
+                              onClick={() => handlePageChange(currentPage - 1)}
+                            >
                               <i className="mdi mdi-chevron-left"></i>
                             </Link>
                           </li>
-                          <li className="page-item">
-                            <Link to="#" className="page-link">
-                              1
-                            </Link>
-                          </li>
-                          <li className="page-item active">
-                            <Link to="#" className="page-link">
-                              2
-                            </Link>
-                          </li>
-                          <li className="page-item">
-                            <Link to="#" className="page-link">
-                              3
-                            </Link>
-                          </li>
-                          <li className="page-item">
-                            <Link to="#" className="page-link">
-                              ...
-                            </Link>
-                          </li>
-                          <li className="page-item">
-                            <Link to="#" className="page-link">
-                              10
-                            </Link>
-                          </li>
-                          <li className="page-item">
-                            <Link to="#" className="page-link">
+                          {[...Array(totalPages)].map((_, index) => (
+                            <li
+                              key={index}
+                              className={`page-item ${
+                                currentPage === index + 1 ? "active" : ""
+                              }`}
+                            >
+                              <Link
+                                to="#"
+                                className="page-link"
+                                onClick={() => handlePageChange(index + 1)}
+                              >
+                                {index + 1}
+                              </Link>
+                            </li>
+                          ))}
+                          <li
+                            className={`page-item ${
+                              currentPage === totalPages ? "disabled" : ""
+                            }`}
+                          >
+                            <Link
+                              to="#"
+                              className="page-link"
+                              onClick={() => handlePageChange(currentPage + 1)}
+                            >
                               <i className="mdi mdi-chevron-right"></i>
                             </Link>
                           </li>
