@@ -30,7 +30,7 @@ import { map } from "lodash";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { bookmarkEmail, getEmails, getMailAccount, verifPassword } from "../../service/mailService";
+import { bookmarkEmail, getEmails, getMailAccount, send, verifPassword } from "../../service/mailService";
 import {
   getMailsLists as onGetMailsLists,
   getSelectedMails as onGetSelectedMails,
@@ -42,6 +42,8 @@ import EmailToolbar from "./email-toolbar";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import EmailSideBar from "./email-sidebar";
 
 const EmailInbox = (props) => {
   //meta title
@@ -54,6 +56,9 @@ const EmailInbox = (props) => {
   const [secondModalOpen, setSecondModalOpen] = useState(true); // Second modal
   const [password, setPassword] = useState('');
   const [account, setAccount] = useState(null);
+  const [to, setTo] = useState('');
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
 
   const fetchEmails = async (account) => {
     try {
@@ -115,9 +120,10 @@ const EmailInbox = (props) => {
   };
 
   useEffect(() => {
-    const mailid = localStorage.getItem("mailId");
-    const id = localStorage.getItem("id");
-    if (id && mailid) {
+    const storedAuthUser = localStorage.getItem('authUser');
+    if (storedAuthUser) {
+      const authUser = JSON.parse(storedAuthUser);
+      const id = authUser?.user?._id;
       fetchMailAccount(id);
     }
   }, []);
@@ -154,191 +160,7 @@ const EmailInbox = (props) => {
           <Row>
             <Col xs="12">
               {/* Render Email SideBar */}
-              <Card className="email-leftbar">
-                <Button
-                  type="button"
-                  color="danger"
-                  onClick={toggleModal}
-                  block
-                >
-                  Compose
-                </Button>
-                <div className="mail-list mt-4">
-                  <Nav
-                    tabs
-                    className="nav-tabs-custom"
-                    vertical
-                    role="tablist"
-                  >
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === 0,
-                        })}
-                        onClick={() => {
-                          setActiveTab(0);
-                          dispatch(onGetMailsLists(0));
-                        }}
-                      >
-                        <i className="mdi mdi-email-outline me-2"></i> Inbox{" "}
-                        <span className="ml-1 float-end">(18)</span>
-                      </NavLink>
-                    </NavItem>
-
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === 6,
-                        })}
-                        onClick={() => {
-                          setActiveTab(6);
-                          dispatch(onGetMailsLists(6));
-                        }}
-                      >
-                        <i className="mdi mdi-star-outline me-2"></i>Starred
-                      </NavLink>
-                    </NavItem>
-
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === 1,
-                        })}
-                        onClick={() => {
-                          setActiveTab(1);
-                          dispatch(onGetMailsLists(1));
-                        }}
-                      >
-                        <i className="mdi mdi-diamond-stone me-2"></i>Important
-                      </NavLink>
-                    </NavItem>
-
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === 2,
-                        })}
-                        onClick={() => {
-                          setActiveTab(2);
-                          dispatch(onGetMailsLists(2));
-                        }}
-                      >
-                        <i className="mdi mdi-file-outline me-2"></i>Draft
-                      </NavLink>
-                    </NavItem>
-
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === 3,
-                        })}
-                        onClick={() => {
-                          setActiveTab(3);
-                          dispatch(onGetMailsLists(3));
-                        }}
-                      >
-                        <i className="mdi mdi-email-check-outline me-2"></i>Sent
-                        Mail
-                      </NavLink>
-                    </NavItem>
-
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: activeTab === 4,
-                        })}
-                        onClick={() => {
-                          setActiveTab(4);
-                          dispatch(onGetMailsLists(4));
-                        }}
-                      >
-                        <i className="mdi mdi-trash-can-outline me-2"></i>Trash
-                      </NavLink>
-                    </NavItem>
-                  </Nav>
-                </div>
-
-                <h6 className="mt-4">Labels</h6>
-
-                <div className="mail-list mt-1">
-                  <Link to="#">
-                    <span className="mdi mdi-arrow-right-drop-circle text-info float-end"></span>
-                    Theme Support
-                  </Link>
-                  <Link to="#">
-                    <span className="mdi mdi-arrow-right-drop-circle text-warning float-end"></span>
-                    Freelance
-                  </Link>
-                  <Link to="#">
-                    <span className="mdi mdi-arrow-right-drop-circle text-primary float-end"></span>
-                    Social
-                  </Link>
-                  <Link to="#">
-                    <span className="mdi mdi-arrow-right-drop-circle text-danger float-end"></span>
-                    Friends
-                  </Link>
-                  <Link to="#">
-                    <span className="mdi mdi-arrow-right-drop-circle text-success float-end"></span>
-                    Family
-                  </Link>
-                </div>
-              </Card>
-
-              <Modal
-                isOpen={modal}
-                role="dialog"
-                autoFocus={true}
-                centered={true}
-                className="exampleModal"
-                tabIndex="-1"
-                toggle={toggleModal}
-              >
-                <div className="modal-content">
-                  <ModalHeader toggle={toggleModal}>New Message</ModalHeader>
-                  <ModalBody>
-                    <form>
-                      <div className="mb-3">
-                        <Input
-                          type="email"
-                          className="form-control"
-                          placeholder="To"
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <Input
-                          type="text"
-                          className="form-control"
-                          placeholder="Subject"
-                        />
-                      </div>
-                      {/* <Editor
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                      /> */}
-                      <CKEditor
-                        editor={ClassicEditor}
-                        data="<p>Hello from CKEditor 5!</p>"
-                        onReady={(editor) => {
-                          // You can store the "editor" and use when it is needed.
-                        }}
-                        onChange={(event, editor) => {
-                          const data = editor.getData();
-                        }}
-                      />
-                    </form>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="secondary" onClick={toggleModal}>
-                      Close
-                    </Button>
-                    <Button color="primary">
-                      Send <i className="fab fa-telegram-plane ms-1"></i>
-                    </Button>
-                  </ModalFooter>
-                </div>
-              </Modal>
+            <EmailSideBar mailaccount = {mailAccount} password={password}/>
 
               <Modal
                 isOpen={secondModalOpen}
@@ -407,17 +229,20 @@ const EmailInbox = (props) => {
                           </div>
                           <div className="col-mail col-mail-2">
                             <div className="subject">
-                              <span
-                              >{mail.subject.length > 25 ? `${mail.subject.substring(0, 30)}...` : mail.subject}</span>
+                              <span>
+                                {mail.subject.length > 25 ? `${mail.subject.substring(0, 30)}...` : mail.subject}
+                              </span>
                             </div>
-                            <div className="date">{new Date(mail.date).toLocaleString('en-US', {
+                            <div className="date w-50">
+                              {new Date(mail.date).toLocaleString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
                                 hour: '2-digit',
-                                minute: '2-digit',  
-                                hour12: true
-                              })}</div>
+                                minute: '2-digit',
+                                hour12: true,
+                              })}
+                            </div>
                           </div>
                         </li>
                         ))}

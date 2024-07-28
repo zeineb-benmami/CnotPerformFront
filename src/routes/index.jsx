@@ -48,6 +48,8 @@ import EmailTemplateBilling from "../pages/Email/email-template-billing";
 import Navbar_Page from "../frontoffice/landing/Navbar/Navbar";
 import MyEvents from "../frontoffice/landing/Blog/myEvents";
 const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
+import MailAccount from "../pages/Email/mailAccount";
+
 
 const authProtectedRoutes = [
   {
@@ -105,6 +107,7 @@ const authProtectedRoutes = [
   { path: "/email-template-basic", component: <EmailBasicTemplte /> },
   { path: "/email-template-alert", component: <EmailAlertTemplte /> },
   { path: "/email-template-billing", component: <EmailTemplateBilling /> },
+  { path: "/email-account", component: <MailAccount /> },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
