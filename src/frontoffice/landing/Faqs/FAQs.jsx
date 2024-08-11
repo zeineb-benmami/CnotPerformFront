@@ -20,12 +20,12 @@ const FAQs = () => {
 
   return (
     <React.Fragment>
-      <section className="section" id="faqs">
+      <section className="section hero-section bg-ico-hero" id="faqs">
         <Container>
           <Row>
             <Col lg="12">
-              <div className="text-center mb-5">
-                <div className="small-title">FAQs</div>
+              <div className="text-center mb-5 text-white">
+                <div className="small-title text-white">FAQs</div>
                 <h4>Frequently asked questions</h4>
               </div>
             </Col>
@@ -43,8 +43,8 @@ const FAQs = () => {
                           setactiveTab("1")
                         }}
                       >
-                        <i className="bx bx-help-circle nav-icon d-block mb-2"/>
-                        <p className="font-weight-bold mb-0">
+                        <i className="bx bx-help-circle nav-icon d-block mb-2 text-white"/>
+                        <p className="font-weight-bold mb-0 text-white">
                           General Questions
                         </p>
                       </NavLink>
@@ -55,8 +55,8 @@ const FAQs = () => {
                           setactiveTab("2")
                         }}
                       >
-                        <i className="bx bx-receipt nav-icon d-block mb-2"/>
-                        <p className="font-weight-bold mb-0">Token sale</p>
+                        <i className="bx bx-receipt nav-icon d-block mb-2 text-white"/>
+                        <p className="font-weight-bold mb-0 text-white">Token sale</p>
                       </NavLink>
 
                       <NavLink
@@ -65,8 +65,8 @@ const FAQs = () => {
                           setactiveTab("3")
                         }}
                       >
-                        <i className="bx bx-timer d-block nav-icon mb-2"/>
-                        <p className="font-weight-bold mb-0">Roadmap</p>
+                        <i className="bx bx-timer d-block nav-icon mb-2 text-white"/>
+                        <p className="font-weight-bold mb-0 text-white">Roadmap</p>
                       </NavLink>
                     </Nav>
                   </Col>

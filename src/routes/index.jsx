@@ -122,9 +122,7 @@ const publicRoutes = [
     path: "/home",
     component: (
       <>
-        <Header />
-        <Home />
-        <Footer />
+        <Landing />
       </>
     ),
   },
@@ -135,15 +133,6 @@ const publicRoutes = [
       <Footer />
     </>
   ), },
-
-  {
-    path: "/landing",
-    component: (
-      <>
-        <Landing />
-      </>
-    ),
-  },
 
   { path: "/articles", component: <Articles /> },
 

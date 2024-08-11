@@ -31,12 +31,12 @@ const Blog = () => {
 
   return (
     <React.Fragment>
-      <section className="section bg-white" id="news">
+      <section className="section hero-section bg-ico-hero" id="news">
         <Container>
           <Row>
             <Col lg="12">
-              <div className="mb-5 text-center">
-                <div className="small-title">Evènements</div>
+              <div className="mb-5 text-center text-white">
+                <div className="small-title text-white">Evènements</div>
                 <h3>Nouvelles Récents</h3>
               </div>
             </Col>
@@ -63,7 +63,7 @@ const Blog = () => {
                       <i className="bx bx-calendar text-danger ms-1" />{" "}
                       {evt?.startDate.substring(0, 10)}
                     </p>
-                    <h5 className="mb-3">{evt?.title}</h5>
+                    <h5 className="mb-3 text-white">{evt?.title}</h5>
                     <p>{evt?.description}</p>
 
                     <div>

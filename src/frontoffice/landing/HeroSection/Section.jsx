@@ -65,7 +65,7 @@ const Section = () => {
   return (
     <React.Fragment>
       <section className="section hero-section bg-ico-hero" id="home">
-        <div className="bg-overlay bg-primary" />
+        <div/>
         <Container>
           <Row className="align-items-center">
             <Col lg="6">

@@ -71,8 +71,6 @@ const CryptoIcoLanding = () => {
       {/* Hero section */}
       <Section />
 
-      {/* mini cards */}
-      <CardsMini />
 
       {/* aboutus */}
       <AboutUs />
