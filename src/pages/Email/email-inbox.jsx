@@ -30,7 +30,7 @@ import { map } from "lodash";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { bookmarkEmail, getEmails, getMailAccount, send, verifPassword } from "../../service/mailService";
+import { bookmarkEmail, getEmails, getMailAccount, verifPassword } from "../../service/mailService";
 import {
   getMailsLists as onGetMailsLists,
   getSelectedMails as onGetSelectedMails,
@@ -42,7 +42,6 @@ import EmailToolbar from "./email-toolbar";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
 import EmailSideBar from "./email-sidebar";
 
 const EmailInbox = (props) => {
@@ -80,7 +79,7 @@ const EmailInbox = (props) => {
       console.log({mailaddress : mailAccount, password: password});
       
       fetchEmails({mailaddress : mailAccount, password: password});
-      toast.success("Fetching mails ...", {
+      /*toast.success("Fetching mails ...", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -90,11 +89,11 @@ const EmailInbox = (props) => {
         progress: undefined,
         theme: "light",
         transition: Bounce,
-        });
+        });*/
       
     }
     else{
-      toast.error('Wrong password', {
+     /* toast.error('Wrong password', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -104,7 +103,7 @@ const EmailInbox = (props) => {
         progress: undefined,
         theme: "colored",
         transition: Bounce,
-        }); 
+        }); */
     }
     
   }
