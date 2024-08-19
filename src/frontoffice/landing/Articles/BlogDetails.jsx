@@ -89,6 +89,7 @@ const BlogDetails = () => {
           style={{ textAlign: "center", maxHeight: "400px", margin: "auto" }}
         />
         <CarouselCaption
+          className="carousel-dark"
           captionText={photo?.fileName}
           captionHeader={photo?.fileName}
         />
@@ -124,6 +125,7 @@ const BlogDetails = () => {
                               <i className="mdi mdi-calendar me-1"></i>
                               {event?.startDate?.substring(0, 10)}{" "}
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <i className="mdi mdi-calendar me-1"></i>
                               {event?.endDate?.substring(0, 10)}
                             </p>
                           </div>
@@ -157,7 +159,10 @@ const BlogDetails = () => {
                           </div>
                           <hr />
 
-                          <div className="my-5">
+                          <div
+                            className="my-5"
+                            style={{ maxHeight: "500px", minHeight: "480px" }}
+                          >
                             <Carousel
                               activeIndex={activeIndex}
                               next={next}
@@ -170,11 +175,13 @@ const BlogDetails = () => {
                               />
                               {slides}
                               <CarouselControl
+                                className="carousel-dark"
                                 direction="prev"
                                 directionText="Previous"
                                 onClickHandler={previous}
                               />
                               <CarouselControl
+                                className="carousel-dark"
                                 direction="next"
                                 directionText="Next"
                                 onClickHandler={next}

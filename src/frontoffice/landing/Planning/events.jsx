@@ -22,7 +22,7 @@ const events = () => {
   const [eventList, setEventList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const dispatch = useDispatch();
+  /*const dispatch = useDispatch();
 
   const { events, categories } = useSelector((state) => ({
     events: state.calendar.events,
@@ -32,7 +32,7 @@ const events = () => {
   useEffect(() => {
     dispatch(onGetCategories());
     dispatch(onGetEvents());
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   useEffect(() => {
     let isMounted = true;
@@ -42,13 +42,33 @@ const events = () => {
       try {
         const data = await getEvents();
         let events = [];
-        if (isMounted) {
+        if (isMounted && data.data && data.data.message) {
           data.data.message.forEach((event) => {
+            let cn = "";
+            switch (event.category) {
+              case "Entourage":
+                cn = "bg-success text-white";
+                break;
+              case "Universalité des jeux olympiques":
+                cn = "bg-primary text-white";
+                break;
+              case "Développement du Sport":
+                cn = "bg-warning text-white";
+                break;
+              case "Valeurs olympiques":
+                cn = "bg-danger text-white";
+                break;
+              default:
+                cn = "bg-dark text-white";
+                break;
+            }
             let evt = {
               id: event._id,
-              title: event.title,
-              start: new Date(event.startDate).getDate(),
-              end: new Date(event.endDate).getDate(),
+              title: event.title + " | " + event.category,
+              start: new Date(event.startDate).getTime(), // Use getTime() for date comparison
+              end: new Date(event.endDate).getTime(), // Use getTime() for date comparison
+
+              className: cn,
             };
             events.push(evt);
           });
@@ -66,7 +86,7 @@ const events = () => {
     fetchEvents();
 
     return () => {
-      isMounted = false;
+      isMounted = false; // Cleanup function to set isMounted to false when the component unmounts
     };
   }, []);
 
@@ -101,7 +121,7 @@ const events = () => {
                   center: "title",
                   right: "dayGridMonth,dayGridWeek,dayGridDay",
                 }}
-                events={events}
+                events={eventList}
                 editable={false}
                 droppable={false}
                 selectable={false}

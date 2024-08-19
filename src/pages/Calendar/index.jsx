@@ -16,6 +16,7 @@ import {
   ModalBody,
   ModalHeader,
   Row,
+  Spinner,
 } from "reactstrap";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -47,6 +48,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
 import BootstrapTheme from "@fullcalendar/bootstrap";
+import { getEvents } from "../../service/event-service";
+import AddEvent from "../Events/Modals/AddEvent";
 
 const Calender = (props) => {
   //meta title
@@ -55,6 +58,13 @@ const Calender = (props) => {
   const dispatch = useDispatch();
 
   const [event, setEvent] = useState({});
+
+  const [eventList, setEventList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   // events validation
   const validation = useFormik({
@@ -125,8 +135,7 @@ const Calender = (props) => {
     },
   });
 
-  const { events, categories } = useSelector((state) => ({
-    events: state.calendar.events,
+  const { categories } = useSelector((state) => ({
     categories: state.calendar.categories,
   }));
 
@@ -139,20 +148,7 @@ const Calender = (props) => {
 
   useEffect(() => {
     dispatch(onGetCategories());
-    dispatch(onGetEvents());
-    new Draggable(document.getElementById("external-events"), {
-      itemSelector: ".external-event",
-    });
   }, [dispatch]);
-
-  useEffect(() => {
-    if (!modal && !isEmpty(event) && !!isEdit) {
-      setTimeout(() => {
-        setEvent({});
-        setIsEdit(false);
-      }, 500);
-    }
-  }, [modal, event]);
 
   /**
    * Handling the modal state
@@ -194,7 +190,7 @@ const Calender = (props) => {
     const modifiedData = { ...arg, date: modifiedDate };
 
     setSelectedDay(modifiedData);
-    toggle();
+    handleShow();
   };
 
   /**
@@ -271,8 +267,73 @@ const Calender = (props) => {
     }
   };
 
+  const fetchEvents = async (isMounted) => {
+    setLoading(true); // Set loading to true before starting the fetch
+    try {
+      const data = await getEvents();
+      let events = [];
+      if (isMounted && data.data && data.data.message) {
+        data.data.message.forEach((event) => {
+          let cn = "";
+          switch (event.category) {
+            case "Entourage":
+              cn = "bg-success text-white";
+              break;
+            case "Universalité des jeux olympiques":
+              cn = "bg-primary text-white";
+              break;
+            case "Développement du Sport":
+              cn = "bg-warning text-white";
+              break;
+            case "Valeurs olympiques":
+              cn = "bg-danger text-white";
+              break;
+            default:
+              cn = "bg-dark text-white";
+              break;
+          }
+          let evt = {
+            id: event._id,
+            title: event.title + " | " + event.category,
+            start: new Date(event.startDate).getTime(), // Use getTime() for date comparison
+            end: new Date(event.endDate).getTime(), // Use getTime() for date comparison
+
+            className: cn,
+          };
+          events.push(evt);
+        });
+        setEventList(events);
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    } finally {
+      if (isMounted) {
+        setLoading(false); // Set loading to false only if the component is still mounted
+      }
+    }
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchEvents(isMounted);
+
+    return () => {
+      isMounted = false; // Cleanup function to set isMounted to false when the component unmounts
+    };
+  }, []);
+
+  const refreshEvents = async () => {
+    let isMounted = true;
+
+    fetchEvents(isMounted);
+  };
+
+  if (loading) return <Spinner color="info"></Spinner>;
+
   return (
     <React.Fragment>
+      <AddEvent show={show} handleClose={handleClose} refresh={refreshEvents} />
       <DeleteModal
         show={deleteModal}
         onDeleteClick={handleDeleteEvent}
@@ -281,7 +342,7 @@ const Calender = (props) => {
       <div className="page-content">
         <Container fluid={true}>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Calendrier" breadcrumbItem="Calendrier" />
+          <Breadcrumbs title="Evènements" breadcrumbItem="Calendrier" />
           <Row>
             <Col className="col-12">
               <Row>
@@ -292,7 +353,7 @@ const Calender = (props) => {
                         <Button
                           color="primary"
                           className="font-16 btn-block"
-                          onClick={toggleCategory}
+                          onClick={handleShow}
                           style={{ borderRadius: "25px" }}
                         >
                           <i className="mdi mdi-plus-circle-outline me-1" />
@@ -348,8 +409,8 @@ const Calender = (props) => {
                         center: "title",
                         right: "dayGridMonth,dayGridWeek,dayGridDay",
                       }}
-                      events={events}
-                      editable={true}
+                      events={eventList}
+                      editable={false}
                       droppable={true}
                       selectable={true}
                       dateClick={handleDateClick}

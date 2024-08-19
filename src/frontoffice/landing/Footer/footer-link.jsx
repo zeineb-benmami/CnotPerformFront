@@ -7,19 +7,30 @@ import { Link } from "react-router-dom";
 
 import logo from "../../../../public/assets/images/logo/CNOT_icon.png";
 
+import sli from "../../../../public/assets/images/logo/sli.png";
+
 const FooterLink = () => {
   return (
     <React.Fragment>
       <Row>
         <Col lg="6">
-          <div className="mb-4">
+          <Row className="mb-4">
             <img
               src={logo}
               alt=""
-              style={{ width: "40%", height: "40%" }}
-              height="20"
+              style={{ width: "200px", height: "200px", borderRadius: "10px" }}
             />
-          </div>
+            <img
+              src={sli}
+              alt=""
+              style={{
+                width: "200px",
+                height: "200px",
+                backgroundColor: "#fff",
+                borderRadius: "10px",
+              }}
+            />
+          </Row>
 
           <p className="mb-2">
             {new Date().getFullYear()} © CNOT Perform Designed & Developed by

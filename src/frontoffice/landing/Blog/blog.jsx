@@ -67,14 +67,14 @@ const Blog = () => {
                     <p>{evt?.description}</p>
 
                     <div>
-                      <Link to={`/articles/${evt?._id}`}>Read more</Link>
+                      <Link to={`/articles/${evt?._id}`}>Voir plus</Link>
                     </div>
                   </div>
                 </div>
               </Col>
             ))}
 
-            <div className="ms-lg-2 text-center">
+            <div className="ms-lg-2 mt-2 text-center">
               <Link to="/articles">
                 <Button
                   color="primary"
