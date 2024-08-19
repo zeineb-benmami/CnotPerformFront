@@ -33,7 +33,7 @@ function MailAccount() {
     setEmail(result.data.mailaddress);
     if(result.data.mailaddress){
       setDisable(true);
-        /*toast.warning("you have already set an account", {
+        toast.warning("you have already set an account", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -43,7 +43,7 @@ function MailAccount() {
         progress: undefined,
         theme: "colored",
         transition: Bounce,
-        });*/
+        });
     }
     return result.data;
     }catch (error) {
@@ -74,7 +74,7 @@ function MailAccount() {
     onSubmit: async (values) => {
       const response = await setEmailAccount(values);
       if(response.data.status === 'success'){
-        /*toast.success("Mail ajouté avec succés", {
+        toast.success("Mail ajouté avec succés", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -86,9 +86,10 @@ function MailAccount() {
           transition: Bounce,
           });
           console.log('here');
-        navigate("/email-inbox")*/
+
+        navigate("/email-inbox")
       } else {
-        /*toast.error('Vérifier les coordonnées de mail utilisé', {
+        toast.error('Vérifier les coordonnées de mail utilisé', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -97,8 +98,8 @@ function MailAccount() {
           draggable: true,
           progress: undefined,
           theme: "colored",
-          transition: Bounce,
-          });*/         
+          transition: Bounce,       
+          });         
       }
     },
   });

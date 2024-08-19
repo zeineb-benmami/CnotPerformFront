@@ -30,7 +30,7 @@ import { map } from "lodash";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { bookmarkEmail, getEmails, getMailAccount, verifPassword } from "../../service/mailService";
+import { bookmarkEmail, getEmails, getMailAccount, send, verifPassword } from "../../service/mailService";
 import {
   getMailsLists as onGetMailsLists,
   getSelectedMails as onGetSelectedMails,
