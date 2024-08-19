@@ -98,11 +98,11 @@ const events = () => {
 
   return (
     <React.Fragment>
-      <section className="section hero-section bg-ico-hero" id="news">
+      <section className="section hero-section" id="news">
         <Container>
           <Row>
             <Col lg="12">
-              <div className="mb-5 text-center text-white">
+              <div className="mb-5 text-left text-white">
                 <div className="small-title text-white">Evènements</div>
                 <h4>Notre planning</h4>
               </div>
@@ -110,7 +110,7 @@ const events = () => {
           </Row>
 
           <Row>
-            <Card >
+            <Card className="bg-black">
               <FullCalendar
                 plugins={[BootstrapTheme, dayGridPlugin, interactionPlugin]}
                 slotDuration={"00:15:00"}

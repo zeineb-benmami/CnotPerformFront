@@ -26,32 +26,31 @@ const Blog = () => {
   }, []);
 
   // Get current events for pagination
-  const startIndex = eventList?.length > 3 ? eventList.length - 3 : 0;
+  const startIndex = eventList?.length > 6 ? eventList.length - 6 : 0;
   const currentEvents = eventList?.slice(startIndex, eventList?.length);
 
   return (
     <React.Fragment>
-      <section className="section hero-section bg-ico-hero" id="news">
+      <section className="section hero-section" id="news">
         <Container>
           <Row>
             <Col lg="12">
-              <div className="mb-5 text-center text-white">
+              <div className="mb-5 text-left text-white">
                 <div className="small-title text-white">Evènements</div>
                 <h3>Nouvelles Récents</h3>
               </div>
             </Col>
           </Row>
 
-          <Row>
+          <Row className=" row-span-3">
             {currentEvents.map((evt, key) => (
               <Col xl="4" sm="6" key={key}>
-                <div className="blog-box mb-xl-0 mb-4">
+                <div className="event-container">
                   <div className="position-relative">
                     <img
                       src={evt?.imgUrl}
                       alt=""
                       className="img-fluid d-block mx-auto rounded"
-                      style={{ maxHeight: "300px", minHeight: "280px" }}
                     />
                     <div className="blog-badge font-size-11 badge bg-primary">
                       {evt?.category}
@@ -64,7 +63,6 @@ const Blog = () => {
                       {evt?.startDate.substring(0, 10)}
                     </p>
                     <h5 className="mb-3 text-white">{evt?.title}</h5>
-                    <p>{evt?.description}</p>
 
                     <div>
                       <Link to={`/articles/${evt?._id}`}>Voir plus</Link>

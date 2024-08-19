@@ -13,11 +13,10 @@ const Index = () => {
   return (
     <React.Fragment>
       <Navbar_Page navClass="nav-sticky" imglight={false} isSimple={false} />
-      <div className="page-content">
+      <div className="page-content section hero-section">
         <Container fluid>
           <Row>
             <BlogList />
-            <RightBar />
           </Row>
         </Container>
       </div>

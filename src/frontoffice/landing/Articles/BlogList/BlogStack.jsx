@@ -7,7 +7,7 @@ const BlogStack = ({ currentEvents }) => {
       {currentEvents?.map((evt, index) => (
         <div key={index}>
           <h5>
-            <Link to={`/articles/${evt?._id}`} className="text-dark">
+            <Link to={`/articles/${evt?._id}`} className="text-white">
               {evt?.title}
             </Link>
           </h5>

@@ -3,12 +3,6 @@ import { Row, Col } from "reactstrap";
 
 import { Link } from "react-router-dom";
 
-//Import Images
-
-import logo from "../../../../public/assets/images/logo/CNOT_icon.png";
-
-import sli from "../../../../public/assets/images/logo/sli.png";
-
 const FooterLink = () => {
   return (
     <React.Fragment>
@@ -16,12 +10,12 @@ const FooterLink = () => {
         <Col lg="6">
           <Row className="mb-4">
             <img
-              src={logo}
+              src="assets/images/logo/CNOT_icon.png"
               alt=""
               style={{ width: "200px", height: "200px", borderRadius: "10px" }}
             />
             <img
-              src={sli}
+              src="assets/images/logo/sli.png"
               alt=""
               style={{
                 width: "200px",

@@ -99,193 +99,175 @@ const BlogDetails = () => {
   return (
     <React.Fragment>
       <Navbar_Page navClass="nav-sticky" imglight={false} isSimple={false} />
-      <div className="page-content">
+      <div className="page-content section hero-section">
         <Container fluid>
           <Breadcrumbs title="Evènement" breadcrumbItem="Evènement Details" />
           <Row>
-            <Col lg={12}>
-              <Card>
-                <CardBody>
-                  <div className="pt-3">
-                    <div className="justify-content-center row">
-                      <div className="col-xl-8">
-                        <div>
-                          <div className="text-center">
-                            <div className="mb-4">
-                              <Link
-                                to="#"
-                                className="badge font-size-12 bg-light"
-                              >
-                                <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
-                                {event?.category}
-                              </Link>
-                            </div>
-                            <h4>{event?.title}</h4>
-                            <p className="text-muted mb-4">
-                              <i className="mdi mdi-calendar me-1"></i>
-                              {event?.startDate?.substring(0, 10)}{" "}
-                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              <i className="mdi mdi-calendar me-1"></i>
-                              {event?.endDate?.substring(0, 10)}
-                            </p>
+            <div className="pt-3">
+              <div className="justify-content-center row">
+                <div className="col-xl-8">
+                  <div>
+                    <div className="text-center">
+                      <div className="mb-4">
+                        <Link to="#" className="badge font-size-12 bg-light">
+                          <i className="bx bx-purchase-tag-alt text-muted me-1 align-middle"></i>{" "}
+                          {event?.category}
+                        </Link>
+                      </div>
+                      <h4>{event?.title}</h4>
+                      <p className="text-muted mb-4">
+                        <i className="mdi mdi-calendar me-1"></i>
+                        {event?.startDate?.substring(0, 10)}{" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i className="mdi mdi-calendar me-1"></i>
+                        {event?.endDate?.substring(0, 10)}
+                      </p>
+                    </div>
+
+                    <hr />
+                    <div className="text-center">
+                      <Row>
+                        <Col sm={4}>
+                          <div>
+                            <p className="text-muted mb-2">Type</p>
+                            <h5 className="font-size-15">{event?.typeEvent}</h5>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
+                          <div className="mt-sm-0 mt-4">
+                            <p className="text-muted mb-2">Prix</p>
+                            <h5 className="font-size-15">
+                              {event?.budget} TND
+                            </h5>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
+                          <div className="mt-sm-0 mt-4">
+                            <p className="text-muted mb-2">Publié par</p>
+                            <h5 className="font-size-15">CNOT</h5>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                    <hr />
+
+                    <div
+                      className="my-5"
+                      style={{ maxHeight: "500px", minHeight: "480px" }}
+                    >
+                      <Carousel
+                        activeIndex={activeIndex}
+                        next={next}
+                        previous={previous}
+                      >
+                        <CarouselIndicators
+                          items={photos}
+                          activeIndex={activeIndex}
+                          onClickHandler={goToIndex}
+                        />
+                        {slides}
+                        <CarouselControl
+                          className="carousel-dark"
+                          direction="prev"
+                          directionText="Previous"
+                          onClickHandler={previous}
+                        />
+                        <CarouselControl
+                          className="carousel-dark"
+                          direction="next"
+                          directionText="Next"
+                          onClickHandler={next}
+                        />
+                      </Carousel>
+                    </div>
+
+                    <hr />
+
+                    <div className="mt-4">
+                      <div className="text-muted font-size-14">
+                        <p>{event?.description}</p>
+
+                        <p className="mb-4">
+                          Ut enim ad minima veniam, quis nostrum exercitationem
+                          ullam corporis suscipit laboriosam, nisi ut aliquid ex
+                          ea reprehenderit qui in ea voluptate velit esse quam
+                          nihil molestiae consequatur, vel illum qui dolorem eum
+                          fugiat quo voluptas nulla pariatur? At vero eos et
+                          accusamus et iusto odio dignissimos ducimus qui
+                          blanditiis praesentium voluptatum deleniti atque
+                          corrupti quos dolores et quas molestias excepturi sint
+                          occaecati cupiditate non provident, similique sunt
+                        </p>
+
+                        <p>
+                          Itaque earum rerum hic tenetur a sapiente delectus, ut
+                          aut reiciendis voluptatibus maiores alias consequatur
+                          aut perferendis doloribus asperiores repellat. Sed ut
+                          perspiciatis unde omnis iste natus error sit
+                        </p>
+                      </div>
+
+                      <hr />
+
+                      <div className="mt-4">
+                        <h5 className="font-size-16 mb-3">Participation</h5>
+
+                        <Form>
+                          <Row>
+                            <Col md={6}>
+                              <div className="mb-3">
+                                <Label htmlFor="commentname-input">Nom</Label>
+                                <Input
+                                  type="text"
+                                  className="form-control"
+                                  id="commentname-input"
+                                  placeholder="Enter name"
+                                />
+                              </div>
+                            </Col>
+                            <Col md={6}>
+                              <div className="mb-3">
+                                <Label htmlFor="commentemail-input">
+                                  Email
+                                </Label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  id="commentemail-input"
+                                  placeholder="Enter email"
+                                />
+                              </div>
+                            </Col>
+                          </Row>
+
+                          <div className="mb-3">
+                            <Label htmlFor="commentmessage-input">
+                              Message
+                            </Label>
+                            <textarea
+                              className="form-control"
+                              id="commentmessage-input"
+                              placeholder="Your message..."
+                              rows="3"
+                            ></textarea>
                           </div>
 
-                          <hr />
-                          <div className="text-center">
-                            <Row>
-                              <Col sm={4}>
-                                <div>
-                                  <p className="text-muted mb-2">Type</p>
-                                  <h5 className="font-size-15">
-                                    {event?.typeEvent}
-                                  </h5>
-                                </div>
-                              </Col>
-                              <Col sm={4}>
-                                <div className="mt-sm-0 mt-4">
-                                  <p className="text-muted mb-2">Prix</p>
-                                  <h5 className="font-size-15">
-                                    {event?.budget} TND
-                                  </h5>
-                                </div>
-                              </Col>
-                              <Col sm={4}>
-                                <div className="mt-sm-0 mt-4">
-                                  <p className="text-muted mb-2">Publié par</p>
-                                  <h5 className="font-size-15">CNOT</h5>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                          <hr />
-
-                          <div
-                            className="my-5"
-                            style={{ maxHeight: "500px", minHeight: "480px" }}
-                          >
-                            <Carousel
-                              activeIndex={activeIndex}
-                              next={next}
-                              previous={previous}
+                          <div className="text-end">
+                            <button
+                              type="submit"
+                              className="btn btn-primary w-sm"
+                              style={{ borderRadius: "25px" }}
                             >
-                              <CarouselIndicators
-                                items={photos}
-                                activeIndex={activeIndex}
-                                onClickHandler={goToIndex}
-                              />
-                              {slides}
-                              <CarouselControl
-                                className="carousel-dark"
-                                direction="prev"
-                                directionText="Previous"
-                                onClickHandler={previous}
-                              />
-                              <CarouselControl
-                                className="carousel-dark"
-                                direction="next"
-                                directionText="Next"
-                                onClickHandler={next}
-                              />
-                            </Carousel>
+                              Participer
+                            </button>
                           </div>
-
-                          <hr />
-
-                          <div className="mt-4">
-                            <div className="text-muted font-size-14">
-                              <p>{event?.description}</p>
-
-                              <p className="mb-4">
-                                Ut enim ad minima veniam, quis nostrum
-                                exercitationem ullam corporis suscipit
-                                laboriosam, nisi ut aliquid ex ea reprehenderit
-                                qui in ea voluptate velit esse quam nihil
-                                molestiae consequatur, vel illum qui dolorem eum
-                                fugiat quo voluptas nulla pariatur? At vero eos
-                                et accusamus et iusto odio dignissimos ducimus
-                                qui blanditiis praesentium voluptatum deleniti
-                                atque corrupti quos dolores et quas molestias
-                                excepturi sint occaecati cupiditate non
-                                provident, similique sunt
-                              </p>
-
-                              <p>
-                                Itaque earum rerum hic tenetur a sapiente
-                                delectus, ut aut reiciendis voluptatibus maiores
-                                alias consequatur aut perferendis doloribus
-                                asperiores repellat. Sed ut perspiciatis unde
-                                omnis iste natus error sit
-                              </p>
-                            </div>
-
-                            <hr />
-
-                            <div className="mt-4">
-                              <h5 className="font-size-16 mb-3">
-                                Participation
-                              </h5>
-
-                              <Form>
-                                <Row>
-                                  <Col md={6}>
-                                    <div className="mb-3">
-                                      <Label htmlFor="commentname-input">
-                                        Nom
-                                      </Label>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        id="commentname-input"
-                                        placeholder="Enter name"
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md={6}>
-                                    <div className="mb-3">
-                                      <Label htmlFor="commentemail-input">
-                                        Email
-                                      </Label>
-                                      <input
-                                        type="email"
-                                        className="form-control"
-                                        id="commentemail-input"
-                                        placeholder="Enter email"
-                                      />
-                                    </div>
-                                  </Col>
-                                </Row>
-
-                                <div className="mb-3">
-                                  <Label htmlFor="commentmessage-input">
-                                    Message
-                                  </Label>
-                                  <textarea
-                                    className="form-control"
-                                    id="commentmessage-input"
-                                    placeholder="Your message..."
-                                    rows="3"
-                                  ></textarea>
-                                </div>
-
-                                <div className="text-end">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-primary w-sm"
-                                    style={{ borderRadius: "25px" }}
-                                  >
-                                    Participer
-                                  </button>
-                                </div>
-                              </Form>
-                            </div>
-                          </div>
-                        </div>
+                        </Form>
                       </div>
                     </div>
                   </div>
-                </CardBody>
-              </Card>
-            </Col>
+                </div>
+              </div>
+            </div>
           </Row>
         </Container>
       </div>

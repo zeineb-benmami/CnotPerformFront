@@ -16,63 +16,37 @@ const AboutUs = () => {
 
   return (
     <React.Fragment>
-      <section className="section hero-section bg-ico-hero" id="about">
+      <section className="section hero-section" id="about">
         <Container>
-          <Row>
-            <Col lg="12">
-              <div className="mb-5 text-center">
-                <div className="small-title">About us</div>
-                <h4 className="text-white">CNOT PERFORM</h4>
+          <Row className="align-items-center position-relative">
+            <img
+              src="/assets/frontImages/49cfcc26d609851f998e68c911138652.png"
+              alt=""
+              className="position-absolute z-n1 inset-0 object-cover"
+              style={{ top: 0, left: 0 }}
+            />
+            <Col lg="5" className="position-relative about-us">
+              <div class="about-content">
+                <h2>About Us</h2>
+                <p>CNOT Perform revolutionizes sports training...</p>
+              </div>
+            </Col>
+
+            <Col lg="6" className="position-relative ms-auto">
+              <div className="mt-lg-0 position-relative z-1 mt-4">
+                <Row>
+                  <Col sm="12" className="mx-auto">
+                    <div>
+                      <img
+                        src="assets/frontImages/002db2a2e1b9edef28d103d6e495ea00.png"
+                        alt=""
+                      />
+                    </div>
+                  </Col>
+                </Row>
               </div>
             </Col>
           </Row>
-          <Row className="align-items-center position-relative">
-  <img
-    src="/assets/frontImages/49cfcc26d609851f998e68c911138652.png"
-    alt=""
-    className="position-absolute inset-0 object-cover z-n1"
-    style={{ top: 0, left: 0 }}
-  />
-  <Col lg="5" className="position-relative">
-    <div className="text-white position-relative z-1 bg-gradient-to-r from-slate-100 to-slate-900">
-      <h4>Contexte & objectifs</h4>
-      <p>
-        CNOT Perform révolutionne l'entraînement sportif grâce à
-        l'Intelligence Artificielle.
-      </p>
-      <p className="mb-4">
-        Suivez vos performances en temps réel, analysez vos données
-        pour identifier vos points forts et faibles, recevez des
-        conseils personnalisés et prévenez les blessures.
-        Rejoignez-nous pour améliorer vos performances sportives et
-        atteindre vos objectifs.
-      </p>
-
-      <div className="d-flex flex-wrap gap-2">
-        <Link
-          to="#"
-          className="btn btn-primary"
-          style={{ borderRadius: "25px" }}
-        >
-          Read More
-        </Link>
-      </div>
-    </div>
-  </Col>
-
-  <Col lg="6" className="ms-auto position-relative">
-    <div className="mt-lg-0 mt-4 position-relative z-1">
-      <Row>
-        <Col sm="12" className="mx-auto">
-          <div>
-            <img src="assets/frontImages/002db2a2e1b9edef28d103d6e495ea00.png" alt="" />
-          </div>
-        </Col>
-      </Row>
-    </div>
-  </Col>
-</Row>
-
 
           <hr className="my-5" />
 

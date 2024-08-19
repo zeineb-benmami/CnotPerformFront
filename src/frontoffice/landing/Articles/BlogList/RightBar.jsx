@@ -9,7 +9,7 @@ import img3 from "../../../../assets/images/small/img-6.jpg";
 
 const RightBar = () => {
   return (
-    <React.Fragment>
+    <>
       <Col xl={3} lg={4}>
         <Card>
           <CardBody className="p-4">
@@ -209,7 +209,7 @@ const RightBar = () => {
           </CardBody>
         </Card>
       </Col>
-    </React.Fragment>
+    </>
   );
 };
 

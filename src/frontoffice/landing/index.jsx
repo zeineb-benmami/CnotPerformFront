@@ -11,6 +11,8 @@ import Events from "./Planning/events";
 import Blog from "./Blog/blog";
 import FAQs from "./Faqs/FAQs";
 import Footer from "./Footer/footer";
+import Offres from "./Features/offres";
+import Contact from "./Contact/Contact";
 
 const CryptoIcoLanding = () => {
   //meta title
@@ -60,7 +62,7 @@ const CryptoIcoLanding = () => {
 
       {showButton && (
         <button
-          className="fixed bottom-5 right-7 z-50 cursor-pointer p-4"
+          className="  z-50 cursor-pointer p-4"
           onClick={handleScrollToTop}
         >
           <div className="event-up-icon">
@@ -71,21 +73,19 @@ const CryptoIcoLanding = () => {
       {/* Hero section */}
       <Section />
 
-
       {/* aboutus */}
       <AboutUs />
 
       {/* features */}
       <Features />
 
+      <Offres />
       {/* blog */}
       <Blog />
 
       <Events />
 
-      {/* faqs */}
-      <FAQs />
-
+      <Contact />
       {/* footer */}
       <Footer />
     </React.Fragment>
