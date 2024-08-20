@@ -71,13 +71,16 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 50px;
-  background: linear-gradient(to bottom, #222, #111);
+  background: #161616;
 }
 
-.hero-content h1 {
-  font-size: 48px;
-  margin-bottom: 20px;
+.hero-img {
+  margin-top: 10%;
+  border-radius: 25px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
+
+
 
 .cta-button {
   padding: 15px 30px;
@@ -116,7 +119,9 @@ button {
   display: flex;
   align-items: center;
   padding: 50px;
-  background: linear-gradient(to bottom, #111, #222);
+  background: linear-gradient(to bottom, #222, #111);
+  border-radius: 25px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .about-content {
@@ -127,6 +132,12 @@ button {
   font-size: 36px;
   margin-bottom: 20px;
 }
+
+.about-content p {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
 
 .about-image img {
   width: 100%;
@@ -151,6 +162,12 @@ button {
   
   height: 300px;
   overflow: hidden;
+}
+
+.event-container .see-more{
+  position: absolute;
+  right: 10%;
+  bottom: 5%;
 }
 
 /* Offer Section */
@@ -225,21 +242,24 @@ button {
 
 }
 
+.contact-box .icons{
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  margin: 20px;
+  padding: 25px;
+}
 .contact-box .info {
   width: 100%;
 
-  background-color: #430070;
+  background: linear-gradient(to bottom, rgba(220, 59, 232, 1), rgb(85, 12, 82));
   border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
 }
 
-.contact-box .info p {
-  position: absolute;
-
-  left: 25%;
-  top: 50%;
-
-}
 .contact-box .input-form{
   margin: 10px 0;
   width: 100%;

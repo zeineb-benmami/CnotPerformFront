@@ -18,8 +18,6 @@ const CryptoIcoLanding = () => {
   //meta title
   document.title = "Accueil | CNOT PERFORM";
 
-  const [imglight, setimglight] = useState(true);
-  const [navClass, setnavClass] = useState("");
   const [showButton, setShowButton] = useState(false);
 
   // Use ComponentDidMount
@@ -30,13 +28,6 @@ const CryptoIcoLanding = () => {
 
   function scrollNavigation() {
     var scrollup = document.documentElement.scrollTop;
-    if (scrollup > 80) {
-      setimglight(false);
-      setnavClass("nav-sticky");
-    } else {
-      setimglight(true);
-      setnavClass("");
-    }
   }
 
   useEffect(() => {
@@ -58,7 +49,7 @@ const CryptoIcoLanding = () => {
   return (
     <React.Fragment>
       {/* import navbar */}
-      <Navbar navClass={navClass} imglight={imglight} isSimple={true} />
+      <Navbar isSimple={true} />
 
       {showButton && (
         <button

@@ -56,18 +56,24 @@ const Blog = () => {
                       {evt?.category}
                     </div>
                   </div>
+                  <Row>
+                    <Col md="3" sm="6">
+                      <h1 className="mb-2">
+                        <i className="bx bx-calendar text-danger ms-1" />{" "}
+                        {evt?.startDate.substring(8, 10)}/
+                        {new Date(evt?.startDate).getUTCMonth() + 1}
+                      </h1>
+                    </Col>
+                    <Col md="9" sm="6">
+                      <div className="text-muted mt-4">
+                        <h5 className="mb-3 text-white">{evt?.title}</h5>
 
-                  <div className="text-muted mt-4">
-                    <p className="mb-2">
-                      <i className="bx bx-calendar text-danger ms-1" />{" "}
-                      {evt?.startDate.substring(0, 10)}
-                    </p>
-                    <h5 className="mb-3 text-white">{evt?.title}</h5>
-
-                    <div>
-                      <Link to={`/articles/${evt?._id}`}>Voir plus</Link>
-                    </div>
-                  </div>
+                        <div className="see-more text-white">
+                          <Link to={`/articles/${evt?._id}`}>Voir plus</Link>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
               </Col>
             ))}
@@ -76,8 +82,7 @@ const Blog = () => {
               <Link to="/articles">
                 <Button
                   color="primary"
-                  className="font-16 btn-block"
-                  style={{ borderRadius: "25px" }}
+                  className="font-16 btn-block cta-button"
                 >
                   Afficher plus d'évènements
                 </Button>

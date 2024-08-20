@@ -8,6 +8,7 @@ const Section = () => {
         <Container>
           <Row className="align-items-center">
             <Col lg="6">
+              <hr />
               <div className="text-white-50">
                 <h1 className="fw-semibold hero-title mb-3 text-white">
                   Bienvenu à
@@ -15,13 +16,16 @@ const Section = () => {
                 <h1 className="fw-semibold hero-title mb-3 text-white">
                   CNOT Perform
                 </h1>
-                <p className="font-size-14">
-                  L'Intelligence Artificielle au service du sport
-                </p>
+              </div>
+              <div>
+                <a href="#about" className="cta-button mt-5">
+                  {" "}
+                  Démarrer
+                </a>
               </div>
             </Col>
             <Col lg="6" md="8" sm="10" className="ms-lg-auto">
-              <img src="assets/images/feature1.jpg" alt="" />
+              <img src="assets/images/fares.jpg" alt="" className=" hero-img" />
             </Col>
           </Row>
         </Container>

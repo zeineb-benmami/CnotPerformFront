@@ -11,18 +11,7 @@ const FeatureBox = (props) => {
           </div>
           <h3 className="mb-0 text-3xl text-white">{props.title}</h3>
         </div>
-        <h5 className="text-xl text-white">{props.desc}</h5>
-        <div className="mt-4">
-          {props.features.map((feature, key) => (
-            <p key={key} className={feature.id === 1 ? "mb-2" : ""}>
-              <i className="mdi mdi-circle-medium me-1 text-white" />
-              <span className="text-white">
-              {feature.desc}
-              </span>
-              
-            </p>
-          ))}
-        </div>
+        <h5 className="text-xl text-slate-500">{props.desc}</h5>
       </div>
     </React.Fragment>
   );

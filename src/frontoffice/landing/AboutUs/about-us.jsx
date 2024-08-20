@@ -20,7 +20,7 @@ const AboutUs = () => {
         <Container>
           <Row className="align-items-center position-relative">
             <img
-              src="/assets/frontImages/49cfcc26d609851f998e68c911138652.png"
+              src="/assets/images/beats.png"
               alt=""
               className="position-absolute z-n1 inset-0 object-cover"
               style={{ top: 0, left: 0 }}
@@ -28,7 +28,23 @@ const AboutUs = () => {
             <Col lg="5" className="position-relative about-us">
               <div class="about-content">
                 <h2>About Us</h2>
-                <p>CNOT Perform revolutionizes sports training...</p>
+                <p>
+                  CNOT Perform revolutionne l'entrainement sportif grâce à{" "}
+                  <strong style={{ color: "pink" }}>
+                    l'Intélligence Artificielle
+                  </strong>
+                </p>
+                <ul>
+                  <li>suivre votre performance en temps réel</li>
+                  <li>
+                    analyser vos données pour identifier vos points faibles et
+                    forts
+                  </li>
+                  <li>
+                    recevoir des conseils personnalisés pour éviter les
+                    blessures
+                  </li>
+                </ul>
               </div>
             </Col>
 
@@ -37,10 +53,7 @@ const AboutUs = () => {
                 <Row>
                   <Col sm="12" className="mx-auto">
                     <div>
-                      <img
-                        src="assets/frontImages/002db2a2e1b9edef28d103d6e495ea00.png"
-                        alt=""
-                      />
+                      <img src="assets/images/runningman.png" alt="" />
                     </div>
                   </Col>
                 </Row>
