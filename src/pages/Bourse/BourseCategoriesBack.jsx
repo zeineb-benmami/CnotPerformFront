@@ -32,10 +32,10 @@ function BourseCategoriesBack() {
   const cardsData = [
     {
       image: univ,
-      title: "Universalité Olympique",
+      title: "Universalité des jeux Olympiques",
       subtitle: "Formation et éducation",
       description:
-        "L'Université Olympique offre des programmes éducatifs visant à promouvoir les valeurs sportives et l'excellence.",
+        "L'Universalité des jeux Olympiques offre des programmes éducatifs visant à promouvoir les valeurs sportives et l'excellence.",
     },
     {
       image: developpement,
@@ -53,7 +53,7 @@ function BourseCategoriesBack() {
     },
     {
       image: admin,
-      title: "Administration",
+      title: "Gestion des CNO et partage de connaissances",
       subtitle: "Gestion efficace",
       description:
         "Notre équipe administrative assure une gestion efficace et transparente de toutes les activités sportives.",
