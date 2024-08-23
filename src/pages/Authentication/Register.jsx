@@ -137,21 +137,25 @@ const Register = (props) => {
 
   return (
     <section className="section hero-section">
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
+        <Link to="/" className="text-white">
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages pt-sm-5 my-5">
+      <div className="account-pages pt-sm-5  mx-auto  my-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
+              <Card className="login-card overflow-hidden">
                 <div className="bg-soft bg-primary">
                   <Row>
                     <Col className="col-7">
-                      <div className="p-4 text-primary">
-                        <h5 className="text-primary">Creation de compte</h5>
+                      <div className="p-4 text-white">
+                        <h5 className="text-white">Creation de compte</h5>
                         <p>Ajoutez Votre Féderation</p>
                       </div>
                     </Col>
@@ -206,7 +210,9 @@ const Register = (props) => {
                       {currentStep === 0 ? (
                         <>
                           <div className="mb-3">
-                            <Label className="form-label">Name</Label>
+                            <Label className="form-label text-white">
+                              Name
+                            </Label>
                             <Input
                               id="name"
                               name="name"
@@ -231,7 +237,9 @@ const Register = (props) => {
                             ) : null}
                           </div>
                           <div className="mb-3">
-                            <Label className="form-label">Email</Label>
+                            <Label className="form-label text-white">
+                              Email
+                            </Label>
                             <Input
                               id="email"
                               name="email"
@@ -256,7 +264,9 @@ const Register = (props) => {
                             ) : null}
                           </div>
                           <div className="mb-3">
-                            <Label className="form-label">Password</Label>
+                            <Label className="form-label text-white">
+                              Mot de passe
+                            </Label>
                             <Input
                               name="password"
                               type="password"
@@ -279,8 +289,8 @@ const Register = (props) => {
                             ) : null}
                           </div>
                           <div className="mb-3">
-                            <Label className="form-label">
-                              Confirm Password
+                            <Label className="form-label text-white">
+                              Confirmer mot de passe
                             </Label>
                             <Input
                               name="confirmPassword"
@@ -307,7 +317,9 @@ const Register = (props) => {
                       ) : (
                         <>
                           <div className="mb-3">
-                            <Label className="form-label">Address</Label>
+                            <Label className="form-label text-white">
+                              Address
+                            </Label>
                             <Input
                               type="select"
                               name="address"
@@ -336,7 +348,9 @@ const Register = (props) => {
                             ) : null}
                           </div>
                           <div className="mb-3">
-                            <Label className="form-label">Phone Number</Label>
+                            <Label className="form-label text-white">
+                              Phone Number
+                            </Label>
                             <Input
                               id="tel"
                               name="tel"
@@ -359,7 +373,9 @@ const Register = (props) => {
                             ) : null}
                           </div>
                           <div className="mb-3">
-                            <Label className="form-label">Certificate</Label>
+                            <Label className="form-label text-white">
+                              Certificate
+                            </Label>
                             <div {...getRootProps()} className="dropzone mb-3">
                               <input {...getInputProps()} />
                               {certificate ? (
@@ -388,21 +404,12 @@ const Register = (props) => {
                             className="btn btn-secondary me-2"
                             onClick={() => setCurrentStep(0)}
                           >
-                            <FontAwesomeIcon icon={faArrowLeft} /> Back
+                            <FontAwesomeIcon icon={faArrowLeft} /> Précédent
                           </button>
                         )}
-                        <button className="btn btn-primary" type="submit">
-                          {currentStep === 0 ? "Next" : "Register"}
+                        <button className="cta-button " type="submit">
+                          {currentStep === 0 ? "Suivant" : "Register"}
                         </button>
-                      </div>
-
-                      <div className="mt-4 text-center">
-                        <p className="mb-0">
-                          By registering you agree to the Skote{" "}
-                          <Link to="#" className="text-primary">
-                            Terms of Use
-                          </Link>
-                        </p>
                       </div>
                     </Form>
                   </div>
@@ -410,19 +417,20 @@ const Register = (props) => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Already have an account ?{" "}
+                  Vous avez déjà un compte ?{" "}
                   <Link
                     to="/login"
                     className="font-weight-medium text-primary"
                     style={{ borderRadius: "25px" }}
                   >
                     {" "}
-                    Login
+                    Se connecter
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} . Conçu avec{" "}
+                  <i className="mdi mdi-heart text-danger" /> par les étudiants
+                  d'Esprit
                 </p>
               </div>
             </Col>

@@ -167,21 +167,25 @@ const Login = () => {
 
   return (
     <section className="section hero-section">
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/home" className="text-dark">
+        <Link to="/home" className="text-white">
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages pt-sm-5 my-5">
+      <div className="account-pages pt-sm-5 mx-auto my-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
+              <Card className="login-card overflow-hidden">
                 <div className="bg-soft bg-primary">
                   <Row>
                     <Col xs={7}>
-                      <div className="p-4 text-primary">
-                        <h5 className="text-primary">Bienvenue !</h5>
+                      <div className="p-4 text-white">
+                        <h5 className="text-white">Bienvenue !</h5>
                         <p>Connectez pour continuer</p>
                       </div>
                     </Col>
@@ -217,7 +221,7 @@ const Login = () => {
                       {error && <Alert color="danger">{error}</Alert>}
 
                       <div className="mb-3">
-                        <Label className="form-label">Email</Label>
+                        <Label className="form-label text-white">Email</Label>
                         <Input
                           name="email"
                           className="form-control"
@@ -241,7 +245,9 @@ const Login = () => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Mot de passe</Label>
+                        <Label className="form-label text-white">
+                          Mot de passe
+                        </Label>
                         <Input
                           name="password"
                           value={validation.values.password || ""}
@@ -266,9 +272,10 @@ const Login = () => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Rôle</Label>
+                        <Label className="form-label text-white">Rôle</Label>
                         <Select
                           name="role"
+                          className=" text-dark"
                           options={roleOptions}
                           styles={{ ...customStyles, ...customSelectStyles }}
                           onChange={handleRoleChange}
@@ -290,9 +297,10 @@ const Login = () => {
 
                       {(selectedRole === "F" || selectedRole === "MC") && (
                         <div className="mb-3">
-                          <Label className="form-label">Nom</Label>
+                          <Label className="form-label text-white">Nom</Label>
                           <Select
                             name="name"
+                            className=" text-dark"
                             options={userNames}
                             components={{ Option: customOption }}
                             onChange={handleNameChange}
@@ -317,7 +325,7 @@ const Login = () => {
 
                       <div className="d-grid mt-3">
                         <button
-                          className="btn btn-primary btn-block"
+                          className="cta-button btn-block"
                           type="submit"
                           style={{ borderRadius: "25px" }}
                         >

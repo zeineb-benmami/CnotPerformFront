@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Container,
-  Card,
-  CardBody,
   Col,
   Form,
   Input,
@@ -169,13 +167,13 @@ const BlogDetails = () => {
                         />
                         {slides}
                         <CarouselControl
-                          className="carousel-dark"
+                          className="carousel-white"
                           direction="prev"
                           directionText="Previous"
                           onClickHandler={previous}
                         />
                         <CarouselControl
-                          className="carousel-dark"
+                          className="carousel-white"
                           direction="next"
                           directionText="Next"
                           onClickHandler={next}

@@ -55,7 +55,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
+  z-index: 0;
 }
 
 .glow-circle {
@@ -64,7 +64,6 @@ button {
   height: 500px;
   border-radius: 50%;
   filter: blur(150px);
-  z-index: -1;
 }
 
 .left {
@@ -139,6 +138,7 @@ button {
   text-decoration: none;
   font-size: 18px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0,0.5);
+  
 }
 
 /* Stats Section */
@@ -255,6 +255,14 @@ button {
   transition: transform 0.3s ease;
 }
 
+.login-card {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.2));
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
 .offer-card:hover {
   transform: translateY(-10px);
 }

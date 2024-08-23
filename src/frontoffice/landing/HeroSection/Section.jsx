@@ -4,11 +4,11 @@ import { Container, Row, Col } from "reactstrap";
 const Section = () => {
   return (
     <React.Fragment>
-      <div class="glow-container">
-        <div class="glow-circle left"></div>
-        <div class="glow-circle right"></div>
-      </div>
       <section className="section hero-section" id="home">
+        <div class="glow-container">
+          <div class="glow-circle left"></div>
+          <div class="glow-circle right"></div>
+        </div>
         <Container>
           <Row className="align-items-center">
             <Col lg="6">
@@ -40,10 +40,6 @@ const Section = () => {
           </Row>
         </Container>
       </section>
-      <div class="glow-container">
-        <div class="glow-circle left"></div>
-        <div class="glow-circle right"></div>
-      </div>
       <section class="stats-section">
         <div class="stats-card">
           <h2>2,500</h2>

@@ -38,7 +38,12 @@ const Navbar_Page = (props) => {
             <img
               src="/public/assets/images/logo/thunder.png"
               alt=""
-              style={{ width: "90px", height: "90px", padding: "10px" }}
+              style={{
+                width: "90px",
+                height: "90px",
+                padding: "10px",
+                borderRadius: "25px",
+              }}
               className="logo logo-dark"
             />
           </Link>
