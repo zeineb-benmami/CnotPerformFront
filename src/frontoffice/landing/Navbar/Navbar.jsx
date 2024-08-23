@@ -36,7 +36,7 @@ const Navbar_Page = (props) => {
         <Container>
           <Link className="navbar-logo" to="/home">
             <img
-              src="assets/images/logo/thunder.png"
+              src="/public/assets/images/logo/thunder.png"
               alt=""
               style={{ width: "90px", height: "90px", padding: "10px" }}
               className="logo logo-dark"
@@ -80,11 +80,17 @@ const Navbar_Page = (props) => {
               </ScrollspyNav>
             ) : (
               <Nav className="navbar-nav ms-auto" id="topnav-menu">
-                <NavItem className="Home">
-                  <NavLink href="/landing"> Home</NavLink>
+                <NavItem>
+                  <NavLink className=" text-white" href="/home">
+                    {" "}
+                    Home
+                  </NavLink>
                 </NavItem>
-                <NavItem className="active">
-                  <NavLink href="/articles"> Events</NavLink>
+                <NavItem>
+                  <NavLink className=" text-white" href="/articles">
+                    {" "}
+                    Events
+                  </NavLink>
                 </NavItem>
               </Nav>
             )}

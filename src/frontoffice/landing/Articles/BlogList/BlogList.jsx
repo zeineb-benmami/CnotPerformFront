@@ -62,7 +62,7 @@ const BlogList = () => {
 
   return (
     <section className="section hero-section">
-      <Col xl={9} lg={8}>
+      <Col xl={12} lg={12}>
         <ul
           className="nav nav-tabs nav-tabs-custom justify-content-center pt-2"
           role="tablist"
@@ -77,20 +77,7 @@ const BlogList = () => {
                 toggleTab("1");
               }}
             >
-              All Post
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              to="#"
-              className={classnames({
-                active: activeTab === "2",
-              })}
-              onClick={() => {
-                toggleTab("2");
-              }}
-            >
-              Archive
+              Tous les publications
             </NavLink>
           </NavItem>
         </ul>

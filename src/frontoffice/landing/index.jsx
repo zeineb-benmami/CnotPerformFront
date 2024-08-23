@@ -13,6 +13,7 @@ import FAQs from "./Faqs/FAQs";
 import Footer from "./Footer/footer";
 import Offres from "./Features/offres";
 import Contact from "./Contact/Contact";
+import Joinus from "./Contact/Joinus";
 
 const CryptoIcoLanding = () => {
   //meta title
@@ -71,6 +72,8 @@ const CryptoIcoLanding = () => {
       <Features />
 
       <Offres />
+
+      <Joinus />
       {/* blog */}
       <Blog />
 

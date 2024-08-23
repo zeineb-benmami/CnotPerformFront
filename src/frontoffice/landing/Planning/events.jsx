@@ -98,6 +98,10 @@ const events = () => {
 
   return (
     <React.Fragment>
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <section className="section hero-section" id="news">
         <Container>
           <Row>

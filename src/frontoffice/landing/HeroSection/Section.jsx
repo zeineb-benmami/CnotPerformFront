@@ -4,10 +4,20 @@ import { Container, Row, Col } from "reactstrap";
 const Section = () => {
   return (
     <React.Fragment>
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <section className="section hero-section" id="home">
         <Container>
           <Row className="align-items-center">
             <Col lg="6">
+              <h4
+                className=" text-teal-500"
+                style={{ color: "cyan", fontStyle: "italic" }}
+              >
+                Votre chemin vers le succés
+              </h4>
               <hr />
               <div className="text-white-50">
                 <h1 className="fw-semibold hero-title mb-3 text-white">
@@ -30,6 +40,10 @@ const Section = () => {
           </Row>
         </Container>
       </section>
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <section class="stats-section">
         <div class="stats-card">
           <h2>2,500</h2>

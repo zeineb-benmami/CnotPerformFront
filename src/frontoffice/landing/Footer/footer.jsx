@@ -55,7 +55,7 @@ const Features = () => {
                       title="Facebook"
                     >
                       <img
-                        src="assets/images/icons/facebook-colored.svg"
+                        src="/public/assets/images/icons/facebook-colored.svg"
                         alt=""
                       />
                     </a>
@@ -67,7 +67,7 @@ const Features = () => {
                       title="CNOT.ORG"
                     >
                       <img
-                        src="assets/images/icons/google-colored.svg"
+                        src="/public/assets/images/icons/google-colored.svg"
                         alt=""
                       />
                     </a>
@@ -79,7 +79,7 @@ const Features = () => {
                       title="Youtube"
                     >
                       <img
-                        src="assets/images/icons/youtube-colored.svg"
+                        src="/public/assets/images/icons/youtube-colored.svg"
                         alt=""
                       />
                     </a>

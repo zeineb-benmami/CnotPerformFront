@@ -4,6 +4,10 @@ import { Col, Container, Row } from "reactstrap";
 const Contact = () => {
   return (
     <section id="contact" className="section hero-section">
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <Container>
         <Row>
           <Col lg="12">

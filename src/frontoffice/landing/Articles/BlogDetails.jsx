@@ -98,8 +98,8 @@ const BlogDetails = () => {
   });
   return (
     <React.Fragment>
-      <Navbar_Page navClass="nav-sticky" imglight={false} isSimple={false} />
-      <div className="page-content section hero-section">
+      <Navbar_Page isSimple={false} />
+      <section className="page-content section hero-section">
         <Container fluid>
           <Breadcrumbs title="Evènement" breadcrumbItem="Evènement Details" />
           <Row>
@@ -129,13 +129,13 @@ const BlogDetails = () => {
                       <Row>
                         <Col sm={4}>
                           <div>
-                            <p className="text-muted mb-2">Type</p>
+                            <p className="text-muted mb-2  text-white">Type</p>
                             <h5 className="font-size-15">{event?.typeEvent}</h5>
                           </div>
                         </Col>
                         <Col sm={4}>
                           <div className="mt-sm-0 mt-4">
-                            <p className="text-muted mb-2">Prix</p>
+                            <p className="text-muted mb-2  text-white">Prix</p>
                             <h5 className="font-size-15">
                               {event?.budget} TND
                             </h5>
@@ -143,7 +143,9 @@ const BlogDetails = () => {
                         </Col>
                         <Col sm={4}>
                           <div className="mt-sm-0 mt-4">
-                            <p className="text-muted mb-2">Publié par</p>
+                            <p className="text-muted mb-2  text-white">
+                              Publié par
+                            </p>
                             <h5 className="font-size-15">CNOT</h5>
                           </div>
                         </Col>
@@ -185,38 +187,23 @@ const BlogDetails = () => {
 
                     <div className="mt-4">
                       <div className="text-muted font-size-14">
-                        <p>{event?.description}</p>
-
-                        <p className="mb-4">
-                          Ut enim ad minima veniam, quis nostrum exercitationem
-                          ullam corporis suscipit laboriosam, nisi ut aliquid ex
-                          ea reprehenderit qui in ea voluptate velit esse quam
-                          nihil molestiae consequatur, vel illum qui dolorem eum
-                          fugiat quo voluptas nulla pariatur? At vero eos et
-                          accusamus et iusto odio dignissimos ducimus qui
-                          blanditiis praesentium voluptatum deleniti atque
-                          corrupti quos dolores et quas molestias excepturi sint
-                          occaecati cupiditate non provident, similique sunt
-                        </p>
-
-                        <p>
-                          Itaque earum rerum hic tenetur a sapiente delectus, ut
-                          aut reiciendis voluptatibus maiores alias consequatur
-                          aut perferendis doloribus asperiores repellat. Sed ut
-                          perspiciatis unde omnis iste natus error sit
-                        </p>
+                        <p className=" text-white">{event?.description}</p>
                       </div>
 
                       <hr />
 
                       <div className="mt-4">
-                        <h5 className="font-size-16 mb-3">Participation</h5>
+                        <h5 className="font-size-16 mb-3  text-white">
+                          Participation
+                        </h5>
 
                         <Form>
                           <Row>
                             <Col md={6}>
                               <div className="mb-3">
-                                <Label htmlFor="commentname-input">Nom</Label>
+                                <Label htmlFor="commentname-input  text-white">
+                                  Nom
+                                </Label>
                                 <Input
                                   type="text"
                                   className="form-control"
@@ -227,7 +214,7 @@ const BlogDetails = () => {
                             </Col>
                             <Col md={6}>
                               <div className="mb-3">
-                                <Label htmlFor="commentemail-input">
+                                <Label htmlFor="commentemail-input  text-white">
                                   Email
                                 </Label>
                                 <input
@@ -241,7 +228,7 @@ const BlogDetails = () => {
                           </Row>
 
                           <div className="mb-3">
-                            <Label htmlFor="commentmessage-input">
+                            <Label htmlFor="commentmessage-input  text-white">
                               Message
                             </Label>
                             <textarea
@@ -255,7 +242,7 @@ const BlogDetails = () => {
                           <div className="text-end">
                             <button
                               type="submit"
-                              className="btn btn-primary w-sm"
+                              className="cta-button"
                               style={{ borderRadius: "25px" }}
                             >
                               Participer
@@ -270,7 +257,7 @@ const BlogDetails = () => {
             </div>
           </Row>
         </Container>
-      </div>
+      </section>
       <Footer />
     </React.Fragment>
   );

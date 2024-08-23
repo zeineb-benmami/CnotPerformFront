@@ -27,7 +27,7 @@ const AboutUs = () => {
             />
             <Col lg="5" className="position-relative about-us">
               <div class="about-content">
-                <h2>About Us</h2>
+                <h2>A propos de nous</h2>
                 <p>
                   CNOT Perform revolutionne l'entrainement sportif grâce à{" "}
                   <strong style={{ color: "pink" }}>
@@ -62,135 +62,6 @@ const AboutUs = () => {
           </Row>
 
           <hr className="my-5" />
-
-          <Row>
-            <Col lg="12">
-              <Col lg="12">
-                <div className="hori-timeline">
-                  <div
-                    className="owl-carousel owl-theme  navs-carousel events"
-                    id="timeline-carousel"
-                  >
-                    {step1 ? (
-                      <>
-                        <Row>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client1}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client2}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client3}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client4}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                        </Row>
-                      </>
-                    ) : null}
-
-                    {step2 ? (
-                      <>
-                        <Row>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client4}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client5}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                          <Col md={3}>
-                            <div className="item">
-                              <div className="client-images">
-                                <img
-                                  src={client6}
-                                  alt="client-img"
-                                  className="img-fluid d-block mx-auto"
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                        </Row>
-                      </>
-                    ) : null}
-
-                    <div className="owl-nav" style={{ textAlign: "center" }}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setStep1(true);
-                          setStep2(false);
-                        }}
-                        className="border-0"
-                        disabled={step1}
-                      >
-                        <i className="mdi mdi-chevron-left" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setStep1(false);
-                          setStep2(true);
-                        }}
-                        className="border-0"
-                        disabled={step2}
-                      >
-                        <i className="mdi mdi-chevron-right" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-            </Col>
-          </Row>
         </Container>
       </section>
     </React.Fragment>

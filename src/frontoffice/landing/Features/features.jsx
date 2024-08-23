@@ -16,8 +16,20 @@ const Features = () => {
 
   return (
     <React.Fragment>
+      <div class="glow-container">
+        <div class="glow-circle left"></div>
+        <div class="glow-circle right"></div>
+      </div>
       <section className="section hero-section" id="features">
         <Container>
+          <Row>
+            <Col lg="12">
+              <div className="mb-5 text-left text-white">
+                <div className="small-title text-white">Nos services</div>
+                <h3>Découvrir nos services</h3>
+              </div>
+            </Col>
+          </Row>
           <Row className="align-items-center pt-md-5 mt-5">
             <Col md="5">
               {/* featurebox */}
@@ -38,6 +50,10 @@ const Features = () => {
               </div>
             </Col>
           </Row>
+          <div class="glow-container">
+            <div class="glow-circle left"></div>
+            <div class="glow-circle right"></div>
+          </div>
           <Row className="align-items-center pt-4">
             <Col md="6" sm="8">
               <div>
