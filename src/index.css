@@ -21,7 +21,6 @@ body {
   
     padding: 0;font-family: Montserrat;
   background-color: var(--background-img);
-  color: #fff;
     overflow-x: hidden;
     position: relative;
 }
@@ -114,6 +113,8 @@ button {
 }
 
 .hero-section {
+  
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;

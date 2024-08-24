@@ -84,7 +84,14 @@ const BlogDetails = () => {
         <img
           src={photo?.fileUrl}
           alt={photo?.fileName}
-          style={{ textAlign: "center", maxHeight: "400px", margin: "auto" }}
+          style={{
+            textAlign: "center",
+            maxHeight: "400px",
+
+            minHeight: "400px",
+            margin: "auto",
+            objectFit: "cover",
+          }}
         />
         <CarouselCaption
           className="carousel-dark"
@@ -195,11 +202,14 @@ const BlogDetails = () => {
                           Participation
                         </h5>
 
-                        <Form>
+                        <Form className="login-card">
                           <Row>
                             <Col md={6}>
                               <div className="mb-3">
-                                <Label htmlFor="commentname-input  text-white">
+                                <Label
+                                  htmlFor="commentname-input "
+                                  className="text-white"
+                                >
                                   Nom
                                 </Label>
                                 <Input
@@ -212,7 +222,10 @@ const BlogDetails = () => {
                             </Col>
                             <Col md={6}>
                               <div className="mb-3">
-                                <Label htmlFor="commentemail-input  text-white">
+                                <Label
+                                  htmlFor="commentemail-input"
+                                  className="text-white"
+                                >
                                   Email
                                 </Label>
                                 <input
@@ -226,7 +239,10 @@ const BlogDetails = () => {
                           </Row>
 
                           <div className="mb-3">
-                            <Label htmlFor="commentmessage-input  text-white">
+                            <Label
+                              htmlFor="commentmessage-input"
+                              className="text-white"
+                            >
                               Message
                             </Label>
                             <textarea

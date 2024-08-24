@@ -25,7 +25,9 @@ const ProfileMenu = ({ t }) => {
         const userData = await getUserProfile();
         setUser({
           username: userData.user.name || "Admin",
-          profilePicture: userData.user.image ? `http://localhost:3000/${userData.user.image}` : "/path/to/default/user1.jpg"
+          profilePicture: userData.user.image
+            ? `http://localhost:3000/${userData.user.image}`
+            : "/path/to/default/user1.jpg",
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -36,9 +38,9 @@ const ProfileMenu = ({ t }) => {
   }, []);
 
   const logout = () => {
-    localStorage.removeItem('authUser'); // Supprimer le token du localStorage
-    localStorage.removeItem('role');
-    navigate('/login'); // Rediriger vers la page de connexion
+    localStorage.removeItem("authUser"); // Supprimer le token du localStorage
+    localStorage.removeItem("role");
+    navigate("/login"); // Rediriger vers la page de connexion
   };
 
   return (
@@ -58,30 +60,20 @@ const ProfileMenu = ({ t }) => {
             src={user.profilePicture}
             alt="Header Avatar"
           />
-          <span className="d-none d-xl-inline-block ms-2 me-1">{user.username}</span>
+          <span className="d-none d-xl-inline-block me-1 ms-2">
+            {user.username}
+          </span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
-            <i className="bx bx-user font-size-16 align-middle me-1" />
+            <i className="bx bx-user font-size-16 me-1 align-middle" />
             {t("Profile")}
           </DropdownItem>
-          <DropdownItem tag="a" href="/crypto-wallet">
-            <i className="bx bx-wallet font-size-16 align-middle me-1" />
-            {t("My Wallet")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="#">
-            <span className="badge bg-success float-end">11</span>
-            <i className="bx bx-wrench font-size-16 align-middle me-1" />
-            {t("Settings")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="auth-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            {t("Lock screen")}
-          </DropdownItem>
+
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item" onClick={logout}>
-            <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
+            <i className="bx bx-power-off font-size-16 text-danger me-1 align-middle" />
             {t("Logout")}
           </Link>
         </DropdownMenu>

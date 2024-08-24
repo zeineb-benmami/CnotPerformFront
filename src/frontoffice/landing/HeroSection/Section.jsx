@@ -1,17 +1,17 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, UncontrolledCarousel } from "reactstrap";
 
 const Section = () => {
   return (
     <React.Fragment>
       <section className="section hero-section" id="home">
-        <div class="glow-container">
-          <div class="glow-circle left"></div>
-          <div class="glow-circle right"></div>
+        <div className="glow-container">
+          <div className="glow-circle left"></div>
+          <div className="glow-circle right"></div>
         </div>
         <Container>
           <Row className="align-items-center">
-            <Col lg="6">
+            <Col lg="6" md="4">
               <h4
                 className=" text-teal-500"
                 style={{ color: "cyan", fontStyle: "italic" }}
@@ -34,26 +34,51 @@ const Section = () => {
                 </a>
               </div>
             </Col>
-            <Col lg="6" md="8" sm="10" className="ms-lg-auto">
-              <img src="assets/images/fares.jpg" alt="" className=" hero-img" />
+            <Col lg="6" md="8" sm="12" className="ms-lg-auto">
+              <div className=" hero-img">
+                <UncontrolledCarousel
+                  items={[
+                    {
+                      altText: "Slide 1",
+                      caption: "Slide 1",
+                      key: 1,
+                      src: "assets/images/fares.jpg",
+                    },
+                    {
+                      altText: "Slide 2",
+                      caption: "Slide 2",
+                      key: 2,
+                      src: "assets/images/fight.jpg",
+                    },
+                    {
+                      altText: "Slide 3",
+                      caption: "Slide 3",
+                      key: 3,
+                      src: "assets/images/glory.jpg",
+                    },
+                  ]}
+                />
+              </div>
+
+              {/*<img src="assets/images/fares.jpg" alt="" />*/}
             </Col>
           </Row>
         </Container>
       </section>
-      <section class="stats-section">
-        <div class="stats-card">
+      <section className="stats-section hero-section">
+        <div className="stats-card">
           <h2>2,500</h2>
           <p>Total Athletes</p>
         </div>
-        <div class="stats-card">
+        <div className="stats-card">
           <h2>300</h2>
           <p>Total Coaches</p>
         </div>
-        <div class="stats-card">
+        <div className="stats-card">
           <h2>150</h2>
           <p>Total Trainers</p>
         </div>
-        <div class="stats-card">
+        <div className="stats-card">
           <h2>10,000</h2>
           <p>Active Sessions</p>
         </div>

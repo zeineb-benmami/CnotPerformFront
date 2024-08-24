@@ -12,13 +12,17 @@ const Index = () => {
   return (
     <React.Fragment>
       <Navbar_Page isSimple={false} />
-      <div className="page-content section hero-section">
+      <section className="page-content section hero-section">
+        <div className="glow-container">
+          <div className="glow-circle left"></div>
+          <div className="glow-circle right"></div>
+        </div>
         <Container fluid>
           <Row>
             <BlogList />
           </Row>
         </Container>
-      </div>
+      </section>
 
       <Footer />
     </React.Fragment>

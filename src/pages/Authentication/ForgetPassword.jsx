@@ -57,9 +57,9 @@ const ForgetPasswordPage = (props) => {
 
   return (
     <section className="section hero-section">
-      <div class="glow-container">
-        <div class="glow-circle left"></div>
-        <div class="glow-circle right"></div>
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
       </div>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-white">

@@ -1,13 +1,13 @@
 import React from "react";
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 const AboutUs = () => {
   return (
     <React.Fragment>
       <section className="section hero-section" id="about">
-        <div class="glow-container">
-          <div class="glow-circle left"></div>
-          <div class="glow-circle right"></div>
+        <div className="glow-container">
+          <div className="glow-circle left"></div>
+          <div className="glow-circle right"></div>
         </div>
         <Container>
           <Row className="align-items-center position-relative">
@@ -18,7 +18,7 @@ const AboutUs = () => {
               style={{ top: 0, left: 0 }}
             />
             <Col lg="5" className="position-relative about-us">
-              <div class="about-content">
+              <div className="about-content">
                 <h2>A propos de nous</h2>
                 <p>
                   CNOT Perform revolutionne l'entrainement sportif grâce à{" "}

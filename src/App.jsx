@@ -20,10 +20,7 @@ import NonAuthLayout from "./components/NonAuthLayout";
 // Import Firebase Configuration file
 // import { initFirebaseBackend } from "./helpers/firebase_helper"
 
-import fakeBackend from "/src/helpers/AuthType/fakeBackend";
-
 // Activating fake backend
-fakeBackend();
 
 // const firebaseConfig = {
 //   apiKey: import.meta.env.VITE_APP_APIKEY,

@@ -53,7 +53,12 @@ const CardProject = ({ events, refresh }) => {
                 <div className="avatar-md me-4">
                   <span className="avatar-title rounded-circle text-danger font-size-16 bg-light">
                     {evt?.imgUrl !== "" ? (
-                      <img src={evt?.imgUrl} alt="" height="30" />
+                      <img
+                        src={evt?.imgUrl}
+                        alt=""
+                        height="30"
+                        style={{ objectFit: "cover" }}
+                      />
                     ) : (
                       <img src="assets/images/icons/calender.svg" alt="" />
                     )}

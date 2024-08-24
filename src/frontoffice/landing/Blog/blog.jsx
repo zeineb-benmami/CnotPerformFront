@@ -32,9 +32,9 @@ const Blog = () => {
   return (
     <React.Fragment>
       <section className="section hero-section" id="news">
-        <div class="glow-container">
-          <div class="glow-circle left"></div>
-          <div class="glow-circle right"></div>
+        <div className="glow-container">
+          <div className="glow-circle left"></div>
+          <div className="glow-circle right"></div>
         </div>
         <Container>
           <Row>

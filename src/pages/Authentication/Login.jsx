@@ -167,9 +167,9 @@ const Login = () => {
 
   return (
     <section className="section hero-section">
-      <div class="glow-container">
-        <div class="glow-circle left"></div>
-        <div class="glow-circle right"></div>
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
       </div>
       <div className="home-btn d-none d-sm-block">
         <Link to="/home" className="text-white">
@@ -344,6 +344,17 @@ const Login = () => {
                 </CardBody>
               </Card>
               <div className="mt-5 text-center">
+                <p>
+                  Vous n'avez pas un compte ?{" "}
+                  <Link
+                    to="/register"
+                    className="font-weight-medium text-primary"
+                    style={{ borderRadius: "25px" }}
+                  >
+                    {" "}
+                    Créer un compte
+                  </Link>{" "}
+                </p>
                 <p>
                   © {new Date().getFullYear()} . Conçu avec{" "}
                   <i className="mdi mdi-heart text-danger" /> par les étudiants

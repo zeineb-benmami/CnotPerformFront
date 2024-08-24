@@ -77,7 +77,7 @@ const BlogList = () => {
                 toggleTab("1");
               }}
             >
-              Tous les publications
+              Toutes les publications
             </NavLink>
           </NavItem>
         </ul>

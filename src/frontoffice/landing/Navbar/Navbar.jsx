@@ -45,6 +45,7 @@ const Navbar_Page = (props) => {
                 borderRadius: "25px",
               }}
               className="logo logo-dark"
+              title="CNOT Perform"
             />
           </Link>
 
