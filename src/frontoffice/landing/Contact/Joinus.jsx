@@ -15,8 +15,8 @@ const Joinus = () => {
             <div className="content">
               <h1 className=" text-white">DEVENIR UN MEMBER</h1>
               <p className=" text-white">
-                Join us to improve your athletic performance and achieve your
-                goals.
+                Rejoignez-nous pour améliorer votre performance athletic et
+                atteindre vos objectifs.
               </p>
               <Link to="/login">
                 <button className="cta-button">Get Started</button>

@@ -118,9 +118,6 @@ const Navbar_Page = (props) => {
 };
 
 Navbar_Page.propTypes = {
-  imglight: PropTypes.any,
-  navClass: PropTypes.string,
-
   isSimple: PropTypes.bool,
 };
 

@@ -11,8 +11,9 @@ import {
 } from "reactstrap";
 import { getUserProfile } from "../../service/apiUser"; // Ensure the import path is correct
 import profile from "../../../public/assets/images/4.png";
+import TapVisitors from "./TapVisitors";
 
-const Settings = (props) => {
+const Settings = ({ popularpost }) => {
   const [user, setUser] = useState({
     username: "Admin",
     profilePicture: "/path/to/default/user1.jpg", // Default image path
@@ -69,6 +70,8 @@ const Settings = (props) => {
             </Row>
           </CardBody>
         </Card>
+
+        <TapVisitors popularpost={popularpost} />
         {/*  <Card>
           <CardBody>
             <div className="d-flex">
@@ -116,28 +119,6 @@ const Settings = (props) => {
           </CardBody>
         </Card>
 */}
-        <Card>
-          <CardBody>
-            <div className="d-flex flex-wrap">
-              <h5 className="card-title mb-3 me-2">Subscribes</h5>
-            </div>
-
-            <div className="d-flex flex-wrap">
-              <div>
-                <p className="text-muted mb-1">Total Subscribe</p>
-                <h4 className="mb-3">10,512</h4>
-                <p className="text-success mb-0">
-                  <span>
-                    0.6 % <i className="mdi mdi-arrow-top-right ms-1"></i>
-                  </span>
-                </p>
-              </div>
-              <div className="align-self-end ms-auto">
-                <i className="bx bx-group display-4 text-light"></i>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
       </Col>
     </React.Fragment>
   );

@@ -454,14 +454,14 @@ const AddEvent = ({ show, handleClose, refresh }) => {
       <ModalFooter>
         <Button
           disabled={Object.keys(errors).length !== 0}
-          color="primary"
+          className=" btn-block cta-button"
           onClick={handleSubmit}
-          style={{ borderRadius: "25px", width: "200px" }}
+          style={{ width: "200px" }}
         >
           Ajouter
         </Button>{" "}
         <Button
-          color="secondary"
+          className=" bg-slate-500"
           onClick={handleClose}
           style={{ borderRadius: "25px" }}
         >
