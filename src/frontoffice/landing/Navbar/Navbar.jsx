@@ -26,9 +26,7 @@ const navItems = [
 const Navbar_Page = (props) => {
   const [isOpenMenu, setisOpenMenu] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("authUser")
-  );
+  const [isLoggedIn] = useState(!!localStorage.getItem("authUser"));
 
   //Store all NavigationbaFr Id into TargetID variable(Used for Scrollspy)
   let TargetId = navItems.map((item) => {

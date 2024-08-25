@@ -36,7 +36,6 @@ const Chat = () => {
     image: images.avatar1,
     _id: "",
   });
-  const [menu1, setMenu1] = useState(false);
   const [search_Menu, setsearch_Menu] = useState(false);
   const [settings_Menu, setsettings_Menu] = useState(false);
   const [other_Menu, setother_Menu] = useState(false);
@@ -304,10 +303,6 @@ const Chat = () => {
                         <h5 className="font-size-15 mb-1 mt-0">
                           {currentUser.name}
                         </h5>
-                        <p className="text-muted mb-0">
-                          <i className="mdi mdi-circle text-success me-2 align-middle" />
-                          Active
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -383,18 +378,6 @@ const Chat = () => {
                         <h5 className="font-size-15 mb-1 text-white">
                           {Chat_Box_Username}
                         </h5>
-                        <p className="text-muted mb-0 text-white">
-                          <i
-                            className={
-                              Chat_Box_User_Status === "Active Now"
-                                ? "mdi mdi-circle text-success me-2 align-middle"
-                                : Chat_Box_User_Status === "intermediate"
-                                ? "mdi mdi-circle text-warning me-1 align-middle"
-                                : "mdi mdi-circle me-1 align-middle"
-                            }
-                          />
-                          {Chat_Box_User_Status}
-                        </p>
                       </Col>
                       <Col md="8" xs="3">
                         <ul className="list-inline user-chat-nav mb-0 text-end">

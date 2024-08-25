@@ -69,16 +69,23 @@ const Unblock = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className="d-flex align-items-center justify-content-center vh-100">
+    <section className="section hero-section">
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
+      </div>
+      <div className="d-flex align-items-center justify-content-center vh-100 mx-auto">
         <Container>
           <Row className="justify-content-center">
             <Col xl={5}>
               <div className="auth-full-page-content p-md-5 p-4">
                 <div className="w-100">
                   <div className="d-flex flex-column h-100">
-                    <div className="mb-4 mb-md-5 text-center">
-                      <Link to="/dashboard" className="d-block auth-logo"></Link>
+                    <div className="mb-md-5 mb-4 text-center">
+                      <Link
+                        to="/dashboard"
+                        className="d-block auth-logo"
+                      ></Link>
                     </div>
                     <div className="my-auto">
                       <div className="text-center">
@@ -87,11 +94,14 @@ const Unblock = () => {
                             <i className="bx bxs-message-rounded-dots h1 mb-0 text-primary"></i>
                           </div>
                         </div>
-                        <div className="p-2 mt-4">
+                        <div className="mt-4 p-2">
                           <h4>Débloquer votre compte</h4>
                           <p>
-                            Veuillez entrer le code à 6 chiffres envoyé par SMS au Directeur{" "}
-                            <span className="fw-semibold">Monsieur Lakhdar Haykel</span>
+                            Veuillez entrer le code à 6 chiffres envoyé par SMS
+                            au Directeur{" "}
+                            <span className="fw-semibold">
+                              Monsieur Lakhdar Haykel
+                            </span>
                           </p>
                           {error && <p className="text-danger">{error}</p>}
                           <Form onSubmit={handleSubmit}>
@@ -122,10 +132,11 @@ const Unblock = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-4 mt-md-5 text-center">
+                    <div className="mt-md-5 mt-4 text-center">
                       <p className="mb-0">
                         © {new Date().getFullYear()} Crafted with{" "}
-                        <i className="mdi mdi-heart text-danger"></i> by Themesbrand
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Themesbrand
                       </p>
                     </div>
                   </div>
@@ -135,7 +146,7 @@ const Unblock = () => {
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </section>
   );
 };
 
