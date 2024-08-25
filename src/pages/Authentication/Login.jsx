@@ -27,7 +27,7 @@ const Login = () => {
   const [userNames, setUserNames] = useState([]);
   const navigate = useNavigate();
 
-  const signin = async (user) => {
+ /* const signin = async (user) => {
     try {
       const response = await axios.post('http://localhost:3000/users/signin', user);
       localStorage.setItem('authUser', JSON.stringify(response.data));
@@ -38,6 +38,38 @@ const Login = () => {
       }
     } catch (err) {
       setError(err.response ? err.response.data.error : err.message);
+    }
+  };*/
+
+  const signin = async (user) => {
+    try {
+      const response = await axios.post('http://localhost:3000/users/signin', user);
+
+      if (response.data.success) {
+        localStorage.setItem('authUser', JSON.stringify(response.data));
+        if (user.role === 'MC') {
+          navigate('/dashboard');
+        } else {
+          navigate('/home');
+        }
+      } else {
+        throw new Error(response.data.error);
+      }
+    } catch (err) {
+      // Check if the error is related to account being blocked
+      if (err.response && err.response.data.error.includes('bloqué')) {
+        // Redirect to unblock page with the necessary user details
+        navigate('/unblock', {
+          state: {
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            
+          }
+        });
+      } else {
+        setError(err.response ? err.response.data.error : err.message);
+      }
     }
   };
 

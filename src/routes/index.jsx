@@ -35,6 +35,9 @@ import AddEvent from "../pages/Events/projects-create";
 
 import Liste from "../pages/Events/projects-list";
 
+import Home from "../frontoffice/pages/Home";
+import Unblock from "../pages/Authentication/Unblock";
+
 import Landing from "../frontoffice/landing/index";
 import Header from "../frontoffice/pages/Header";
 import Footer from "../frontoffice/pages/Footer";
@@ -142,6 +145,12 @@ const publicRoutes = [
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
   { path: "/unauthorized", component: <Unauthorized /> },
+
+  {path:"/unblock", component:<Unblock/>
+    
+  }
+
+
 ];
 
 export { authProtectedRoutes, publicRoutes };
