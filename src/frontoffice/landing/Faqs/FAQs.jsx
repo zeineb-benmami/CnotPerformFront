@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -9,23 +9,23 @@ import {
   NavLink,
   TabContent,
   TabPane,
-} from "reactstrap"
-import classnames from "classnames"
+} from "reactstrap";
+import classnames from "classnames";
 
 //Import Components
-import Accordian from "./accordian"
+import Accordian from "./accordian";
 
 const FAQs = () => {
-  const [activeTab, setactiveTab] = useState("1")
+  const [activeTab, setactiveTab] = useState("1");
 
   return (
     <React.Fragment>
-      <section className="section" id="faqs">
+      <section className="section hero-section" id="faqs">
         <Container>
           <Row>
             <Col lg="12">
-              <div className="text-center mb-5">
-                <div className="small-title">FAQs</div>
+              <div className="mb-5 text-center text-white">
+                <div className="small-title text-white">FAQs</div>
                 <h4>Frequently asked questions</h4>
               </div>
             </Col>
@@ -40,11 +40,11 @@ const FAQs = () => {
                       <NavLink
                         className={classnames({ active: activeTab === "1" })}
                         onClick={() => {
-                          setactiveTab("1")
+                          setactiveTab("1");
                         }}
                       >
-                        <i className="bx bx-help-circle nav-icon d-block mb-2"/>
-                        <p className="font-weight-bold mb-0">
+                        <i className="bx bx-help-circle nav-icon d-block mb-2 text-white" />
+                        <p className="font-weight-bold mb-0 text-white">
                           General Questions
                         </p>
                       </NavLink>
@@ -52,21 +52,25 @@ const FAQs = () => {
                       <NavLink
                         className={classnames({ active: activeTab === "2" })}
                         onClick={() => {
-                          setactiveTab("2")
+                          setactiveTab("2");
                         }}
                       >
-                        <i className="bx bx-receipt nav-icon d-block mb-2"/>
-                        <p className="font-weight-bold mb-0">Token sale</p>
+                        <i className="bx bx-receipt nav-icon d-block mb-2 text-white" />
+                        <p className="font-weight-bold mb-0 text-white">
+                          Token sale
+                        </p>
                       </NavLink>
 
                       <NavLink
                         className={classnames({ active: activeTab === "3" })}
                         onClick={() => {
-                          setactiveTab("3")
+                          setactiveTab("3");
                         }}
                       >
-                        <i className="bx bx-timer d-block nav-icon mb-2"/>
-                        <p className="font-weight-bold mb-0">Roadmap</p>
+                        <i className="bx bx-timer d-block nav-icon mb-2 text-white" />
+                        <p className="font-weight-bold mb-0 text-white">
+                          Roadmap
+                        </p>
                       </NavLink>
                     </Nav>
                   </Col>
@@ -132,7 +136,7 @@ const FAQs = () => {
         </Container>
       </section>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default FAQs
+export default FAQs;

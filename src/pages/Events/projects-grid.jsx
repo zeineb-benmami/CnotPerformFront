@@ -8,7 +8,6 @@ import {
   Row,
 } from "reactstrap";
 import withRouter from "../../components/Common/withRouter";
-import { map } from "lodash";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
@@ -16,10 +15,6 @@ import Breadcrumbs from "/src/components/Common/Breadcrumb";
 //Import Cards
 import CardProject from "./card-project";
 
-import { getProjects as onGetProjects } from "/src/store/actions";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
 import AddEvent from "./Modals/AddEvent";
 import { getEvents } from "../../service/event-service";
 
@@ -94,6 +89,7 @@ const ProjectsGrid = (props) => {
   return (
     <div className="page-content">
       <AddEvent show={show} handleClose={handleClose} refresh={refreshEvents} />
+
       <Container fluid>
         {/* Render Breadcrumbs */}
         <Breadcrumbs
@@ -140,6 +136,9 @@ const ProjectsGrid = (props) => {
         </Row>
         <Row>
           {/* Import Cards */}
+          {currentEvents?.length == 0 && (
+            <h3 className=" text-center">Aucun évènement trouvé</h3>
+          )}
           <CardProject events={currentEvents} refresh={refreshEvents} />
         </Row>
 

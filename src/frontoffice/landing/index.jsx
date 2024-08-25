@@ -11,13 +11,13 @@ import Events from "./Planning/events";
 import Blog from "./Blog/blog";
 import FAQs from "./Faqs/FAQs";
 import Footer from "./Footer/footer";
+import Offres from "./Features/offres";
+import Contact from "./Contact/Contact";
 
 const CryptoIcoLanding = () => {
   //meta title
   document.title = "Accueil | CNOT PERFORM";
 
-  const [imglight, setimglight] = useState(true);
-  const [navClass, setnavClass] = useState("");
   const [showButton, setShowButton] = useState(false);
 
   // Use ComponentDidMount
@@ -28,13 +28,6 @@ const CryptoIcoLanding = () => {
 
   function scrollNavigation() {
     var scrollup = document.documentElement.scrollTop;
-    if (scrollup > 80) {
-      setimglight(false);
-      setnavClass("nav-sticky");
-    } else {
-      setimglight(true);
-      setnavClass("");
-    }
   }
 
   useEffect(() => {
@@ -56,11 +49,11 @@ const CryptoIcoLanding = () => {
   return (
     <React.Fragment>
       {/* import navbar */}
-      <Navbar navClass={navClass} imglight={imglight} isSimple={true} />
+      <Navbar isSimple={true} />
 
       {showButton && (
         <button
-          className="fixed bottom-5 right-7 z-50 cursor-pointer p-4"
+          className="  z-50 cursor-pointer p-4"
           onClick={handleScrollToTop}
         >
           <div className="event-up-icon">
@@ -71,23 +64,19 @@ const CryptoIcoLanding = () => {
       {/* Hero section */}
       <Section />
 
-      {/* mini cards */}
-      <CardsMini />
-
       {/* aboutus */}
       <AboutUs />
 
       {/* features */}
       <Features />
 
+      <Offres />
       {/* blog */}
       <Blog />
 
       <Events />
 
-      {/* faqs */}
-      <FAQs />
-
+      <Contact />
       {/* footer */}
       <Footer />
     </React.Fragment>

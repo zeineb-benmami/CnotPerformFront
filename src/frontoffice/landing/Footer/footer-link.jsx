@@ -3,23 +3,28 @@ import { Row, Col } from "reactstrap";
 
 import { Link } from "react-router-dom";
 
-//Import Images
-
-import logo from "../../../../public/assets/images/logo/CNOT_icon.png";
-
 const FooterLink = () => {
   return (
     <React.Fragment>
       <Row>
         <Col lg="6">
-          <div className="mb-4">
+          <Row className="mb-4">
             <img
-              src={logo}
+              src="assets/images/logo/CNOT_icon.png"
               alt=""
-              style={{ width: "40%", height: "40%" }}
-              height="20"
+              style={{ width: "200px", height: "200px", borderRadius: "10px" }}
             />
-          </div>
+            <img
+              src="assets/images/logo/sli.png"
+              alt=""
+              style={{
+                width: "200px",
+                height: "200px",
+                backgroundColor: "#fff",
+                borderRadius: "10px",
+              }}
+            />
+          </Row>
 
           <p className="mb-2">
             {new Date().getFullYear()} © CNOT Perform Designed & Developed by

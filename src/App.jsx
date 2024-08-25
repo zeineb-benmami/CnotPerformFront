@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Suspense } from "react";
 
 import { Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
@@ -16,9 +16,6 @@ import Authmiddleware from "./routes/route";
 import VerticalLayout from "./components/VerticalLayout/";
 import HorizontalLayout from "./components/HorizontalLayout/";
 import NonAuthLayout from "./components/NonAuthLayout";
-
-// Import scss
-import "./assets/scss/theme.scss";
 
 // Import Firebase Configuration file
 // import { initFirebaseBackend } from "./helpers/firebase_helper"
@@ -42,6 +39,8 @@ fakeBackend();
 // init firebase backend
 // initFirebaseBackend(firebaseConfig)
 
+import "./index.css";
+
 const App = (props) => {
   const { layoutType } = useSelector((state) => ({
     layoutType: state.Layout.layoutType,
@@ -64,29 +63,31 @@ const App = (props) => {
 
   return (
     <React.Fragment>
-      <Routes>
-        {publicRoutes.map((route, idx) => (
-          <Route
-            path={route.path}
-            element={<NonAuthLayout>{route.component}</NonAuthLayout>}
-            key={idx}
-            exact={true}
-          />
-        ))}
+      <Suspense fallback={<p>Loading ...</p>}>
+        <Routes>
+          {publicRoutes.map((route, idx) => (
+            <Route
+              path={route.path}
+              element={<NonAuthLayout>{route.component}</NonAuthLayout>}
+              key={idx}
+              exact={true}
+            />
+          ))}
 
-        {authProtectedRoutes.map((route, idx) => (
-          <Route
-            path={route.path}
-            element={
-              <Authmiddleware>
-                <Layout>{route.component}</Layout>
-              </Authmiddleware>
-            }
-            key={idx}
-            exact={true}
-          />
-        ))}
-      </Routes>
+          {authProtectedRoutes.map((route, idx) => (
+            <Route
+              path={route.path}
+              element={
+                <Authmiddleware>
+                  <Layout>{route.component}</Layout>
+                </Authmiddleware>
+              }
+              key={idx}
+              exact={true}
+            />
+          ))}
+        </Routes>
+      </Suspense>
     </React.Fragment>
   );
 };

@@ -19,9 +19,10 @@ function TapVisitors(props) {
           <CardBody>
             <div className="d-flex flex-wrap">
               <div className="ms-2">
-                <h5 className="card-title mb-3">Top Visitors</h5>
+                <h5 className="card-title mb-3">Evènements par categories</h5>
               </div>
             </div>
+            {/*
             <Row className="text-center">
               <Col xs={6}>
                 <div className="mt-3">
@@ -41,7 +42,7 @@ function TapVisitors(props) {
                   </h5>
                 </div>
               </Col>
-            </Row>
+            </Row>*/}
 
             <hr />
 
@@ -50,11 +51,11 @@ function TapVisitors(props) {
                 <li className="list-group-item">
                   <div className="py-2">
                     <h5 className="font-size-14">
-                      California <span className="float-end">78%</span>
+                      Entourage <span className="float-end">78%</span>
                     </h5>
                     <div className="progress animated-progess progress-sm">
                       <div
-                        className="progress-bar"
+                        className="progress-bar bg-success"
                         role="progressbar"
                         style={{ width: "78%" }}
                         aria-valuenow="78"
@@ -67,11 +68,12 @@ function TapVisitors(props) {
                 <li className="list-group-item">
                   <div className="py-2">
                     <h5 className="font-size-14">
-                      Nevada <span className="float-end">69%</span>
+                      Universalité des jeux olympiques{" "}
+                      <span className="float-end">69%</span>
                     </h5>
                     <div className="progress animated-progess progress-sm">
                       <div
-                        className="progress-bar bg-warning"
+                        className="progress-bar bg-info"
                         role="progressbar"
                         style={{ width: "69%" }}
                         aria-valuenow="69"
@@ -84,11 +86,46 @@ function TapVisitors(props) {
                 <li className="list-group-item">
                   <div className="py-2">
                     <h5 className="font-size-14">
-                      Texas <span className="float-end">61%</span>
+                      Développement du Sport{" "}
+                      <span className="float-end">61%</span>
                     </h5>
                     <div className="progress animated-progess progress-sm">
                       <div
-                        className="progress-bar bg-success"
+                        className="progress-bar bg-warning"
+                        role="progressbar"
+                        style={{ width: "61%" }}
+                        aria-valuenow="61"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                </li>
+                <li className="list-group-item">
+                  <div className="py-2">
+                    <h5 className="font-size-14">
+                      Valeurs olympiques <span className="float-end">61%</span>
+                    </h5>
+                    <div className="progress animated-progess progress-sm">
+                      <div
+                        className="progress-bar bg-danger"
+                        role="progressbar"
+                        style={{ width: "61%" }}
+                        aria-valuenow="61"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                </li>
+                <li className="list-group-item">
+                  <div className="py-2">
+                    <h5 className="font-size-14">
+                      Gestion des CNO <span className="float-end">61%</span>
+                    </h5>
+                    <div className="progress animated-progess progress-sm">
+                      <div
+                        className="progress-bar bg-dark"
                         role="progressbar"
                         style={{ width: "61%" }}
                         aria-valuenow="61"

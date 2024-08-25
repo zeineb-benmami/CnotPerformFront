@@ -15,13 +15,15 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 import Calendar from "../pages/Calendar/index";
 import Federation from "../pages/Federations/contacts-grid";
-import Chat from "../pages/Chat/Chat"
-import ChatFederation from "../pages/Chat/ChatFederation"
+import Chat from "../pages/Chat/Chat";
+import ChatFederation from "../pages/Chat/ChatFederation";
 // Front office pages
 
 import Events from "../pages/Events/projects-grid";
 
-import Articles from "../frontoffice/landing/Articles/BlogList/index";
+const Articles = React.lazy(() =>
+  import("../frontoffice/landing/Articles/BlogList/index")
+);
 
 import ArticleDetails from "../frontoffice/landing/Articles/BlogDetails";
 
@@ -32,8 +34,10 @@ import EventDetails from "../pages/Events/ProjectOverview/projects-overview";
 import AddEvent from "../pages/Events/projects-create";
 
 import Liste from "../pages/Events/projects-list";
+
 import Home from "../frontoffice/pages/Home";
 import Unblock from "../pages/Authentication/Unblock";
+
 import Landing from "../frontoffice/landing/index";
 import Header from "../frontoffice/pages/Header";
 import Footer from "../frontoffice/pages/Footer";
@@ -46,7 +50,6 @@ import EmailTemplateBilling from "../pages/Email/email-template-billing";
 const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 
 const authProtectedRoutes = [
-  
   {
     path: "/dashboard",
     component: (
@@ -67,7 +70,7 @@ const authProtectedRoutes = [
     path: "/federation",
     component: (
       <Authmiddleware restrictedRoutes={restrictedRoutes}>
-        <Federation/>
+        <Federation />
       </Authmiddleware>
     ),
   },
@@ -114,33 +117,22 @@ const authProtectedRoutes = [
   },
 ];
 
-
-
-
 const publicRoutes = [
   {
     path: "/home",
     component: (
       <>
-        <Header />
-        <Home />
-        <Footer />
+        <Landing />
       </>
     ),
   },
-  { path: "/Chat",  component: (
-    <>
-      <Header />
-      <ChatFederation />
-      <Footer />
-    </>
-  ), },
-
   {
-    path: "/landing",
+    path: "/Chat",
     component: (
       <>
-        <Landing />
+        <Header />
+        <ChatFederation />
+        <Footer />
       </>
     ),
   },
@@ -153,9 +145,11 @@ const publicRoutes = [
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
   { path: "/unauthorized", component: <Unauthorized /> },
+
   {path:"/unblock", component:<Unblock/>
     
   }
+
 
 ];
 

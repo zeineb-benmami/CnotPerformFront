@@ -16,82 +16,45 @@ const AboutUs = () => {
 
   return (
     <React.Fragment>
-      <section className="section bg-white pt-4" id="about">
+      <section className="section hero-section" id="about">
         <Container>
-          <Row>
-            <Col lg="12">
-              <div className="mb-5 text-center">
-                <div className="small-title">About us</div>
-                <h4>CNOT PERFORM</h4>
-              </div>
-            </Col>
-          </Row>
-          <Row className="align-items-center">
-            <Col lg="5">
-              <div className="text-muted">
-                <h4>Contexte & objectifs</h4>
+          <Row className="align-items-center position-relative">
+            <img
+              src="/assets/images/beats.png"
+              alt=""
+              className="position-absolute z-n1 inset-0 object-cover"
+              style={{ top: 0, left: 0 }}
+            />
+            <Col lg="5" className="position-relative about-us">
+              <div class="about-content">
+                <h2>About Us</h2>
                 <p>
-                  CNOT Perform révolutionne l'entraînement sportif grâce à
-                  l'Intelligence Artificielle.
+                  CNOT Perform revolutionne l'entrainement sportif grâce à{" "}
+                  <strong style={{ color: "pink" }}>
+                    l'Intélligence Artificielle
+                  </strong>
                 </p>
-                <p className="mb-4">
-                  Suivez vos performances en temps réel, analysez vos données
-                  pour identifier vos points forts et faibles, recevez des
-                  conseils personnalisés et prévenez les blessures.
-                  Rejoignez-nous pour améliorer vos performances sportives et
-                  atteindre vos objectifs.
-                </p>
-
-                <div className="d-flex flex-wrap gap-2">
-                  <Link
-                    to="#"
-                    className="btn btn-primary"
-                    style={{ borderRadius: "25px" }}
-                  >
-                    Read More
-                  </Link>
-                </div>
+                <ul>
+                  <li>suivre votre performance en temps réel</li>
+                  <li>
+                    analyser vos données pour identifier vos points faibles et
+                    forts
+                  </li>
+                  <li>
+                    recevoir des conseils personnalisés pour éviter les
+                    blessures
+                  </li>
+                </ul>
               </div>
             </Col>
 
-            <Col lg="6" className="ms-auto">
-              <div className="mt-lg-0 mt-4">
+            <Col lg="6" className="position-relative ms-auto">
+              <div className="mt-lg-0 position-relative z-1 mt-4">
                 <Row>
-                  <Col sm="6">
-                    <Card className="border">
-                      <CardBody>
-                        <div className="mb-3">
-                          <i className="mdi mdi-bitcoin h2 text-success" />
-                        </div>
-                        <h5>Lending</h5>
-                        <p className="text-muted mb-0">
-                          At vero eos et accusamus et iusto blanditiis
-                        </p>
-                      </CardBody>
-                      <div className="card-footer border-top bg-transparent text-center">
-                        <Link to="#" className="text-primary">
-                          Learn more
-                        </Link>
-                      </div>
-                    </Card>
-                  </Col>
-                  <Col sm="6">
-                    <Card className="mt-lg-5 border">
-                      <CardBody>
-                        <div className="mb-3">
-                          <i className="mdi mdi-wallet-outline h2 text-success" />
-                        </div>
-                        <h5>Wallet</h5>
-                        <p className="text-muted mb-0">
-                          Quis autem vel eum iure reprehenderit
-                        </p>
-                      </CardBody>
-                      <div className="card-footer border-top bg-transparent text-center">
-                        <Link to="#" className="text-primary">
-                          Learn more
-                        </Link>
-                      </div>
-                    </Card>
+                  <Col sm="12" className="mx-auto">
+                    <div>
+                      <img src="assets/images/runningman.png" alt="" />
+                    </div>
                   </Col>
                 </Row>
               </div>

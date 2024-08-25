@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { map } from "lodash";
 import {
@@ -14,20 +14,37 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import { deleteEvent } from "../../service/event-service";
+import DeleteModal from "../Calendar/DeleteModal";
 
 const CardProject = ({ events, refresh }) => {
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const [eventId, setEventId] = useState("");
+
   const onClickDelete = async (id) => {
     try {
       await deleteEvent(id);
-      console.log("Delete successful");
+
+      setDeleteModal(false);
       refresh();
     } catch (error) {
       console.error("There was an error!", error.message);
     }
   };
 
+  const handleDeleteEvent = async (id) => {
+    setEventId(id);
+
+    setDeleteModal(true);
+  };
+
   return (
     <React.Fragment>
+      <DeleteModal
+        show={deleteModal}
+        onDeleteClick={() => onClickDelete(eventId)}
+        onCloseClick={() => setDeleteModal(false)}
+      />
       {map(events, (evt, key) => (
         <Col xl="4" sm="6" key={key}>
           <Card>
@@ -121,7 +138,7 @@ const CardProject = ({ events, refresh }) => {
                       <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
                       Modifier
                     </DropdownItem>
-                    <DropdownItem onClick={() => onClickDelete(evt?._id)}>
+                    <DropdownItem onClick={() => handleDeleteEvent(evt?._id)}>
                       <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
                       Supprimer
                     </DropdownItem>

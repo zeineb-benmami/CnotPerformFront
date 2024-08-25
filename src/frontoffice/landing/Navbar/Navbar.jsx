@@ -14,16 +14,12 @@ import ScrollspyNav from "./scrollSpy";
 
 //Import Images
 
-import logo from "../../../../public/assets/images/logo/CNOT_icon.png";
-
-import cnotlogo from "../../../assets/images/CNOT_logo.svg";
-
 const navItems = [
   { id: 1, idnm: "home", navheading: "Home" },
   { id: 2, idnm: "about", navheading: "About" },
   { id: 3, idnm: "features", navheading: "Services" },
   { id: 4, idnm: "news", navheading: "Events" },
-  { id: 5, idnm: "faqs", navheading: "FAQs" },
+  { id: 5, idnm: "contact", navheading: "Contact" },
 ];
 
 const Navbar_Page = (props) => {
@@ -36,29 +32,15 @@ const Navbar_Page = (props) => {
 
   return (
     <React.Fragment>
-      <nav
-        className={
-          "navbar navbar-expand-lg navigation fixed-top sticky " +
-          props.navClass
-        }
-      >
+      <nav className="navbar navbar-expand-lg navigation fixed-top nav-sticky sticky bg-dark">
         <Container>
           <Link className="navbar-logo" to="/home">
-            {props.imglight !== true ? (
-              <img
-                src={cnotlogo}
-                alt=""
-                style={{ width: "200px", height: "90px", padding: "10px" }}
-                className="logo logo-dark"
-              />
-            ) : (
-              <img
-                src={logo}
-                alt=""
-                style={{ width: "80px", height: "90px", padding: "10px" }}
-                className="logo logo-light"
-              />
-            )}
+            <img
+              src="assets/images/logo/thunder.png"
+              alt=""
+              style={{ width: "90px", height: "90px", padding: "10px" }}
+              className="logo logo-dark"
+            />
           </Link>
 
           <NavbarToggler
@@ -85,7 +67,10 @@ const Navbar_Page = (props) => {
                       key={key}
                       className={item.navheading === "Home" ? "active" : ""}
                     >
-                      <NavLink href={"#" + item.idnm}>
+                      <NavLink
+                        className="text-2xl text-white"
+                        href={"#" + item.idnm}
+                      >
                         {" "}
                         {item.navheading}
                       </NavLink>
@@ -107,8 +92,7 @@ const Navbar_Page = (props) => {
               <Link to="/login">
                 <Button
                   color="primary"
-                  className="font-16 btn-block"
-                  style={{ borderRadius: "25px" }}
+                  className="font-16 btn-block cta-button"
                 >
                   Se connecter
                 </Button>

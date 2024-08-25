@@ -1,74 +1,14 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardHeader,
-  Button,
-} from "reactstrap";
-import { Link } from "react-router-dom";
-
-//Import Countdown
-import Countdown from "react-countdown";
-
-const renderer = ({ days, hours, minutes, seconds, completed }) => {
-  if (completed) {
-    // Render a completed state
-    return (
-      <>
-        <div className="coming-box">
-          00
-          <span>Days</span>
-        </div>
-        <div className="coming-box">
-          00
-          <span>Hours</span>
-        </div>
-        <div className="coming-box">
-          00
-          <span>Minutes</span>
-        </div>
-        <div className="coming-box">
-          00
-          <span>Seconds</span>
-        </div>
-      </>
-    );
-  } else {
-    // Render a countdown
-    return (
-      <>
-        <div className="coming-box">
-          {days}
-          <span>Days</span>
-        </div>
-        <div className="coming-box">
-          {hours}
-          <span>Hours</span>
-        </div>
-        <div className="coming-box">
-          {minutes}
-          <span>Minutes</span>
-        </div>
-        <div className="coming-box">
-          {seconds}
-          <span>Seconds</span>
-        </div>
-      </>
-    );
-  }
-};
+import { Container, Row, Col } from "reactstrap";
 
 const Section = () => {
   return (
     <React.Fragment>
-      <section className="section hero-section bg-ico-hero" id="home">
-        <div className="bg-overlay bg-primary" />
+      <section className="section hero-section" id="home">
         <Container>
           <Row className="align-items-center">
             <Col lg="6">
+              <hr />
               <div className="text-white-50">
                 <h1 className="fw-semibold hero-title mb-3 text-white">
                   Bienvenu à
@@ -76,32 +16,37 @@ const Section = () => {
                 <h1 className="fw-semibold hero-title mb-3 text-white">
                   CNOT Perform
                 </h1>
-                <p className="font-size-14">
-                  L'Intelligence Artificielle au service du sport
-                </p>
+              </div>
+              <div>
+                <a href="#about" className="cta-button mt-5">
+                  {" "}
+                  Démarrer
+                </a>
               </div>
             </Col>
             <Col lg="6" md="8" sm="10" className="ms-lg-auto">
-              <Card className="mt-lg-0 mb-0 mt-5 overflow-hidden">
-                <CardHeader className="text-center">
-                  <h5 className="mb-0">Actualités</h5>
-                </CardHeader>
-                <CardBody>
-                  <iframe
-                    src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FCNOTunisie%2Fposts%2Fpfbid025heVdFnEFhTXKRFfToGRzqydPRYwCzBe5fkV3MARia5Vrw8L9XdFeQtjD3PC6uaCl&show_text=false&width=500"
-                    width="500"
-                    height="498"
-                    style={{ border: "none", overflow: "hidden" }}
-                    scrolling="no"
-                    frameBorder="0"
-                    allowFullScreen={true}
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  ></iframe>
-                </CardBody>
-              </Card>
+              <img src="assets/images/fares.jpg" alt="" className=" hero-img" />
             </Col>
           </Row>
         </Container>
+      </section>
+      <section class="stats-section">
+        <div class="stats-card">
+          <h2>2,500</h2>
+          <p>Total Athletes</p>
+        </div>
+        <div class="stats-card">
+          <h2>300</h2>
+          <p>Total Coaches</p>
+        </div>
+        <div class="stats-card">
+          <h2>150</h2>
+          <p>Total Trainers</p>
+        </div>
+        <div class="stats-card">
+          <h2>10,000</h2>
+          <p>Active Sessions</p>
+        </div>
       </section>
     </React.Fragment>
   );
