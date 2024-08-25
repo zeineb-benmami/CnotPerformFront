@@ -41,6 +41,9 @@ nav {
   align-items: center;
 }
 
+button:disabled {
+  background-color: #888;
+}
 
 /*side cerles*/
 .glow-container {

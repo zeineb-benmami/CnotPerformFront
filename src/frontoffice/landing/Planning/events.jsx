@@ -90,10 +90,6 @@ const events = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(eventList);
-  }, [eventList]);
-
   if (loading) return <Spinner color="info"></Spinner>;
 
   return (

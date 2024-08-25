@@ -19,11 +19,14 @@ const Joinus = () => {
                 atteindre vos objectifs.
               </p>
               <Link to="/login">
-                <button className="cta-button">Get Started</button>
+                <button className="cta-button">Démarrer</button>
               </Link>
             </div>
             <div className="image">
-              <img src="assets/images/1.jpg" alt="Athletes celebrating" />
+              <img
+                src="/public/assets/images/1.jpg"
+                alt="Athletes celebrating"
+              />
             </div>
           </div>
         </Row>

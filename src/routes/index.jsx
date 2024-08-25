@@ -44,6 +44,7 @@ import EmailBasicTemplte from "../pages/Email/email-basic-templte";
 import EmailAlertTemplte from "../pages/Email/email-template-alert";
 import EmailTemplateBilling from "../pages/Email/email-template-billing";
 import Navbar_Page from "../frontoffice/landing/Navbar/Navbar";
+import MyEvents from "../frontoffice/landing/Blog/myEvents";
 const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 
 const authProtectedRoutes = [
@@ -125,8 +126,18 @@ const publicRoutes = [
     path: "/Chat",
     component: (
       <>
-        <Navbar_Page isSimple={true} />
+        <Navbar_Page isSimple={false} />
         <ChatFederation />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/Participations",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <MyEvents />
         <Footer />
       </>
     ),

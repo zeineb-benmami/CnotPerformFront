@@ -19,31 +19,30 @@ import {
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import images from "/src/assets/images";
 import { io } from "socket.io-client";
 import { getUserProfile } from "../../service/apiUser";
 import moment from "moment";
-import 'moment/locale/fr';
+import "moment/locale/fr";
 
-moment.locale('fr');
+moment.locale("fr");
 
 const Chat = () => {
-  document.title = "Chat | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Chat | CNOT PERFORM";
 
-  const [messageBox, setMessageBox] = useState(null);
   const [currentUser, setCurrentUser] = useState({
     name: "Henry Wells",
     isActive: true,
     image: images.avatar1,
-    _id: '',
+    _id: "",
   });
   const [menu1, setMenu1] = useState(false);
   const [search_Menu, setsearch_Menu] = useState(false);
   const [settings_Menu, setsettings_Menu] = useState(false);
   const [other_Menu, setother_Menu] = useState(false);
   const [Chat_Box_Username, setChat_Box_Username] = useState("");
-  const [Chat_Box_User_Status, setChat_Box_User_Status] = useState("Active Now");
+  const [Chat_Box_User_Status, setChat_Box_User_Status] =
+    useState("Active Now");
   const [curMessage, setcurMessage] = useState("");
   const [recentChats, setRecentChats] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -68,12 +67,16 @@ const Chat = () => {
         });
 
         // Fetch contacts with role MC
-        const response = await fetch(`http://localhost:3000/api/contactsMC/${userData.user._id}`);
+        const response = await fetch(
+          `http://localhost:3000/api/contactsMC/${userData.user._id}`
+        );
         const contactsData = await response.json();
         const sortedContacts = contactsData.sort((a, b) => {
           if (a.lastMessageTimeDiff === "Aucun message") return 1;
           if (b.lastMessageTimeDiff === "Aucun message") return -1;
-          return new Date(b.lastMessageTimeDiff) - new Date(a.lastMessageTimeDiff);
+          return (
+            new Date(b.lastMessageTimeDiff) - new Date(a.lastMessageTimeDiff)
+          );
         });
         setContacts(sortedContacts);
 
@@ -93,25 +96,25 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem('authUser'))?.token;
+    const token = JSON.parse(localStorage.getItem("authUser"))?.token;
 
     if (token) {
-      const newSocket = io('http://localhost:3000', {
+      const newSocket = io("http://localhost:3000", {
         auth: { token },
-        transports: ['websocket', 'polling']
+        transports: ["websocket", "polling"],
       });
 
       setSocket(newSocket);
 
-      newSocket.on('connect', () => {
-        console.log('Connected to server');
+      newSocket.on("connect", () => {
+        console.log("Connected to server");
       });
 
-      newSocket.on('disconnect', () => {
-        console.log('Disconnected from server');
+      newSocket.on("disconnect", () => {
+        console.log("Disconnected from server");
       });
 
-      newSocket.on('receiveMessage', (message) => {
+      newSocket.on("receiveMessage", (message) => {
         setMessages((prevMessages) => {
           const updatedMessages = [...prevMessages, message];
           updateRecentChats(updatedMessages);
@@ -120,15 +123,15 @@ const Chat = () => {
         updateContacts();
       });
 
-      newSocket.on('connect_error', (err) => {
-        console.error('Connection error:', err.message);
+      newSocket.on("connect_error", (err) => {
+        console.error("Connection error:", err.message);
       });
 
       return () => {
-        newSocket.off('connect');
-        newSocket.off('disconnect');
-        newSocket.off('receiveMessage');
-        newSocket.off('connect_error');
+        newSocket.off("connect");
+        newSocket.off("disconnect");
+        newSocket.off("receiveMessage");
+        newSocket.off("connect_error");
         newSocket.close();
       };
     }
@@ -140,23 +143,29 @@ const Chat = () => {
 
   const fetchMessages = async (userId, contactId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/messages/${userId}/${contactId}`);
+      const response = await fetch(
+        `http://localhost:3000/api/messages/${userId}/${contactId}`
+      );
       const data = await response.json();
       setMessages(data);
       updateRecentChats(data);
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.error("Error fetching messages:", error);
     }
   };
 
   const updateContacts = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/contactsMC/${currentUser._id}`);
+      const response = await fetch(
+        `http://localhost:3000/api/contactsMC/${currentUser._id}`
+      );
       const contactsData = await response.json();
       const sortedContacts = contactsData.sort((a, b) => {
         if (a.lastMessageTimeDiff === "Aucun message") return 1;
         if (b.lastMessageTimeDiff === "Aucun message") return -1;
-        return new Date(b.lastMessageTimeDiff) - new Date(a.lastMessageTimeDiff);
+        return (
+          new Date(b.lastMessageTimeDiff) - new Date(a.lastMessageTimeDiff)
+        );
       });
       setContacts(sortedContacts);
     } catch (error) {
@@ -166,17 +175,31 @@ const Chat = () => {
 
   const updateRecentChats = (messages) => {
     const recentChatsMap = messages.reduce((acc, message) => {
-      const contactId = message.sender === currentUser._id ? message.receiver : message.sender;
-      const contactName = message.sender === currentUser._id ? message.receiverName : message.senderName;
+      const contactId =
+        message.sender === currentUser._id ? message.receiver : message.sender;
+      const contactName =
+        message.sender === currentUser._id
+          ? message.receiverName
+          : message.senderName;
       if (!acc[contactId]) {
-        acc[contactId] = { id: contactId, name: contactName, lastMessage: message.message, time: message.timestamp, image: `http://localhost:3000/${message.image}` };
+        acc[contactId] = {
+          id: contactId,
+          name: contactName,
+          lastMessage: message.message,
+          time: message.timestamp,
+          image: `http://localhost:3000/${message.image}`,
+        };
       } else if (new Date(message.timestamp) > new Date(acc[contactId].time)) {
         acc[contactId].lastMessage = message.message;
         acc[contactId].time = message.timestamp;
       }
       return acc;
     }, {});
-    setRecentChats(Object.values(recentChatsMap).sort((a, b) => new Date(b.time) - new Date(a.time)));
+    setRecentChats(
+      Object.values(recentChatsMap).sort(
+        (a, b) => new Date(b.time) - new Date(a.time)
+      )
+    );
   };
 
   const toggleSearch = () => {
@@ -206,18 +229,23 @@ const Chat = () => {
         receiver: receiverId,
         receiverName: Chat_Box_Username,
         message: curMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-      socket.emit('sendMessage', messageData);
-      setcurMessage('');
-      setMessages(prevMessages => {
+      socket.emit("sendMessage", messageData);
+      setcurMessage("");
+      setMessages((prevMessages) => {
         const updatedMessages = [...prevMessages, messageData];
         updateRecentChats(updatedMessages);
         return updatedMessages;
       });
       updateContacts();
     } else {
-      console.error('Failed to send message:', { curMessage, socket, currentUserId: currentUser._id, receiverId });
+      console.error("Failed to send message:", {
+        curMessage,
+        socket,
+        currentUserId: currentUser._id,
+        receiverId,
+      });
     }
   };
 
@@ -252,14 +280,18 @@ const Chat = () => {
   };
 
   return (
-    <React.Fragment>
+    <section className="section hero-section">
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
+      </div>
       <Container style={{ marginTop: "80px", marginBottom: "20px" }}>
         <Row>
           <Col lg="12">
-            <div className="d-lg-flex">
+            <div className="d-lg-flex login-card">
               <div className="chat-leftsidebar me-lg-4">
                 <div>
-                  <div className="py-4 border-bottom">
+                  <div className="border-bottom py-4">
                     <div className="d-flex">
                       <div className="align-self-center me-3">
                         <img
@@ -269,29 +301,13 @@ const Chat = () => {
                         />
                       </div>
                       <div className="flex-grow-1">
-                        <h5 className="font-size-15 mt-0 mb-1">
+                        <h5 className="font-size-15 mb-1 mt-0">
                           {currentUser.name}
                         </h5>
                         <p className="text-muted mb-0">
-                          <i className="mdi mdi-circle text-success align-middle me-2" />
+                          <i className="mdi mdi-circle text-success me-2 align-middle" />
                           Active
                         </p>
-                      </div>
-                      <div>
-                        <Dropdown
-                          isOpen={menu1}
-                          toggle={() => setMenu1(!menu1)}
-                          className="chat-noti-dropdown active"
-                        >
-                          <DropdownToggle tag="a" className="btn">
-                            <i className="bx bx-bell bx-tada"></i>
-                          </DropdownToggle>
-                          <DropdownMenu className="dropdown-menu-end">
-                            <DropdownItem href="#">Action</DropdownItem>
-                            <DropdownItem href="#">Another action</DropdownItem>
-                            <DropdownItem href="#">Something else</DropdownItem>
-                          </DropdownMenu>
-                        </Dropdown>
                       </div>
                     </div>
                   </div>
@@ -315,7 +331,10 @@ const Chat = () => {
                       <PerfectScrollbar style={{ height: "410px" }}>
                         {contacts.map((contact) => (
                           <div key={contact._id}>
-                            <ul className="list-unstyled chat-list" id="recent-list">
+                            <ul
+                              className="list-unstyled chat-list"
+                              id="recent-list"
+                            >
                               <li key={contact._id}>
                                 <Link
                                   to="#"
@@ -326,8 +345,11 @@ const Chat = () => {
                                   <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center">
                                       <div className="avatar-xs me-3">
-                                        <span className="rounded-circle bg-primary bg-soft text-primary">
-                                          <img src={`http://localhost:3000/${contact.image}`} alt={contact.name} />
+                                        <span className="rounded-circle bg-soft bg-primary text-primary">
+                                          <img
+                                            src={`http://localhost:3000/${contact.image}`}
+                                            alt={contact.name}
+                                          />
                                         </span>
                                       </div>
                                       <div>
@@ -354,28 +376,28 @@ const Chat = () => {
                 </div>
               </div>
               <div className="w-100 user-chat">
-                <Card>
-                  <div className="p-4 border-bottom ">
+                <Card className="login-card">
+                  <div className="border-bottom p-4 ">
                     <Row>
                       <Col md="4" xs="9">
-                        <h5 className="font-size-15 mb-1">
+                        <h5 className="font-size-15 mb-1 text-white">
                           {Chat_Box_Username}
                         </h5>
-                        <p className="text-muted mb-0">
+                        <p className="text-muted mb-0 text-white">
                           <i
                             className={
                               Chat_Box_User_Status === "Active Now"
-                                ? "mdi mdi-circle text-success align-middle me-2"
+                                ? "mdi mdi-circle text-success me-2 align-middle"
                                 : Chat_Box_User_Status === "intermediate"
-                                  ? "mdi mdi-circle text-warning align-middle me-1"
-                                  : "mdi mdi-circle align-middle me-1"
+                                ? "mdi mdi-circle text-warning me-1 align-middle"
+                                : "mdi mdi-circle me-1 align-middle"
                             }
                           />
                           {Chat_Box_User_Status}
                         </p>
                       </Col>
                       <Col md="8" xs="3">
-                        <ul className="list-inline user-chat-nav text-end mb-0">
+                        <ul className="list-inline user-chat-nav mb-0 text-end">
                           <li className="list-inline-item d-none d-sm-inline-block">
                             <Dropdown
                               isOpen={search_Menu}
@@ -415,19 +437,14 @@ const Chat = () => {
                                 <DropdownItem href="#">
                                   View Profile
                                 </DropdownItem>
-                                <DropdownItem href="#">
-                                  Clear chat
-                                </DropdownItem>
+                                <DropdownItem href="#">Clear chat</DropdownItem>
                                 <DropdownItem href="#">Muted</DropdownItem>
                                 <DropdownItem href="#">Delete</DropdownItem>
                               </DropdownMenu>
                             </Dropdown>
                           </li>
                           <li className="list-inline-item">
-                            <Dropdown
-                              isOpen={other_Menu}
-                              toggle={toggleOther}
-                            >
+                            <Dropdown isOpen={other_Menu} toggle={toggleOther}>
                               <DropdownToggle className="btn nav-btn" tag="i">
                                 <i className="bx bx-dots-horizontal-rounded" />
                               </DropdownToggle>
@@ -454,7 +471,6 @@ const Chat = () => {
                           style={{ height: "470px" }}
                           containerRef={(ref) => (messageBoxRef.current = ref)}
                         >
-                         
                           {messages &&
                             messages.map((message, index) => (
                               <li
@@ -475,27 +491,37 @@ const Chat = () => {
                                       <i className="bx bx-dots-vertical-rounded" />
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                      <DropdownItem onClick={(e) => console.log('Copy message')} href="#">
+                                      <DropdownItem
+                                        onClick={(e) =>
+                                          console.log("Copy message")
+                                        }
+                                        href="#"
+                                      >
                                         Copy
                                       </DropdownItem>
-                                      <DropdownItem href="#">
-                                        Save
-                                      </DropdownItem>
+                                      <DropdownItem href="#">Save</DropdownItem>
                                       <DropdownItem href="#">
                                         Forward
                                       </DropdownItem>
-                                      <DropdownItem onClick={(e) => console.log('Delete message')} href="#">
+                                      <DropdownItem
+                                        onClick={(e) =>
+                                          console.log("Delete message")
+                                        }
+                                        href="#"
+                                      >
                                         Delete
                                       </DropdownItem>
                                     </DropdownMenu>
                                   </UncontrolledDropdown>
                                   <div className="ctext-wrap">
-                                    <div className="conversation-name">
+                                    <div className="conversation-name text-dark">
                                       {message.senderName}
                                     </div>
-                                    <p>{message.message}</p>
-                                    <p className="chat-time mb-0">
-                                      <i className="bx bx-time-five align-middle me-1"></i>{" "}
+                                    <p className=" text-dark">
+                                      {message.message}
+                                    </p>
+                                    <p className="chat-time mb-0 text-dark">
+                                      <i className="bx bx-time-five me-1 align-middle"></i>{" "}
                                       {moment(message.timestamp).format("LT")}
                                     </p>
                                   </div>
@@ -505,7 +531,7 @@ const Chat = () => {
                         </PerfectScrollbar>
                       </ul>
                     </div>
-                    <div className="p-3 chat-input-section">
+                    <div className="chat-input-section p-3">
                       <Row>
                         <Col>
                           <div className="position-relative">
@@ -587,7 +613,7 @@ const Chat = () => {
           </Col>
         </Row>
       </Container>
-    </React.Fragment>
+    </section>
   );
 };
 

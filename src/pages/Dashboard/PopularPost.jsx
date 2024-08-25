@@ -55,8 +55,8 @@ const PopularPost = ({ popularpost }) => {
                       </td>
                       <td>{popularpost?.category}</td>
                       <td>
-                        <i className="bx bx-comment-dots me-1 align-middle"></i>{" "}
-                        {popularpost?.comment}
+                        <i className="bx bx-user me-1 align-middle"></i>{" "}
+                        {popularpost?.participants?.length}
                       </td>
                     </tr>
                   ))}

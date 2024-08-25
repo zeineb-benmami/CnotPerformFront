@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
+import ProfileMenu1 from "../../../components/CommonForBoth/TopbarDropdown/ProfileMenu1";
 
 //Import Images
 
@@ -24,6 +25,10 @@ const navItems = [
 
 const Navbar_Page = (props) => {
   const [isOpenMenu, setisOpenMenu] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("authUser")
+  );
 
   //Store all NavigationbaFr Id into TargetID variable(Used for Scrollspy)
   let TargetId = navItems.map((item) => {
@@ -101,14 +106,18 @@ const Navbar_Page = (props) => {
               </Nav>
             )}
             <div className="ms-lg-2">
-              <Link to="/login">
-                <Button
-                  color="primary"
-                  className="font-16 btn-block cta-button"
-                >
-                  Se connecter
-                </Button>
-              </Link>
+              {isLoggedIn ? (
+                <ProfileMenu1 />
+              ) : (
+                <Link to="/login">
+                  <Button
+                    color="primary"
+                    className="font-16 btn-block cta-button"
+                  >
+                    Se connecter
+                  </Button>
+                </Link>
+              )}
             </div>
           </Collapse>
         </Container>

@@ -17,7 +17,9 @@ const BlogStack = ({ currentEvents }) => {
           </p>
 
           <div className="position-relative mb-3">
-            <img src={evt?.imgUrl} alt="" className="img-thumbnail" />
+            <Link to={`/articles/${evt?._id}`}>
+              <img src={evt?.imgUrl} alt="" className="img-thumbnail" />
+            </Link>
           </div>
 
           <ul className="list-inline">
@@ -29,12 +31,11 @@ const BlogStack = ({ currentEvents }) => {
             </li>
             <li className="list-inline-item mr-3">
               <Link to="#" className="text-muted">
-                <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
+                <i className="bx bx-user text-muted me-1 align-middle"></i>{" "}
                 {evt?.participants?.length}
               </Link>
             </li>
           </ul>
-          <p>{evt?.description}</p>
 
           <div>
             <Link to={`/articles/${evt?._id}`} className="text-primary">

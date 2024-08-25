@@ -20,9 +20,16 @@ import Breadcrumbs from "../../../components/Common/Breadcrumb";
 // import images
 
 import Footer from "../Footer/footer";
-import { getEvents } from "../../../service/event-service";
+import {
+  cancelParticipation,
+  getEvents,
+  hasParticipated,
+  participate,
+} from "../../../service/event-service";
 import { getPhotosByEvent } from "../../../service/photo-service";
 import Navbar_Page from "../Navbar/Navbar";
+
+import Joinus from "../Contact/Joinus";
 
 const BlogDetails = () => {
   //meta title
@@ -31,6 +38,8 @@ const BlogDetails = () => {
   const [event, setEvent] = useState([]);
 
   const [photos, setPhotos] = useState([]);
+
+  const [buttonState, setButtonState] = useState(true);
 
   useEffect(() => {
     try {
@@ -47,7 +56,7 @@ const BlogDetails = () => {
       fetchEvent();
       fetchEventPhotos();
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
     return () => {};
   }, []);
@@ -101,10 +110,72 @@ const BlogDetails = () => {
       </CarouselItem>
     );
   });
+
+  const [isLoggedIn] = useState(!!localStorage.getItem("authUser"));
+
+  const loggedUser = JSON.parse(localStorage.getItem("authUser"));
+
+  useEffect(() => {
+    const isParticipation = async () => {
+      try {
+        const response = await hasParticipated(id, loggedUser?.user?._id);
+        setButtonState(response.data.hasParticipated);
+      } catch (error) {
+        console.error("Error fetching participation status:", error);
+      }
+    };
+    isParticipation();
+  }, [id, loggedUser?.user?._id]);
+
+  const handleParticipation = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (buttonState) {
+      await handleCancelEvent();
+    } else {
+      await handleAddEvent();
+    }
+  };
+
+  const handleAddEvent = async () => {
+    try {
+      const result = await participate(id, loggedUser?.user?._id);
+      if (result.status === 200) {
+        alert(result.data.message);
+        setButtonState(true); // Participation successful
+      } else {
+        setErrors(result.data.error);
+      }
+    } catch (error) {
+      console.error("Error adding participation:", error);
+    }
+  };
+
+  const handleCancelEvent = async () => {
+    try {
+      const result = await cancelParticipation(id, loggedUser?.user?._id);
+      if (result.status === 200) {
+        alert(result.data.message);
+        setButtonState(false); // Participation canceled
+      } else {
+        setErrors(result.data.error);
+      }
+    } catch (error) {
+      console.error("Error canceling participation:", error);
+    }
+  };
+
+  const [errors, setErrors] = useState("");
+
   return (
     <React.Fragment>
       <Navbar_Page isSimple={false} />
       <section className="page-content section hero-section">
+        <div className="glow-container">
+          <div className="glow-circle left"></div>
+          <div className="glow-circle right"></div>
+        </div>
         <Container fluid>
           <Breadcrumbs title="Evènement" breadcrumbItem="Evènement Details" />
           <Row>
@@ -155,9 +226,13 @@ const BlogDetails = () => {
                           </div>
                         </Col>
                       </Row>
+                      {new Date(event?.endDate) < new Date() && (
+                        <p className=" mx-auto" style={{ color: "red" }}>
+                          Evènement terminé
+                        </p>
+                      )}
                     </div>
                     <hr />
-
                     <div
                       className="my-5"
                       style={{ maxHeight: "500px", minHeight: "480px" }}
@@ -191,79 +266,91 @@ const BlogDetails = () => {
                     <hr />
 
                     <div className="mt-4">
-                      <div className="text-muted font-size-14">
-                        <p className=" text-white">{event?.description}</p>
+                      <div className="text-muted font-size-14 p-3">
+                        {event?.description?.length !== "" && (
+                          <p className=" text-white">
+                            Description: {event?.description}
+                          </p>
+                        )}
+
+                        <p className=" position-absolute start-0  text-white">
+                          <i className="bx bx-user"></i> Participants:{" "}
+                          {event?.participants?.length}
+                        </p>
+                        <p className=" position-absolute end-0  text-white">
+                          <i className="bx bx-task"></i> Nombre de places:{" "}
+                          {event?.seats}
+                        </p>
                       </div>
 
                       <hr />
 
-                      <div className="mt-4">
-                        <h5 className="font-size-16 mb-3  text-white">
-                          Participation
-                        </h5>
+                      {isLoggedIn ? (
+                        <div className="mt-4">
+                          <h5 className="font-size-16 mb-3  text-white">
+                            Participation
+                          </h5>
 
-                        <Form className="login-card">
-                          <Row>
-                            <Col md={6}>
-                              <div className="mb-3">
-                                <Label
-                                  htmlFor="commentname-input "
-                                  className="text-white"
-                                >
-                                  Nom
-                                </Label>
-                                <Input
-                                  type="text"
-                                  className="form-control"
-                                  id="commentname-input"
-                                  placeholder="Enter name"
-                                />
-                              </div>
-                            </Col>
-                            <Col md={6}>
-                              <div className="mb-3">
-                                <Label
-                                  htmlFor="commentemail-input"
-                                  className="text-white"
-                                >
-                                  Email
-                                </Label>
-                                <input
-                                  type="email"
-                                  className="form-control"
-                                  id="commentemail-input"
-                                  placeholder="Enter email"
-                                />
-                              </div>
-                            </Col>
-                          </Row>
+                          <Form className="login-card">
+                            <Row>
+                              <Col md={6}>
+                                <div className="mb-3">
+                                  <Label
+                                    htmlFor="commentname-input "
+                                    className="text-white"
+                                  >
+                                    Nom
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    className="form-control"
+                                    value={loggedUser?.user?.name}
+                                    disabled={true}
+                                    id="commentname-input"
+                                    placeholder="Enter name"
+                                  />
+                                </div>
+                              </Col>
+                              <Col md={6}>
+                                <div className="mb-3">
+                                  <Label
+                                    htmlFor="commentemail-input"
+                                    className="text-white"
+                                  >
+                                    Email
+                                  </Label>
+                                  <Input
+                                    type="email"
+                                    className="form-control"
+                                    value={loggedUser?.user?.email}
+                                    disabled={true}
+                                    id="commentemail-input"
+                                    placeholder="Enter email"
+                                  />
+                                </div>
+                              </Col>
+                            </Row>
 
-                          <div className="mb-3">
-                            <Label
-                              htmlFor="commentmessage-input"
-                              className="text-white"
-                            >
-                              Message
-                            </Label>
-                            <textarea
-                              className="form-control"
-                              id="commentmessage-input"
-                              placeholder="Your message..."
-                              rows="3"
-                            ></textarea>
-                          </div>
-
-                          <div className="text-end">
-                            <button
-                              type="submit"
-                              className="cta-button"
-                              style={{ borderRadius: "25px" }}
-                            >
-                              Participer
-                            </button>
-                          </div>
-                        </Form>
-                      </div>
+                            <div className="text-end">
+                              <button
+                                type="submit"
+                                className={`cta-button ${
+                                  buttonState ? "btn btn-danger" : ""
+                                }`}
+                                onClick={handleParticipation}
+                                disabled={new Date(event?.endDate) < new Date()}
+                              >
+                                {buttonState
+                                  ? "Annuler Participation"
+                                  : "Participer"}
+                              </button>
+                            </div>
+                            <h1 style={{ color: "red" }}>{errors}</h1>
+                          </Form>
+                        </div>
+                      ) : (
+                        <Joinus />
+                      )}
                     </div>
                   </div>
                 </div>

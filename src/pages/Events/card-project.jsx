@@ -45,7 +45,7 @@ const CardProject = ({ events, refresh }) => {
         onDeleteClick={() => onClickDelete(eventId)}
         onCloseClick={() => setDeleteModal(false)}
       />
-      {map(events, (evt, key) => (
+      {events.reverse().map((evt, key) => (
         <Col xl="4" sm="6" key={key}>
           <Card>
             <CardBody>
@@ -167,8 +167,7 @@ const CardProject = ({ events, refresh }) => {
                   </UncontrolledTooltip>
                 </li>{" "}
                 <li className="list-inline-item me-3" id="comments">
-                  <i className="bx bx-comment-dots me-1" />{" "}
-                  {evt?.participants?.length}
+                  <i className="bx bx-user me-1" /> {evt?.participants?.length}
                   <UncontrolledTooltip placement="top" target="comments">
                     Participants
                   </UncontrolledTooltip>

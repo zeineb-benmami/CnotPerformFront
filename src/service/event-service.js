@@ -15,3 +15,19 @@ export const updateEvent = async (id, event) => {
 export const deleteEvent = async (id) => {
   return await axios.delete(`${url}/${id}`);
 };
+
+export const participate = async (event, user) => {
+  return await axios.post(`${url}/${event}/participate/${user}`);
+};
+
+export const cancelParticipation = async (event, user) => {
+  return await axios.delete(`${url}/${event}/cancel/${user}`);
+};
+
+export const participatedEvents = async (user) => {
+  return await axios.get(`${url}/users/participated/${user}`);
+};
+
+export const hasParticipated = async (event, user) => {
+  return await axios.get(`${url}/${event}/has-participated/${user}`);
+};
