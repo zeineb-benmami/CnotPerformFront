@@ -75,6 +75,11 @@ const ProfileMenu = ({ t }) => {
             <i className="bx bx-task font-size-16 me-1 align-middle" />
             {t("Mes participations")}
           </DropdownItem>
+
+          <DropdownItem tag="a" href="/bourses">
+            <i className="bx bx-money font-size-16 me-1 align-middle" />
+            {t("Mes Bourses")}
+          </DropdownItem>
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item" onClick={logout}>
             <i className="bx bx-power-off font-size-16 text-danger me-1 align-middle" />

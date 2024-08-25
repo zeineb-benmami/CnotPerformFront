@@ -50,7 +50,6 @@ import MyEvents from "../frontoffice/landing/Blog/myEvents";
 const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 import MailAccount from "../pages/Email/mailAccount";
 import BourseCategories from "../pages/Bourse/BourseCategories";
-import Navbar_Page from "../frontoffice/landing/Navbar/Navbar";
 import FooterLink from "../frontoffice/landing/Footer/footer-link";
 import DemandeBourse from "../pages/Bourse/DemandeBourse";
 import BourseCategoriesBack from "../pages/Bourse/BourseCategoriesBack";
@@ -145,6 +144,16 @@ const publicRoutes = [
     </>
   ), 
 },
+{
+  path: "/Participations",
+  component: (
+    <>
+      <Navbar_Page isSimple={false} />
+      <MyEvents />
+      <Footer />
+    </>
+  ),
+},
 
   { path: "/articles", component: <Articles /> },
 
@@ -153,8 +162,18 @@ const publicRoutes = [
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
-  { path: "/bourses", component: <BourseCategories/> },
-  { path: "/bourses/:groupe", component: <BourseListFront/> },
+  { path: "/bourses", component: 
+  <>
+    <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
+    <BourseCategories/>
+    <FooterLink />
+  </> },
+  { path: "/bourses/:groupe", component: 
+    <>
+    <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
+    <BourseListFront/>
+    <FooterLink />
+    </> },
   { path: "/unauthorized", component: <Unauthorized /> },
 
   { path: "/unblock", component: <Unblock /> },

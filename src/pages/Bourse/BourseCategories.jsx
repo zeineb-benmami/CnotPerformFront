@@ -70,9 +70,8 @@ function BourseCategories() {
 
   return (
     <React.Fragment>
-      <Navbar isSimple={true} />
       <section className="section hero-section" id="home">
-      <Container>
+      <Container className='mt-12'>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {cardsData.map((card, index) => (
@@ -101,7 +100,6 @@ function BourseCategories() {
         </div>
         </Container>
       </section>
-      <Features />
     </React.Fragment>
   );
 }

@@ -40,4 +40,12 @@ export const getBourseByFederation = async (id:string) => {
   export const refusee = async (id:string) => {
     return await API.put(`bourses/refusee/${id}`);
   };
+
+  export const attente = async (id:string) => {
+    return await API.put(`bourses/attente/${id}`);
+  };
+
+  export const enCours = async (id:string) => {
+    return await API.put(`bourses/encours/${id}`);
+  };
   

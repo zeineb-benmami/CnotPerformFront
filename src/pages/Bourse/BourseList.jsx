@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Container, List, ListGroup, ListGroupItem, Table } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import { acceptee, deleteBourse, getBourses, refusee } from '../../service/bourseService';
 
 function BourseList() {
     const { groupe } = useParams();
     const [bourses, setBourses] = useState([]);
     const [page, setPage] = useState(1);
+    const [modal, setModal] = useState(false);
+    const [selectedDocument, setSelectedDocument] = useState(null);
+    const toggle = () => setModal(!modal);
     const navigate = useNavigate();
 
     const fetchBourses = async (page) =>{
@@ -25,8 +28,7 @@ function BourseList() {
   return (
     <div className="page-content">
     <div className="section hero-section bg-ico-hero" id="home">
-      <Container>
-        <Table bordered hover responsive>
+        <Table bordered responsive className='text-white'>
           <thead>
             <tr>
               <th>#</th>
@@ -53,7 +55,10 @@ function BourseList() {
       <td>
         <ul>
           {bourse.liste_documents && bourse.liste_documents.map((doc, docIndex) => (
-            <li key={docIndex}><a>{doc}</a></li>
+            <li key={docIndex}><a  onClick={() => {
+              toggle();
+              setSelectedDocument(doc);
+            }}>{doc.name}</a></li>
           ))}
         </ul>
       </td>
@@ -65,20 +70,22 @@ function BourseList() {
       (<span class="bg-warning badge bg-secondary"> En attente </span>)}
       {bourse.status === 'acceptee' &&
       (<span class="bg-success badge bg-secondary"> Acceptée </span>)}
+      {bourse.status === 'En cours' && 
+          (<span className="bg-info badge bg-secondary">Documents Déposés</span>)}
       {bourse.status === 'refusee' &&
       (<span class="bg-danger badge bg-secondary"> Refusee </span>)}</td>
       <td>
-      {bourse.status === 'attente' && (
-        <Button color="success" outline onClick={async() => {
+      {(bourse.status != 'acceptee' && bourse.status != 'refusee') && (
+        <Button onClick={async() => {
           await acceptee(bourse._id);
           fetchBourses(page, groupe);
         }}>Approuvé</Button>
       )}
       </td>
       <td>
-      {bourse.status === 'attente' && (
-      <Button color="danger" outline onClick={async() => {
-          await refusee(bourse._id);
+      {(bourse.status != 'acceptee' && bourse.status != 'refusee') && (
+      <Button onClick={async() => {
+          await attente(bourse._id);
           fetchBourses(page, groupe);
         }}>Refusée</Button>
       )
@@ -136,8 +143,22 @@ function BourseList() {
             </tr>
           </tbody>
         </Table>
-      </Container>
     </div>
+    <Modal isOpen={modal} toggle={toggle} >
+        <ModalHeader toggle={toggle}>{selectedDocument?.name}</ModalHeader>
+        <ModalBody>
+          <img
+                  src={`http://localhost:3000/${selectedDocument?.path}`}
+                  alt="document image"
+                  className="img-fluid d-block mx-auto rounded"
+                />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   )
 }

@@ -24,7 +24,7 @@ const CardUser = ({ popularpost, dataColors }) => {
   }));
 
   const summ = popularpost?.reduce(
-    (acc, event) => acc + event.participants.length,
+    (acc, event) => acc + event.participants?.length,
     0
   );
 
