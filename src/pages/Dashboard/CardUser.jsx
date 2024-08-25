@@ -5,9 +5,8 @@ import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardBlogVisitorData } from "../../store/actions";
-import { getEvents } from "../../service/event-service";
 
-const CardUser = ({ dataColors }) => {
+const CardUser = ({ popularpost, dataColors }) => {
   const apexCardUserChartColors = getChartColorsArray(dataColors);
   const [duration, setDuration] = useState("year");
   const dispatch = useDispatch();
@@ -24,25 +23,12 @@ const CardUser = ({ dataColors }) => {
     visitor: state.DashboardBlog.visitor,
   }));
 
-  const [events, setEvents] = useState([]);
-  let summ = 0;
+  const summ = popularpost?.reduce(
+    (acc, event) => acc + event.participants.length,
+    0
+  );
 
-  useEffect(() => {
-    try {
-      const fetchEvents = async () => {
-        const data = await getEvents();
-        setEvents(data.data.message);
-        summ = data.data.message.reduce(
-          (acc, event) => acc + event.participants,
-          0
-        );
-      };
-      fetchEvents();
-    } catch (err) {
-      alert(err.message);
-    }
-    return () => {};
-  }, []);
+  const bud = popularpost?.reduce((acc, event) => acc + event.budget, 0);
 
   const series = [
     {
@@ -110,7 +96,7 @@ const CardUser = ({ dataColors }) => {
                 <div className="d-flex flex-wrap">
                   <div className="me-3">
                     <p className="text-muted mb-2">Total Evènts</p>
-                    <h5 className="mb-0">{events?.length}</h5>
+                    <h5 className="mb-0">{popularpost?.length}</h5>
                   </div>
 
                   <div className="avatar-sm ms-auto">
@@ -128,8 +114,8 @@ const CardUser = ({ dataColors }) => {
               <CardBody>
                 <div className="d-flex flex-wrap">
                   <div className="me-3">
-                    <p className="text-muted mb-2">Pages</p>
-                    <h5 className="mb-0">86</h5>
+                    <p className="text-muted mb-2">Budget Total</p>
+                    <h5 className="mb-0">{bud}DT</h5>
                   </div>
 
                   <div className="avatar-sm ms-auto">

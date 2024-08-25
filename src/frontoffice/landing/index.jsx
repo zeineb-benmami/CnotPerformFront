@@ -3,16 +3,15 @@ import React, { useEffect, useState } from "react";
 //Import Components
 import Navbar from "./Navbar/Navbar";
 import Section from "./HeroSection/Section";
-import CardsMini from "./HeroSection/cards-mini";
 import AboutUs from "./AboutUs/about-us";
 import Features from "./Features/features";
 
 import Events from "./Planning/events";
 import Blog from "./Blog/blog";
-import FAQs from "./Faqs/FAQs";
 import Footer from "./Footer/footer";
 import Offres from "./Features/offres";
 import Contact from "./Contact/Contact";
+import Joinus from "./Contact/Joinus";
 
 const CryptoIcoLanding = () => {
   //meta title
@@ -71,6 +70,8 @@ const CryptoIcoLanding = () => {
       <Features />
 
       <Offres />
+
+      <Joinus />
       {/* blog */}
       <Blog />
 

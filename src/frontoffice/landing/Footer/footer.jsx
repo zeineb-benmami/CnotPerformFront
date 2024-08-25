@@ -55,8 +55,14 @@ const Features = () => {
                       title="Facebook"
                     >
                       <img
-                        src="assets/images/icons/facebook-colored.svg"
-                        alt=""
+                        src="/public/assets/images/icons/facebook-colored.svg"
+                        alt="Facebook"
+                        style={{
+                          borderRadius: "50%",
+                          width: "80px",
+                          height: "80px",
+                          backgroundColor: "white",
+                        }}
                       />
                     </a>
                   </li>
@@ -67,20 +73,32 @@ const Features = () => {
                       title="CNOT.ORG"
                     >
                       <img
-                        src="assets/images/icons/google-colored.svg"
-                        alt=""
+                        src="/public/assets/images/CNOT_logo.svg"
+                        alt="CNOT_logo"
+                        style={{
+                          borderRadius: "50%",
+                          width: "80px",
+                          height: "80px",
+                          backgroundColor: "white",
+                        }}
                       />
                     </a>
                   </li>
                   <li>
                     <a
-                      href="https://www.youtube.com/"
+                      href="https://www.instagram.com/explore/locations/751826591553960/comite-national-olympique-tunisien-cnot/"
                       target="_blank"
                       title="Youtube"
                     >
                       <img
-                        src="assets/images/icons/youtube-colored.svg"
-                        alt=""
+                        src="/public/assets/images/icons/Instagram_logo.svg"
+                        alt="Instagram_logo"
+                        style={{
+                          borderRadius: "50%",
+                          width: "80px",
+                          height: "80px",
+                          backgroundColor: "white",
+                        }}
                       />
                     </a>
                   </li>

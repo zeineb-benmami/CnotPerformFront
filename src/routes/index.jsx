@@ -25,7 +25,9 @@ const Articles = React.lazy(() =>
   import("../frontoffice/landing/Articles/BlogList/index")
 );
 
-import ArticleDetails from "../frontoffice/landing/Articles/BlogDetails";
+const ArticleDetails = React.lazy(() =>
+  import("../frontoffice/landing/Articles/BlogDetails")
+);
 
 import EventOverview from "../pages/Events/EventDetails/EcommerceProductDetail";
 
@@ -33,20 +35,18 @@ import EventDetails from "../pages/Events/ProjectOverview/projects-overview";
 
 import AddEvent from "../pages/Events/projects-create";
 
-import Liste from "../pages/Events/projects-list";
-
-import Home from "../frontoffice/pages/Home";
 import Unblock from "../pages/Authentication/Unblock";
 
 import Landing from "../frontoffice/landing/index";
-import Header from "../frontoffice/pages/Header";
-import Footer from "../frontoffice/pages/Footer";
+import Footer from "../frontoffice/landing/Footer/footer";
 import Unauthorized from "./unauthorized";
 import EmailInbox from "../pages/Email/email-inbox";
 import EmailRead from "../pages/Email/email-read";
 import EmailBasicTemplte from "../pages/Email/email-basic-templte";
 import EmailAlertTemplte from "../pages/Email/email-template-alert";
 import EmailTemplateBilling from "../pages/Email/email-template-billing";
+import Navbar_Page from "../frontoffice/landing/Navbar/Navbar";
+import MyEvents from "../frontoffice/landing/Blog/myEvents";
 const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 
 const authProtectedRoutes = [
@@ -99,8 +99,6 @@ const authProtectedRoutes = [
 
   { path: "/event_details/:id", component: <EventDetails /> },
 
-  { path: "/liste", component: <Liste /> },
-
   //email
   { path: "/email-inbox", component: <EmailInbox /> },
   { path: "/email-read/:id", component: <EmailRead /> },
@@ -130,8 +128,18 @@ const publicRoutes = [
     path: "/Chat",
     component: (
       <>
-        <Header />
+        <Navbar_Page isSimple={false} />
         <ChatFederation />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/Participations",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <MyEvents />
         <Footer />
       </>
     ),
@@ -146,11 +154,7 @@ const publicRoutes = [
   { path: "/register", component: <Register /> },
   { path: "/unauthorized", component: <Unauthorized /> },
 
-  {path:"/unblock", component:<Unblock/>
-    
-  }
-
-
+  { path: "/unblock", component: <Unblock /> },
 ];
 
 export { authProtectedRoutes, publicRoutes };

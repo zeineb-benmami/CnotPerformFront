@@ -4,6 +4,10 @@ import { Col, Container, Row } from "reactstrap";
 const Contact = () => {
   return (
     <section id="contact" className="section hero-section">
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
+      </div>
       <Container>
         <Row>
           <Col lg="12">
@@ -23,10 +27,10 @@ const Contact = () => {
                   <i className="bx bx-phone" /> +(216) 71 767 681
                 </li>
                 <li>
-                  <i className="bx bx-email" /> president.cnot@email.ati.tn
+                  <i className="bx bx-mail" /> president.cnot@email.ati.tn
                 </li>
                 <li>
-                  <i className="bx bx-marker" /> Centre Culturel et Sportif de
+                  <i className="bx bx-geo-alt" /> Centre Culturel et Sportif de
                   la Jeunesse El Menzah 6 -2091 Tunis
                 </li>
               </ul>

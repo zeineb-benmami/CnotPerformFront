@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
+import ProfileMenu1 from "../../../components/CommonForBoth/TopbarDropdown/ProfileMenu1";
 
 //Import Images
 
@@ -25,6 +26,10 @@ const navItems = [
 const Navbar_Page = (props) => {
   const [isOpenMenu, setisOpenMenu] = useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("authUser")
+  );
+
   //Store all NavigationbaFr Id into TargetID variable(Used for Scrollspy)
   let TargetId = navItems.map((item) => {
     return item.idnm;
@@ -36,10 +41,16 @@ const Navbar_Page = (props) => {
         <Container>
           <Link className="navbar-logo" to="/home">
             <img
-              src="assets/images/logo/thunder.png"
+              src="/public/assets/images/logo/thunder.png"
               alt=""
-              style={{ width: "90px", height: "90px", padding: "10px" }}
+              style={{
+                width: "90px",
+                height: "90px",
+                padding: "10px",
+                borderRadius: "25px",
+              }}
               className="logo logo-dark"
+              title="CNOT Perform"
             />
           </Link>
 
@@ -80,23 +91,33 @@ const Navbar_Page = (props) => {
               </ScrollspyNav>
             ) : (
               <Nav className="navbar-nav ms-auto" id="topnav-menu">
-                <NavItem className="Home">
-                  <NavLink href="/landing"> Home</NavLink>
+                <NavItem>
+                  <NavLink className=" text-white" href="/home">
+                    {" "}
+                    Home
+                  </NavLink>
                 </NavItem>
-                <NavItem className="active">
-                  <NavLink href="/articles"> Events</NavLink>
+                <NavItem>
+                  <NavLink className=" text-white" href="/articles">
+                    {" "}
+                    Events
+                  </NavLink>
                 </NavItem>
               </Nav>
             )}
             <div className="ms-lg-2">
-              <Link to="/login">
-                <Button
-                  color="primary"
-                  className="font-16 btn-block cta-button"
-                >
-                  Se connecter
-                </Button>
-              </Link>
+              {isLoggedIn ? (
+                <ProfileMenu1 />
+              ) : (
+                <Link to="/login">
+                  <Button
+                    color="primary"
+                    className="font-16 btn-block cta-button"
+                  >
+                    Se connecter
+                  </Button>
+                </Link>
+              )}
             </div>
           </Collapse>
         </Container>
@@ -106,9 +127,6 @@ const Navbar_Page = (props) => {
 };
 
 Navbar_Page.propTypes = {
-  imglight: PropTypes.any,
-  navClass: PropTypes.string,
-
   isSimple: PropTypes.bool,
 };
 

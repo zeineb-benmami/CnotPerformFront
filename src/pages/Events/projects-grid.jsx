@@ -124,9 +124,8 @@ const ProjectsGrid = (props) => {
             <div className="d-grid mb-2" style={{ justifyContent: "end" }}>
               <Button
                 color="primary"
-                className="font-16 btn-block"
+                className="font-16 btn-block cta-button"
                 onClick={handleShow}
-                style={{ borderRadius: "25px" }}
               >
                 <i className="mdi mdi-plus-circle-outline w1/4 me-1" />
                 Créer un Evènement

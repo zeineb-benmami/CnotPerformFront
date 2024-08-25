@@ -56,26 +56,32 @@ const ForgetPasswordPage = (props) => {
   }));
 
   return (
-    <React.Fragment>
+    <section className="section hero-section">
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
+      </div>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
+        <Link to="/" className="text-white">
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages my-5 pt-sm-5">
+      <div className="account-pages pt-sm-5  mx-auto my-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
-                <div className="bg-primary bg-soft">
+              <Card className="login-card overflow-hidden">
+                <div className="bg-soft bg-primary">
                   <Row>
                     <Col xs={7}>
-                      <div className="text-primary p-4">
-                        <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
+                      <div className="p-4 text-white">
+                        <h5 className="text-white">
+                          Oublié votre mot de passe ?
+                        </h5>
+                        <p>Entrez votre email.</p>
                       </div>
                     </Col>
-                    <Col className="col-5 align-self-end">
+                    <Col className="align-self-end col-5">
                       <img src={profile} alt="" className="img-fluid" />
                     </Col>
                   </Row>
@@ -83,17 +89,17 @@ const ForgetPasswordPage = (props) => {
                 <CardBody className="pt-0">
                   <div>
                     <Link to="/">
-                    <div className="avatar-md profile-user-wid mb-4">
-  <span className="avatar-title rounded-circle bg-light">
-    <img
-      src={logo}
-      alt=""
-      className=""
-      height="35" // Adjust the height to make the logo smaller
-      width="35"  // Adjust the width to maintain aspect ratio and make the logo smaller
-    />
-  </span>
-</div>
+                      <div className="avatar-md profile-user-wid mb-4">
+                        <span className="avatar-title rounded-circle bg-light">
+                          <img
+                            src={logo}
+                            alt=""
+                            className=""
+                            height="35" // Adjust the height to make the logo smaller
+                            width="35" // Adjust the width to maintain aspect ratio and make the logo smaller
+                          />
+                        </span>
+                      </div>
                     </Link>
                   </div>
                   <div className="p-2">
@@ -117,7 +123,7 @@ const ForgetPasswordPage = (props) => {
                       }}
                     >
                       <div className="mb-3">
-                        <Label className="form-label">Email</Label>
+                        <Label className="form-label text-white">Email</Label>
                         <Input
                           name="email"
                           className="form-control"
@@ -140,10 +146,7 @@ const ForgetPasswordPage = (props) => {
                       </div>
                       <Row className="mb-3">
                         <Col className="text-end">
-                          <button
-                            className="btn btn-primary w-md "
-                            type="submit"
-                          >
+                          <button className="cta-button w-md " type="submit">
                             Reset
                           </button>
                         </Col>
@@ -154,21 +157,22 @@ const ForgetPasswordPage = (props) => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Go back to{" "}
-                  <Link to="login" className="font-weight-medium text-primary">
-                    Login
+                  Aller pour{" "}
+                  <Link to="/login" className="font-weight-medium text-primary">
+                    vous connectez
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} . Conçu avec{" "}
+                  <i className="mdi mdi-heart text-danger" /> par les étudiants
+                  d'Esprit
                 </p>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </section>
   );
 };
 

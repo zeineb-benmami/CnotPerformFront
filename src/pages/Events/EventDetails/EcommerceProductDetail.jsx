@@ -151,12 +151,12 @@ const EcommerceProductDetail = (props) => {
 
                       <Col xl="4">
                         <div className="mt-xl-3 mt-4">
-                          <Link
-                            to="#"
-                            className="badge font-size-11 m-1 bg-primary"
-                          >
+                          <p className="badge font-size-11 m-1 bg-primary">
                             {event?.category}
-                          </Link>
+                          </p>
+                          <p className="badge font-size-11 bg-success m-1">
+                            {event?.typeEvent}
+                          </p>
                           <h4 className="mb-3 mt-1">{event?.title}</h4>
 
                           <h5 className="mb-4">
@@ -233,7 +233,14 @@ const EcommerceProductDetail = (props) => {
                         </div>
                       </Col>
                       <Col xl="3">
-                        <TeamMembers team={event?.participants} />
+                        <h3 className="">
+                          <i className="bx bx-user"></i>
+                          Places: {event?.seats}
+                        </h3>
+                        <h3 className="">
+                          <i className="bx bx-user"></i>
+                          Participants: {event?.participants?.length}
+                        </h3>
                       </Col>
                     </Row>
                   </CardBody>

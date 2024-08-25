@@ -90,15 +90,15 @@ const events = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(eventList);
-  }, [eventList]);
-
   if (loading) return <Spinner color="info"></Spinner>;
 
   return (
     <React.Fragment>
       <section className="section hero-section" id="news">
+        <div className="glow-container">
+          <div className="glow-circle left"></div>
+          <div className="glow-circle right"></div>
+        </div>
         <Container>
           <Row>
             <Col lg="12">

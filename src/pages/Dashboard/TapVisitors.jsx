@@ -1,145 +1,176 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-import {
-  Card,
-  CardBody,
-  Col,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownToggle,
-  Row,
-} from "reactstrap";
+import { Card, CardBody, Col } from "reactstrap";
 
-function TapVisitors(props) {
+function TapVisitors({ popularpost }) {
+  const entourage = popularpost?.filter(
+    (event) => event.category === "Entourage"
+  ).length;
+
+  const univ = popularpost?.filter(
+    (event) => event.category === "Universalité des jeux olympiques"
+  ).length;
+
+  const devsport = popularpost?.filter(
+    (event) => event.category === "Développement du Sport"
+  ).length;
+
+  const valolymp = popularpost?.filter(
+    (event) => event.category === "Valeurs olympiques"
+  ).length;
+
+  const gest = popularpost?.filter(
+    (event) => event.category === "Gestion des CNO"
+  ).length;
+
   return (
     <React.Fragment>
-      <Col xl={4}>
-        <Card>
-          <CardBody>
-            <div className="d-flex flex-wrap">
-              <div className="ms-2">
-                <h5 className="card-title mb-3">Evènements par categories</h5>
-              </div>
+      <Card>
+        <CardBody>
+          <div className="d-flex flex-wrap">
+            <div className="ms-2">
+              <h5 className="card-title mb-3">Evènements par categories</h5>
             </div>
-            {/*
-            <Row className="text-center">
-              <Col xs={6}>
-                <div className="mt-3">
-                  <p className="text-muted mb-1">Today</p>
-                  <h5>1024</h5>
-                </div>
-              </Col>
+          </div>
 
-              <Col xs={6}>
-                <div className="mt-3">
-                  <p className="text-muted mb-1">This Month</p>
-                  <h5>
-                    12356{" "}
-                    <span className="text-success font-size-13">
-                      0.2 % <i className="mdi mdi-arrow-up ms-1"></i>
+          <hr />
+
+          <div>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">
+                <div className="py-2">
+                  <h5 className="font-size-14">
+                    Entourage{" "}
+                    <span className="float-end">
+                      {Math.trunc((entourage / popularpost?.length) * 100)}%
                     </span>
                   </h5>
+                  <div className="progress animated-progess progress-sm">
+                    <div
+                      className="progress-bar bg-success"
+                      role="progressbar"
+                      style={{
+                        width: `${Math.trunc(
+                          (entourage / popularpost?.length) * 100
+                        )}%`,
+                      }}
+                      aria-valuenow={Math.trunc(
+                        (entourage / popularpost?.length) * 100
+                      )}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
                 </div>
-              </Col>
-            </Row>*/}
-
-            <hr />
-
-            <div>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">
-                  <div className="py-2">
-                    <h5 className="font-size-14">
-                      Entourage <span className="float-end">78%</span>
-                    </h5>
-                    <div className="progress animated-progess progress-sm">
-                      <div
-                        className="progress-bar bg-success"
-                        role="progressbar"
-                        style={{ width: "78%" }}
-                        aria-valuenow="78"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+              </li>
+              <li className="list-group-item">
+                <div className="py-2">
+                  <h5 className="font-size-14">
+                    Universalité des jeux olympiques{" "}
+                    <span className="float-end">
+                      {Math.trunc((univ / popularpost?.length) * 100)}%
+                    </span>
+                  </h5>
+                  <div className="progress animated-progess progress-sm">
+                    <div
+                      className="progress-bar bg-info"
+                      role="progressbar"
+                      style={{
+                        width: `${Math.trunc(
+                          (univ / popularpost?.length) * 100
+                        )}%`,
+                      }}
+                      aria-valuenow={Math.trunc(
+                        (univ / popularpost?.length) * 100
+                      )}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="py-2">
-                    <h5 className="font-size-14">
-                      Universalité des jeux olympiques{" "}
-                      <span className="float-end">69%</span>
-                    </h5>
-                    <div className="progress animated-progess progress-sm">
-                      <div
-                        className="progress-bar bg-info"
-                        role="progressbar"
-                        style={{ width: "69%" }}
-                        aria-valuenow="69"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="py-2">
+                  <h5 className="font-size-14">
+                    Développement du Sport{" "}
+                    <span className="float-end">
+                      {Math.trunc((devsport / popularpost?.length) * 100)}%
+                    </span>
+                  </h5>
+                  <div className="progress animated-progess progress-sm">
+                    <div
+                      className="progress-bar bg-warning"
+                      role="progressbar"
+                      style={{
+                        width: `${Math.trunc(
+                          (devsport / popularpost?.length) * 100
+                        )}%`,
+                      }}
+                      aria-valuenow={Math.trunc(
+                        (devsport / popularpost?.length) * 100
+                      )}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="py-2">
-                    <h5 className="font-size-14">
-                      Développement du Sport{" "}
-                      <span className="float-end">61%</span>
-                    </h5>
-                    <div className="progress animated-progess progress-sm">
-                      <div
-                        className="progress-bar bg-warning"
-                        role="progressbar"
-                        style={{ width: "61%" }}
-                        aria-valuenow="61"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="py-2">
+                  <h5 className="font-size-14">
+                    Valeurs olympiques{" "}
+                    <span className="float-end">
+                      {Math.trunc((valolymp / popularpost?.length) * 100)}%
+                    </span>
+                  </h5>
+                  <div className="progress animated-progess progress-sm">
+                    <div
+                      className="progress-bar bg-danger"
+                      role="progressbar"
+                      style={{
+                        width: `${Math.trunc(
+                          (valolymp / popularpost?.length) * 100
+                        )}%`,
+                      }}
+                      aria-valuenow={Math.trunc(
+                        (valolymp / popularpost?.length) * 100
+                      )}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="py-2">
-                    <h5 className="font-size-14">
-                      Valeurs olympiques <span className="float-end">61%</span>
-                    </h5>
-                    <div className="progress animated-progess progress-sm">
-                      <div
-                        className="progress-bar bg-danger"
-                        role="progressbar"
-                        style={{ width: "61%" }}
-                        aria-valuenow="61"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="py-2">
+                  <h5 className="font-size-14">
+                    Gestion des CNO{" "}
+                    <span className="float-end">
+                      {Math.trunc((gest / popularpost?.length) * 100)}%
+                    </span>
+                  </h5>
+                  <div className="progress animated-progess progress-sm">
+                    <div
+                      className="progress-bar bg-dark"
+                      role="progressbar"
+                      style={{
+                        width: `${Math.trunc(
+                          (gest / popularpost?.length) * 100
+                        )}%`,
+                      }}
+                      aria-valuenow={Math.trunc(
+                        (gest / popularpost?.length) * 100
+                      )}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="py-2">
-                    <h5 className="font-size-14">
-                      Gestion des CNO <span className="float-end">61%</span>
-                    </h5>
-                    <div className="progress animated-progess progress-sm">
-                      <div
-                        className="progress-bar bg-dark"
-                        role="progressbar"
-                        style={{ width: "61%" }}
-                        aria-valuenow="61"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </CardBody>
-        </Card>
-      </Col>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </CardBody>
+      </Card>
     </React.Fragment>
   );
 }

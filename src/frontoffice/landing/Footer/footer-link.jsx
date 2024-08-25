@@ -10,12 +10,12 @@ const FooterLink = () => {
         <Col lg="6">
           <Row className="mb-4">
             <img
-              src="assets/images/logo/CNOT_icon.png"
+              src="/public/assets/images/logo/CNOT_icon.png"
               alt=""
               style={{ width: "200px", height: "200px", borderRadius: "10px" }}
             />
             <img
-              src="assets/images/logo/sli.png"
+              src="/public/assets/images/logo/sli.png"
               alt=""
               style={{
                 width: "200px",

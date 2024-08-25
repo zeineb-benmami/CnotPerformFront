@@ -14,14 +14,14 @@ import {
   FormFeedback,
   Label,
 } from "reactstrap";
-import Select, { components } from 'react-select';
+import Select, { components } from "react-select";
 import profile from "../../../public/assets/images/4.png";
 import logo from "../../assets/images/CNOT_logo.svg";
-import axios from 'axios';
-import { getRoleMCName, getRoleFName } from '../../service/apiUser'; // Adjust the import path according to your project structure
+import axios from "axios";
+import { getRoleMCName, getRoleFName } from "../../service/apiUser"; // Adjust the import path according to your project structure
 
 const Login = () => {
-  document.title = "Login | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Se Connecter | CNOT PERFORM";
   const [error, setError] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [userNames, setUserNames] = useState([]);
@@ -29,12 +29,15 @@ const Login = () => {
 
  /* const signin = async (user) => {
     try {
-      const response = await axios.post('http://localhost:3000/users/signin', user);
-      localStorage.setItem('authUser', JSON.stringify(response.data));
-      if (user.role === 'MC') {
-        navigate('/dashboard');
+      const response = await axios.post(
+        "http://localhost:3000/users/signin",
+        user
+      );
+      localStorage.setItem("authUser", JSON.stringify(response.data));
+      if (user.role === "MC") {
+        navigate("/dashboard");
       } else {
-        navigate('/home');
+        navigate("/home");
       }
     } catch (err) {
       setError(err.response ? err.response.data.error : err.message);
@@ -81,11 +84,13 @@ const Login = () => {
       name: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Email invalide").required("Email est obligatoire"),
+      email: Yup.string()
+        .email("Email invalide")
+        .required("Email est obligatoire"),
       password: Yup.string().required("Mot de passe est obligatoire"),
       role: Yup.string().required("Rôle est obligatoire"),
-      name: Yup.string().when('role', {
-        is: (role) => role === 'F' || role === 'MC',
+      name: Yup.string().when("role", {
+        is: (role) => role === "F" || role === "MC",
         then: Yup.string().required("Nom est obligatoire"),
         otherwise: Yup.string(),
       }),
@@ -99,17 +104,19 @@ const Login = () => {
     const fetchUserData = async () => {
       try {
         let response;
-        if (selectedRole === 'F') {
+        if (selectedRole === "F") {
           response = await getRoleFName();
-        } else if (selectedRole === 'MC') {
+        } else if (selectedRole === "MC") {
           response = await getRoleMCName();
         }
-        
+
         if (response && Array.isArray(response.users)) {
-          const users = response.users.map(user => ({
+          const users = response.users.map((user) => ({
             value: user.name,
             label: user.name,
-            image: user.image ? `http://localhost:3000/${user.image}` : "/path/to/default/user1.jpg"
+            image: user.image
+              ? `http://localhost:3000/${user.image}`
+              : "/path/to/default/user1.jpg",
           }));
           setUserNames(users);
         }
@@ -125,21 +132,34 @@ const Login = () => {
 
   const handleRoleChange = (selectedOption) => {
     setSelectedRole(selectedOption ? selectedOption.value : "");
-    validation.setFieldValue("role", selectedOption ? selectedOption.value : "");
-    if (!selectedOption || (selectedOption.value !== 'F' && selectedOption.value !== 'MC')) {
+    validation.setFieldValue(
+      "role",
+      selectedOption ? selectedOption.value : ""
+    );
+    if (
+      !selectedOption ||
+      (selectedOption.value !== "F" && selectedOption.value !== "MC")
+    ) {
       validation.setFieldValue("name", "");
     }
   };
 
   const handleNameChange = (selectedOption) => {
-    validation.setFieldValue("name", selectedOption ? selectedOption.value : "");
+    validation.setFieldValue(
+      "name",
+      selectedOption ? selectedOption.value : ""
+    );
   };
 
   const customOption = (props) => {
     return (
       <components.Option {...props}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src={props.data.image} alt={props.data.label} style={{ width: 20, height: 20, marginRight: 10 }} />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={props.data.image}
+            alt={props.data.label}
+            style={{ width: 20, height: 20, marginRight: 10 }}
+          />
           {props.data.label}
         </div>
       </components.Option>
@@ -147,45 +167,57 @@ const Login = () => {
   };
 
   const roleOptions = [
-    { value: 'F', label: 'Federation' },
-    { value: 'MC', label: 'Membre CNOT' }
+    { value: "F", label: "Federation" },
+    { value: "MC", label: "Membre CNOT" },
   ];
 
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      borderColor: state.isFocused ? '#2684FF' : state.selectProps.error ? '#dc3545' : base.borderColor,
-      '&:hover': {
-        borderColor: state.isFocused ? '#2684FF' : state.selectProps.error ? '#dc3545' : base.borderColor
-      }
-    })
+      borderColor: state.isFocused
+        ? "#2684FF"
+        : state.selectProps.error
+        ? "#dc3545"
+        : base.borderColor,
+      "&:hover": {
+        borderColor: state.isFocused
+          ? "#2684FF"
+          : state.selectProps.error
+          ? "#dc3545"
+          : base.borderColor,
+      },
+    }),
   };
 
   const customSelectStyles = {
     control: (base) => ({
       ...base,
-      height: 'calc(1.5em + 0.75rem + 2px)',
-      minHeight: 'calc(1.5em + 0.75rem + 2px)',
-    })
+      height: "calc(1.5em + 0.75rem + 2px)",
+      minHeight: "calc(1.5em + 0.75rem + 2px)",
+    }),
   };
 
   return (
-    <React.Fragment>
+    <section className="section hero-section">
+      <div className="glow-container">
+        <div className="glow-circle left"></div>
+        <div className="glow-circle right"></div>
+      </div>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/home" className="text-dark">
+        <Link to="/home" className="text-white">
           <i className="bx bx-home h2" />
         </Link>
       </div>
-      <div className="account-pages pt-sm-5 my-5">
+      <div className="account-pages pt-sm-5 mx-auto my-5">
         <Container>
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
-              <Card className="overflow-hidden">
+              <Card className="login-card overflow-hidden">
                 <div className="bg-soft bg-primary">
                   <Row>
                     <Col xs={7}>
-                      <div className="p-4 text-primary">
-                        <h5 className="text-primary">Bienvenue !</h5>
+                      <div className="p-4 text-white">
+                        <h5 className="text-white">Bienvenue !</h5>
                         <p>Connectez pour continuer</p>
                       </div>
                     </Col>
@@ -221,7 +253,7 @@ const Login = () => {
                       {error && <Alert color="danger">{error}</Alert>}
 
                       <div className="mb-3">
-                        <Label className="form-label">Email</Label>
+                        <Label className="form-label text-white">Email</Label>
                         <Input
                           name="email"
                           className="form-control"
@@ -235,7 +267,7 @@ const Login = () => {
                               ? true
                               : false
                           }
-                          style={{ height: 'calc(1.5em + 0.75rem + 2px)' }}
+                          style={{ height: "calc(1.5em + 0.75rem + 2px)" }}
                         />
                         {validation.touched.email && validation.errors.email ? (
                           <FormFeedback type="invalid">
@@ -245,7 +277,9 @@ const Login = () => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Mot de passe</Label>
+                        <Label className="form-label text-white">
+                          Mot de passe
+                        </Label>
                         <Input
                           name="password"
                           value={validation.values.password || ""}
@@ -259,7 +293,7 @@ const Login = () => {
                               ? true
                               : false
                           }
-                          style={{ height: 'calc(1.5em + 0.75rem + 2px)' }}
+                          style={{ height: "calc(1.5em + 0.75rem + 2px)" }}
                         />
                         {validation.touched.password &&
                         validation.errors.password ? (
@@ -270,16 +304,21 @@ const Login = () => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Rôle</Label>
+                        <Label className="form-label text-white">Rôle</Label>
                         <Select
                           name="role"
+                          className=" text-dark"
                           options={roleOptions}
                           styles={{ ...customStyles, ...customSelectStyles }}
                           onChange={handleRoleChange}
                           onBlur={validation.handleBlur}
-                          value={roleOptions.find(option => option.value === validation.values.role)}
+                          value={roleOptions.find(
+                            (option) => option.value === validation.values.role
+                          )}
                           isClearable
-                          error={validation.touched.role && validation.errors.role}
+                          error={
+                            validation.touched.role && validation.errors.role
+                          }
                         />
                         {validation.touched.role && validation.errors.role ? (
                           <FormFeedback type="invalid" className="d-block">
@@ -290,17 +329,23 @@ const Login = () => {
 
                       {(selectedRole === "F" || selectedRole === "MC") && (
                         <div className="mb-3">
-                          <Label className="form-label">Nom</Label>
+                          <Label className="form-label text-white">Nom</Label>
                           <Select
                             name="name"
+                            className=" text-dark"
                             options={userNames}
                             components={{ Option: customOption }}
                             onChange={handleNameChange}
                             onBlur={validation.handleBlur}
-                            value={userNames.find(option => option.value === validation.values.name)}
+                            value={userNames.find(
+                              (option) =>
+                                option.value === validation.values.name
+                            )}
                             isClearable
                             styles={{ ...customStyles, ...customSelectStyles }}
-                            error={validation.touched.name && validation.errors.name}
+                            error={
+                              validation.touched.name && validation.errors.name
+                            }
                           />
                           {validation.touched.name && validation.errors.name ? (
                             <FormFeedback type="invalid" className="d-block">
@@ -310,9 +355,9 @@ const Login = () => {
                         </div>
                       )}
 
-                      <div className="mt-3 d-grid">
+                      <div className="d-grid mt-3">
                         <button
-                          className="btn btn-primary btn-block"
+                          className="cta-button btn-block"
                           type="submit"
                           style={{ borderRadius: "25px" }}
                         >
@@ -332,15 +377,27 @@ const Login = () => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
+                  Vous n'avez pas un compte ?{" "}
+                  <Link
+                    to="/register"
+                    className="font-weight-medium text-primary"
+                    style={{ borderRadius: "25px" }}
+                  >
+                    {" "}
+                    Créer un compte
+                  </Link>{" "}
+                </p>
+                <p>
                   © {new Date().getFullYear()} . Conçu avec{" "}
-                  <i className="mdi mdi-heart text-danger" /> par les étudiants d'Esprit
+                  <i className="mdi mdi-heart text-danger" /> par les étudiants
+                  d'Esprit
                 </p>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
-    </React.Fragment>
+    </section>
   );
 };
 

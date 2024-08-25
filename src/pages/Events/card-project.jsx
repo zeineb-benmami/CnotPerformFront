@@ -45,7 +45,7 @@ const CardProject = ({ events, refresh }) => {
         onDeleteClick={() => onClickDelete(eventId)}
         onCloseClick={() => setDeleteModal(false)}
       />
-      {map(events, (evt, key) => (
+      {events.reverse().map((evt, key) => (
         <Col xl="4" sm="6" key={key}>
           <Card>
             <CardBody>
@@ -53,7 +53,12 @@ const CardProject = ({ events, refresh }) => {
                 <div className="avatar-md me-4">
                   <span className="avatar-title rounded-circle text-danger font-size-16 bg-light">
                     {evt?.imgUrl !== "" ? (
-                      <img src={evt?.imgUrl} alt="" height="30" />
+                      <img
+                        src={evt?.imgUrl}
+                        alt=""
+                        height="30"
+                        style={{ objectFit: "cover" }}
+                      />
                     ) : (
                       <img src="assets/images/icons/calender.svg" alt="" />
                     )}
@@ -134,10 +139,6 @@ const CardProject = ({ events, refresh }) => {
                     <i className="mdi mdi-dots-horizontal font-size-18" />
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-menu-end">
-                    <DropdownItem>
-                      <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
-                      Modifier
-                    </DropdownItem>
                     <DropdownItem onClick={() => handleDeleteEvent(evt?._id)}>
                       <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
                       Supprimer
@@ -166,8 +167,7 @@ const CardProject = ({ events, refresh }) => {
                   </UncontrolledTooltip>
                 </li>{" "}
                 <li className="list-inline-item me-3" id="comments">
-                  <i className="bx bx-comment-dots me-1" />{" "}
-                  {evt?.participants?.length}
+                  <i className="bx bx-user me-1" /> {evt?.participants?.length}
                   <UncontrolledTooltip placement="top" target="comments">
                     Participants
                   </UncontrolledTooltip>

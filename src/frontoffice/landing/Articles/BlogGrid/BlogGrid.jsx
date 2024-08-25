@@ -34,17 +34,19 @@ const BlogGrid = ({ currentEvents }) => {
               </div>
 
               <div className="position-relative">
-                <img
-                  src={event?.imgUrl}
-                  alt=""
-                  className="img-thumbnail"
-                  style={{
-                    maxHeight: "350px",
-                    minHeight: "100%",
-                    textAlign: "center",
-                    margin: "auto",
-                  }}
-                />
+                <Link to={`/articles/${event?._id}`}>
+                  <img
+                    src={event?.imgUrl}
+                    alt=""
+                    className="img-thumbnail"
+                    style={{
+                      maxHeight: "350px",
+                      minHeight: "100%",
+                      textAlign: "center",
+                      margin: "auto",
+                    }}
+                  />
+                </Link>
               </div>
 
               <div className="p-3">
@@ -57,13 +59,11 @@ const BlogGrid = ({ currentEvents }) => {
                   </li>
                   <li className="list-inline-item me-3">
                     <Link to="#" className="text-muted">
-                      <i className="bx bx-comment-dots text-muted me-1 align-middle"></i>{" "}
+                      <i className="bx bx-user text-muted me-1 align-middle"></i>{" "}
                       {event?.participants?.length} Participants
                     </Link>
                   </li>
                 </ul>
-
-                <p>{event?.description}</p>
 
                 <div>
                   <Link to={`/articles/${event?._id}`} className="text-primary">

@@ -36,6 +36,7 @@ const AddEvent = ({ show, handleClose, refresh }) => {
     budget: 0,
     category: "Entourage",
     typeEvent: "initiative",
+    seats: 0,
   });
 
   //form errors validation
@@ -89,6 +90,9 @@ const AddEvent = ({ show, handleClose, refresh }) => {
     }
     if (inputValues.budget <= 0 || inputValues.budget >= 10000) {
       errors.budget = "Budget doit être compris entre 0 et 10000";
+    }
+    if (inputValues.seats <= 0 || inputValues.seats >= 10000) {
+      errors.seats = "Nombre de places des participants est invalide";
     }
     return errors;
   };
@@ -358,21 +362,23 @@ const AddEvent = ({ show, handleClose, refresh }) => {
               </FormGroup>
 
               <FormGroup className="mb-4" row>
-                <Label
-                  htmlFor="participants"
-                  className="col-form-label col-lg-2"
-                >
-                  No participants
+                <Label htmlFor="seats" className="col-form-label col-lg-2">
+                  Tickets
                 </Label>
 
                 <Col>
                   <Input
-                    id="participants"
-                    name="participants"
+                    id="seats"
+                    name="seats"
                     type="number"
                     placeholder="Nombre maximal des participants"
                     className="form-control"
+                    value={eventItem.seats}
+                    onChange={onValueChange}
                   ></Input>
+                  {errors.seats && (
+                    <p className=" text-danger ">{errors.seats}</p>
+                  )}
                 </Col>
               </FormGroup>
             </Form>
@@ -454,14 +460,14 @@ const AddEvent = ({ show, handleClose, refresh }) => {
       <ModalFooter>
         <Button
           disabled={Object.keys(errors).length !== 0}
-          color="primary"
+          className=" btn-block cta-button"
           onClick={handleSubmit}
-          style={{ borderRadius: "25px", width: "200px" }}
+          style={{ width: "200px" }}
         >
           Ajouter
         </Button>{" "}
         <Button
-          color="secondary"
+          className=" bg-slate-500"
           onClick={handleClose}
           style={{ borderRadius: "25px" }}
         >
