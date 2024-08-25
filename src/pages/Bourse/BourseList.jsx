@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Container, List, ListGroup, ListGroupItem, Table } from 'reactstrap';
-import { acceptee, getBourses, refusee } from '../../service/bourseService';
+import { acceptee, deleteBourse, getBourses, refusee } from '../../service/bourseService';
 
 function BourseList() {
     const { groupe } = useParams();
     const [bourses, setBourses] = useState([]);
     const [page, setPage] = useState(1);
+    const navigate = useNavigate();
 
     const fetchBourses = async (page) =>{
       console.log(groupe);
@@ -22,6 +23,7 @@ function BourseList() {
     },[page])
 
   return (
+    <div className="page-content">
     <div className="section hero-section bg-ico-hero" id="home">
       <Container>
         <Table bordered hover responsive>
@@ -38,6 +40,8 @@ function BourseList() {
               <th>Status</th>
               <th></th>
               <th></th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -80,17 +84,26 @@ function BourseList() {
       )
     }
     </td>
+    <td>
+      <button class="avatar-sm rounded-circle bg-warning align-self-center mini-stat-icon" onClick={() => {navigate(`/addBourse/${bourse._id}`)}}><span class="avatar-title rounded-circle bg-warning"><i class='bx bx-edit font-size-24'></i></span></button>
+      </td>
+      <td>
+      <button class="avatar-sm rounded-circle bg-danger align-self-center mini-stat-icon" onClick={async() => {
+        await deleteBourse(bourse._id)
+        fetchBourses(page, groupe);
+        }}><span class="avatar-title rounded-circle bg-danger"><i class='bx bx-trash font-size-24'></i></span></button>
+      </td>
     </tr>
   ))}
   {bourses.length == 0 &&(
                   <tr>
-                  <td colSpan="11">
+                  <td colSpan="13">
                     <h1>Aucune bourse trouvée</h1>
                     </td>
                   </tr>
   )}
             <tr>
-              <td colSpan="11">
+              <td colSpan="13">
                 <div className="d-flex justify-content-between">
                   <div></div>
                   <div className="pagination">
@@ -124,6 +137,7 @@ function BourseList() {
           </tbody>
         </Table>
       </Container>
+    </div>
     </div>
   )
 }

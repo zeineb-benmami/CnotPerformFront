@@ -60,3 +60,14 @@ button {
   width: calc(100% - 100px); /* Adjust the width as needed */
 }
 
+.card.draggable {
+  margin-bottom: 1rem;
+  cursor: grab;
+}
+
+.droppable {
+  background-color: var(--success);
+  min-height: 120px;
+  margin-bottom: 1rem;
+}
+

@@ -197,7 +197,7 @@ const SidebarContent = (props) => {
                 <Link to="/email-inbox">{props.t("Inbox")}</Link>
               </li>
               <li>
-                <Link to="#">{props.t("Set up mail account")} </Link>
+                <Link to="/email-account">{props.t("Set up mail account")} </Link>
               </li>
             </ul>
           </li>

@@ -11,6 +11,7 @@ import admin from "../../assets/images/icon/administration.png";
 import entourage from "../../assets/images/icon/entourage.png";
 import {
   Button,
+  Container
 } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 
@@ -69,7 +70,8 @@ function BourseCategoriesBack() {
 
   return (
     <React.Fragment>
-      
+      <div className="page-content">
+      <Container fluid>
       <section className="section hero-section bg-ico-hero" id="home">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -98,6 +100,8 @@ function BourseCategoriesBack() {
           </div>
         </div>
       </section>
+      </Container>
+      </div>
     </React.Fragment>
   );
 }

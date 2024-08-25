@@ -1,6 +1,6 @@
 // Import statements
 import React from 'react';
-import Navbar_Page from "../../frontoffice/landing/Navbar/Navbar";
+import Navbar from "../../frontoffice/landing/Navbar/Navbar";
 import Features from "../../frontoffice/landing/Footer/footer";
 
 // Image imports
@@ -11,6 +11,7 @@ import admin from "../../assets/images/icon/administration.png";
 import entourage from "../../assets/images/icon/entourage.png";
 import {
   Button,
+  Container,
 } from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 
@@ -69,9 +70,9 @@ function BourseCategories() {
 
   return (
     <React.Fragment>
-      <Navbar_Page navClass="nav-sticky" imglight={false} isSimple={false} />
-      
-      <section className="section hero-section bg-ico-hero" id="home">
+      <Navbar isSimple={true} />
+      <section className="section hero-section" id="home">
+      <Container>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {cardsData.map((card, index) => (
@@ -98,6 +99,7 @@ function BourseCategories() {
             ))}
           </div>
         </div>
+        </Container>
       </section>
       <Features />
     </React.Fragment>

@@ -17,16 +17,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import Select from 'react-select';
 import bourseIcon from "../../assets/images/icon/bourse.png";
-import { addBourse } from '../../service/bourseService';
+import { addBourse, editBourse, getBoursebyId } from '../../service/bourseService';
 import { Chip } from 'primereact/chip';
+import { getRoleFName } from '../../service/apiUser';
 
 function DemandeBourse() {
-    const { bourseTitle } = useParams();
+    const { id } = useParams();
     const [documents, setDocuments] = useState([]);
+    const [federationsList, setFederationsList] = useState([]);
     const [documentName, setDocumentName] = useState('');
     const [selectedRole, setSelectedRole] = useState("");
     const [selectedDomaine, setSelectedDomaine] = useState('');
     const [selectedGroupe, setSelectedGroupe] = useState('');
+    const [bourse, setBourse] = useState(null);
+    const [initialValues, setInitialValues] = useState({
+        titre: '',
+        montant: 0,
+        federation: '',
+        domaine: '',
+        groupe: '',
+        documents: [],
+        description: ''
+    })
 
     const enumGroupes = {
         "Universalité des jeux Olympiques": 'universalite',
@@ -92,15 +104,8 @@ function DemandeBourse() {
   };
 
     const validation = useFormik({
-        initialValues: {
-            titre: '',
-            montant: 0,
-            federation: '',
-            domaine: '',
-            groupe: '',
-            documents: [],
-            description: ''
-        },
+        initialValues: initialValues,
+        enableReinitialize: true,
         validationSchema: Yup.object().shape({
             titre: Yup.string()
                 .required('Le titre est obligatoire')
@@ -123,7 +128,11 @@ function DemandeBourse() {
                 console.log(values);
 
                 // Submit your form data here, e.g., using an API call
+                if(id){
+                await editBourse(id,values)
+                } else {
                 await addBourse(values);
+                }
                 // Swal.fire('Succès!', 'La bourse est ajoutée avec succès.', 'success');
                 navigate('/listbourses');
             } catch (error) {
@@ -132,12 +141,46 @@ function DemandeBourse() {
         }
     });
 
+    const fetchBourseById = async (id) => {
+        const response = await getBoursebyId(id);
+        const bourse = response.data;
+        console.log(bourse);
+        
+            setInitialValues({
+                titre: bourse.titre,
+                montant: bourse.montant,
+                federation: bourse.Federation_Conserne,
+                domaine: enumDomaines[bourse.domaine],
+                groupe: enumGroupes[bourse.groupe],
+                description: bourse.description
+            });
+            console.log(initialValues);
+            for (let doc of bourse.liste_documents){
+                documents.push(doc);
+            }
+    }
+
+    const fetchFederations = async () => {
+        const response = await getRoleFName();
+        const list = response.users.map(federation => ({
+            label: federation.name,
+            value: federation._id,
+        })); 
+        console.log(list);
+        
+        setFederationsList(list);     
+    }
+
     useEffect(() => {
-        console.log(bourseTitle);
-    }, [bourseTitle]);
+        fetchFederations();
+        if(id){
+        fetchBourseById(id);
+        }
+    }, [id]);
 
     return (
         <React.Fragment>
+            <div className="page-content">
           <section className="section hero-section bg-ico-hero" id="home">
                     <Container>
                         <Row className="justify-content-center">
@@ -210,7 +253,7 @@ function DemandeBourse() {
                                                         name="montant"
                                                         value={validation.values.montant}
                                                         type="number"
-                                                        placeholder="Enter Password"
+                                                        placeholder="Entrer montant"
                                                         onChange={validation.handleChange}
                                                         onBlur={validation.handleBlur}
                                                         invalid={
@@ -231,11 +274,11 @@ function DemandeBourse() {
                                                     <Label className="form-label">federation</Label>
                                                     <Select
                                                         name="federation"
-                                                        options={federations}
+                                                        options={federationsList}
                                                         styles={{ ...customStyles, ...customSelectStyles }}
                                                         onChange={handleRoleChange}
                                                         onBlur={validation.handleBlur}
-                                                        value={federations.find(option => option.value === validation.values.federation)}
+                                                        value={federationsList.find(option => option.value === validation.values.federation)}
                                                         isClearable
                                                         error={validation.touched.federation && validation.errors.federation}
                                                     />
@@ -246,24 +289,24 @@ function DemandeBourse() {
                                                     ) : null}
                                                 </div>
 
-                                                <div className="mb-3">
-                                                    <Label className="form-label">domaine</Label>
-                                                    <Select
-                                                        name="domaine"
-                                                        options={domaineOptions}
-                                                        styles={{ ...customStyles, ...customSelectStyles }}
-                                                        onChange={handleDomaineChange}
-                                                        onBlur={validation.handleBlur}
-                                                        value={domaineOptions.find(option => option.value === validation.values.domaine)}
-                                                        isClearable
-                                                        error={validation.touched.domaine && validation.errors.domaine}
-                                                    />
-                                                    {validation.touched.domaine && validation.errors.domaine ? (
-                                                        <FormFeedback type="invalid" className="d-block">
-                                                            {validation.errors.domaine}
-                                                        </FormFeedback>
-                                                    ) : null}
-                                                </div>
+                                        <div className="mb-3">
+                                            <Label className="form-label">domaine</Label>
+                                            <Select
+                                                name="domaine"
+                                                options={domaineOptions}
+                                                styles={{ ...customStyles, ...customSelectStyles }}
+                                                onChange={handleDomaineChange}
+                                                onBlur={validation.handleBlur}
+                                                value={domaineOptions.find(option => option.value === validation.values.domaine)}
+                                                isClearable
+                                                error={validation.touched.domaine && validation.errors.domaine}
+                                            />
+                                            {validation.touched.domaine && validation.errors.domaine ? (
+                                                <FormFeedback type="invalid" className="d-block">
+                                                    {validation.errors.domaine}
+                                                </FormFeedback>
+                                            ) : null}
+                                        </div>
 
                                                 <div className="mb-3">
                                                     <Label className="form-label">groupe</Label>
@@ -306,6 +349,10 @@ function DemandeBourse() {
                                                             documents.length > 0 && documents.map((doc, index) => (
                                                                 <Badge key={index} color="primary" className="m-2 p-2 fs-6">
                                                                     {doc}
+                                                                    <span><a onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        setDocuments(documents.filter((_, i) => i !== index));
+                                                                    }} >  X </a></span>
                                                                 </Badge>
                                                             ))
                                                         }
@@ -348,7 +395,7 @@ function DemandeBourse() {
                                                         className="btn btn-primary btn-block"
                                                         type="submit"
                                                     >
-                                                        Ajouter
+                                                        Enregistrer
                                                     </button>
                                                 </div>
                                             </Form>
@@ -359,6 +406,7 @@ function DemandeBourse() {
                         </Row>
                     </Container>
             </section>
+            </div>
         </React.Fragment>
     );
 }

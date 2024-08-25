@@ -55,6 +55,7 @@ import FooterLink from "../frontoffice/landing/Footer/footer-link";
 import DemandeBourse from "../pages/Bourse/DemandeBourse";
 import BourseCategoriesBack from "../pages/Bourse/BourseCategoriesBack";
 import BourseList from "../pages/Bourse/BourseList";
+import BourseListFront from "../pages/Bourse/BourseListFront";
 
 
 const authProtectedRoutes = [
@@ -116,7 +117,8 @@ const authProtectedRoutes = [
   { path: "/email-account", component: <MailAccount /> },
   { path: "/listbourses", component: <BourseCategoriesBack /> },
   { path: "/listbourses/:groupe", component: <BourseList /> },
-  { path: "/addBourse", component: <DemandeBourse /> },
+  { path: "/addBourse/", component: <DemandeBourse /> },
+  { path: "/addBourse/:id", component: <DemandeBourse /> },
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   {
@@ -152,7 +154,7 @@ const publicRoutes = [
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
   { path: "/bourses", component: <BourseCategories/> },
-  { path: "/bourses/:groupe", component: <BourseList/> },
+  { path: "/bourses/:groupe", component: <BourseListFront/> },
   { path: "/unauthorized", component: <Unauthorized /> },
 
   { path: "/unblock", component: <Unblock /> },
