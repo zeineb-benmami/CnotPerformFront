@@ -60,7 +60,7 @@ const EmailRead = () => {
                   <CardBody>
                     <div className="d-flex mb-4">
 <div className="position-relative h-40 w-25 rounded-circle overflow-hidden">
-  <div className="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center w-25 h-75 bg-dark rounded-circle">
+  <div className="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center w-25 h-100 bg-dark rounded-circle">
     <span className="font-weight-medium text-white">
       {mail.from ? mail.from.charAt(0) : ''}
     </span>

@@ -153,19 +153,26 @@ const SidebarContent = (props) => {
 
           <li className="menu-title">{props.t("Apps")}</li>
 
-          <li>
-            <Link to="/federation">
-              <i className="bx bxs-user-detail"></i>
-              <span>{props.t("Féderations")}</span>
-            </Link>
-          </li>
+            <li>
+              <Link to="/federation">
+                <i className="bx bxs-user-detail"></i>
+                <span>{props.t("Féderations")}</span>
+              </Link>
+            </li>
+            
 
-          <li>
-            <Link to="/chatCnot">
-              <i className="bx bx-chat"></i>
-              <span>{props.t("Chat")}</span>
-            </Link>
-          </li>
+            <li>
+              <Link to="/chatCnot">
+                <i className="bx bx-chat"></i>
+                <span>{props.t("Chat")}</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#">
+                <i className="bx bx-file"></i>
+                <span>{props.t("File Manager")}</span>
+              </Link>
+            </li>
           <li>
             <Link to="/calendar">
               <i className="bx bx-calendar"></i>
@@ -190,7 +197,22 @@ const SidebarContent = (props) => {
                 <Link to="/email-inbox">{props.t("Inbox")}</Link>
               </li>
               <li>
-                <Link to="#">{props.t("Set up mail account")} </Link>
+                <Link to="/email-account">{props.t("Set up mail account")} </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <Link to="/#" className="has-arrow ">
+              <i className="bx bx-wallet"></i>
+              <span>{props.t("Bourse")}</span>
+            </Link>
+            <ul className="sub-menu">
+              <li>
+                <Link to="/addBourse">{props.t("Ajouter Bourse")}</Link>
+              </li>
+              <li>
+                <Link to="/listbourses">{props.t("List des bourses")} </Link>
               </li>
             </ul>
           </li>

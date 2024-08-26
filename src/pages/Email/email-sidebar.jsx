@@ -20,9 +20,13 @@ import avatar2 from "../../assets/images/users/avatar-2.jpg"
 import avatar3 from "../../assets/images/users/avatar-3.jpg"
 import avatar4 from "../../assets/images/users/avatar-4.jpg"
 import avatar6 from "../../assets/images/users/avatar-6.jpg"
+import { send } from "../../service/mailService";
 
 const EmailSideBar = props => {
   const [modal, setmodal] = useState(false)
+  const [to, setTo] = useState('');
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
 
   return (
     <React.Fragment>
@@ -39,7 +43,7 @@ const EmailSideBar = props => {
           Compose
         </Button>
         <div className="mail-list mt-4">
-          <Link to="email-inbox" className="active">
+          <Link to="/email-inbox" className="active">
             <i className="mdi mdi-email-outline me-2"></i> Inbox{" "}
             <span className="ml-1 float-end">(18)</span>
           </Link>
@@ -57,31 +61,6 @@ const EmailSideBar = props => {
           </Link>
           <Link to="/email-inbox">
             <i className="mdi mdi-trash-can-outline me-2"></i>Trash
-          </Link>
-        </div>
-
-        <h6 className="mt-4">Labels</h6>
-
-        <div className="mail-list mt-1">
-          <Link to="#">
-            <span className="mdi mdi-arrow-right-drop-circle text-info float-end"></span>
-            Theme Support
-          </Link>
-          <Link to="#">
-            <span className="mdi mdi-arrow-right-drop-circle text-warning float-end"></span>
-            Freelance
-          </Link>
-          <Link to="#">
-            <span className="mdi mdi-arrow-right-drop-circle text-primary float-end"></span>
-            Social
-          </Link>
-          <Link to="#">
-            <span className="mdi mdi-arrow-right-drop-circle text-danger float-end"></span>
-            Friends
-          </Link>
-          <Link to="#">
-            <span className="mdi mdi-arrow-right-drop-circle text-success float-end"></span>
-            Family
           </Link>
         </div>
       </Card>
@@ -103,12 +82,17 @@ const EmailSideBar = props => {
               setmodal(!modal)
             }}
           >
-            New Message
+            Nouveau mail
           </ModalHeader>
           <ModalBody>
             <form>
               <div className="mb-3">
-                <Input type="email" className="form-control" placeholder="To" />
+                <Input type="email" 
+                className="form-control" 
+                placeholder="To"           
+                onChange={() =>{
+                  setTo(event.target.value);
+          }}/>
               </div>
 
               <div className="mb-3">
@@ -116,6 +100,9 @@ const EmailSideBar = props => {
                   type="text"
                   className="form-control"
                   placeholder="Subject"
+                  onChange={() =>{
+                    setSubject(event.target.value);
+                  }}
                 />
               </div>
               {/* <Editor
@@ -125,13 +112,14 @@ const EmailSideBar = props => {
               /> */}
               <CKEditor
                       editor={ClassicEditor}
-                      data="<p>Hello from CKEditor 5!</p>"
+                      data="<p>Bonjour!</p>"
                       onReady={editor => {
                         // You can store the "editor" and use when it is needed.
                         console.log('Editor is ready to use!', editor);
                       }}
                       onChange={(event, editor) => {
-                        const data = editor.getData();
+                        setBody(editor.getData());
+                        
                       }}
                     />
             </form>
@@ -146,7 +134,14 @@ const EmailSideBar = props => {
             >
               Close
             </Button>
-            <Button type="button" color="primary">
+            <Button type="button" color="primary" 
+            onClick={async () => {
+              const response =await send({from: props.mailaccount, password:props.password, to: to, subject: subject, body: body})
+              if(response.status == 200){
+                setmodal(false);
+              }
+                } 
+                }>
               Send <i className="fab fa-telegram-plane ms-1"></i>
             </Button>
           </ModalFooter>
