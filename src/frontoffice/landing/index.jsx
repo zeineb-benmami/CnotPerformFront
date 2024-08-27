@@ -12,6 +12,7 @@ import Footer from "./Footer/footer";
 import Offres from "./Features/offres";
 import Contact from "./Contact/Contact";
 import Joinus from "./Contact/Joinus";
+import BourseCategories from "../../pages/Bourse/BourseCategories";
 
 const CryptoIcoLanding = () => {
   //meta title
@@ -72,6 +73,10 @@ const CryptoIcoLanding = () => {
       <Offres />
 
       <Joinus />
+
+      <BourseCategories/>
+
+
       {/* blog */}
       <Blog />
 

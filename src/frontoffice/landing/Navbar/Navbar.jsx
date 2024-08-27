@@ -19,8 +19,9 @@ const navItems = [
   { id: 1, idnm: "home", navheading: "Home" },
   { id: 2, idnm: "about", navheading: "About" },
   { id: 3, idnm: "features", navheading: "Services" },
-  { id: 4, idnm: "news", navheading: "Events" },
-  { id: 5, idnm: "contact", navheading: "Contact" },
+  { id: 4, idnm: "bourses", navheading: "Bourses" },
+  { id: 5, idnm: "news", navheading: "Events" },
+  { id: 6, idnm: "contact", navheading: "Contact" },
 ];
 
 const Navbar_Page = (props) => {
