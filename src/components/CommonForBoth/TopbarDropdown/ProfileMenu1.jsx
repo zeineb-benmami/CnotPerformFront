@@ -76,7 +76,12 @@ const ProfileMenu = ({ t }) => {
             {t("Mes participations")}
           </DropdownItem>
 
-          <DropdownItem tag="a" href="/bourses">
+          <DropdownItem tag="a" href="/demandebourse">
+            <i className="bx bx-file font-size-16 me-1 align-middle" />
+            {t("Demande De Bourse")}
+          </DropdownItem>
+
+          <DropdownItem tag="a" href="/mybourses">
             <i className="bx bx-money font-size-16 me-1 align-middle" />
             {t("Mes Bourses")}
           </DropdownItem>
