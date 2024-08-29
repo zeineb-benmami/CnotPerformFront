@@ -16,7 +16,6 @@ function BourseList() {
     const navigate = useNavigate();
 
     const fetchBourses = async (page) =>{
-      console.log(groupe);
       
       const response = await getBourses(page);
       console.log(response.data);
@@ -26,7 +25,7 @@ function BourseList() {
 
     useEffect(() =>{
         fetchBourses(page)
-    },[ bourses])
+    },[])
 
    /* useEffect(() => {
       setFilteredEvents(
@@ -49,7 +48,7 @@ function BourseList() {
         <Row>
           <Col lg="6">
             <form
-              className="app-search d-none d-lg-block"
+              className="app-search d-none d-lg-block mb-4"
               style={{
                 backgroundColor: "#fff",
                 borderRadius: "25px",
