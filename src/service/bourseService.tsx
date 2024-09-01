@@ -33,8 +33,8 @@ export const getBourseByFederation = async (id:string) => {
     return await API.delete(`bourses/${id}`);
   };
 
-  export const acceptee = async (id:string) => {
-    return await API.put(`bourses/acceptee/${id}`);
+  export const acceptee = async (id:string, montant: number) => {
+    return await API.put(`bourses/acceptee/${id}/${montant}`);
   };
 
   export const refusee = async (id:string) => {

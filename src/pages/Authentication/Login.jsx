@@ -20,7 +20,10 @@ import logo from "../../assets/images/CNOT_logo.svg";
 import axios from "axios";
 import { getRoleMCName, getRoleFName } from "../../service/apiUser"; // Adjust the import path according to your project structure
 
+
 const Login = () => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   document.title = "Se Connecter | CNOT PERFORM";
   const [error, setError] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
@@ -46,7 +49,7 @@ const Login = () => {
 
   const signin = async (user) => {
     try {
-      const response = await axios.post('http://localhost:3000/users/signin', user);
+      const response = await axios.post(`${url}/users/signin`, user);
 
       if (response.data.success) {
         localStorage.setItem('authUser', JSON.stringify(response.data));
@@ -115,7 +118,7 @@ const Login = () => {
             value: user.name,
             label: user.name,
             image: user.image
-              ? `http://localhost:3000/${user.image}`
+              ? `${url}/${user.image}`
               : "/path/to/default/user1.jpg",
           }));
           setUserNames(users);

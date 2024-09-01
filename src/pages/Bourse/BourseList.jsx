@@ -4,15 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Container, Row, Col, PaginationItem, PaginationLink, } from 'reactstrap';
 import { acceptee, deleteBourse, getBourses, refusee } from '../../service/bourseService';
 import BourseCard from './BourseCard';
+import ModalMontantAccorde from './modalMontantAccorde';
 
 function BourseList() {
     const [bourses, setBourses] = useState([]);
     const [page, setPage] = useState(1);
-    const [modal, setModal] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const totalPage = 12
 
-    const toggle = () => setModal(!modal);
     const navigate = useNavigate();
 
     const fetchBourses = async (page) =>{
@@ -72,7 +71,7 @@ function BourseList() {
         <Row>
           {/* Import Cards */}
           {bourses?.length == 0 && (
-            <h3 className=" text-center">Aucun évènement trouvé</h3>
+            <h3 className=" text-center">Aucune bourse trouvé</h3>
           )}
           <BourseCard bourses={bourses} refresh={fetchBourses} />
         </Row>

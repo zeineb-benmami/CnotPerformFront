@@ -11,14 +11,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../service/apiUser"; // Assurez-vous que le chemin d'importation est correct
 import withRouter from "../../Common/withRouter";
 
+
 const ProfileMenu = ({ t }) => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   const [menu, setMenu] = useState(false);
   const [user, setUser] = useState({
     username: "Admin",
     profilePicture: "/path/to/default/user1.jpg", // Default image path
   });
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -26,7 +28,7 @@ const ProfileMenu = ({ t }) => {
         setUser({
           username: userData.user.name || "Admin",
           profilePicture: userData.user.image
-            ? `http://localhost:3000/${userData.user.image}`
+            ? `${url}/${userData.user.image}`
             : "/path/to/default/user1.jpg",
         });
       } catch (error) {

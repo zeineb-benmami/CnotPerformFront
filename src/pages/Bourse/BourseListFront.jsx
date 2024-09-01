@@ -207,6 +207,7 @@ function BourseListFront() {
             <Button color="secondary" onClick={() => {
               toggle();
               handleUpload(selectedBourse._id);
+              setSelectedFiles([]);
             }
             }>
               Déposer

@@ -1,20 +1,150 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Badge, Button, Card, CardBody, Col, DropdownItem,
   DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter, ModalHeader, Nav, NavItem, NavLink, UncontrolledDropdown, UncontrolledTooltip
 } from 'reactstrap';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 import bourseIcon from "../../assets/images/icon/bourse.png";
 import { acceptee, refusee } from '../../service/bourseService';
+import ModalMontantAccorde from './modalMontantAccorde';
+import univ from "../../assets/images/icon/univolymp.png";
+import developpement from "../../assets/images/icon/devsport.png";
+import valeur from "../../assets/images/icon/valeursolymp.png";
+import admin from "../../assets/images/icon/administration.png";
+import entourage from "../../assets/images/icon/entourage.png";
+import cnot from "../../../public/assets/images/logo/CNOT_icon.png"
+import { getUserData } from '../../service/apiUser';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
 function BourseCard({ bourses, fetchBourses }) {
+  const url = process.env.REACT_APP_BACKEND_URL;
+  const descriptions = {
+    "Universalité des Jeux Olympiques": "soutenir des athlètes et équipes d’élite",
+    "Développement du Sport": "promotion du développement du sport, de la relève à l’élit",
+    "Valeurs Olympiques": "promouvoir le sport pour tous, ainsi que les valeurs et principes fondamentaux de l’Olympisme dans le domaine du sport et de l’éducation",
+    "Gestion des CNO et partage de connaissances": "développer et maintenir des structures administratives solides et durables",
+    "Entourage": "bénéficier du soutien de personnes sensibilisées à des sujets clés tels que la protection des athlètes intègres et la lutte contre le dopage, la discrimination, le harcèlement et la manipulation des compétitions.",
+  };
+
   const [modal, setModal] = useState(false);
+  const [modalMontant, setModalMontant] = useState(false);
   const [selectedBourse, setSelectedBourse] = useState(null);
   const [showRapportFinan, setShowRapportFinan] = useState(true);
   const [showRapportTech, setShowRapportTech] = useState(false);
   const [activeTab, setActiveTab] = useState('rapportFinan');
+  const [base64Image, setBase64Image] = useState('');
+
 
   const toggle = () => {
     setModal(!modal);
+  };
+  const toggleMontant = () => setModalMontant(!modalMontant);
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+  
+  useEffect(() => {
+    fetch(cnot)
+      .then(response => response.blob())
+      .then(blob => convertToBase64(blob))
+      .then(base64 => setBase64Image(base64))
+      .catch(error => console.error('Error converting image:', error));
+  }, []);
+
+  const generateBoursePDF = (nature, budgetPrev, montant, federation, domaine, groupe) => {
+    console.log(federation);
+    
+    const docDefinition = {
+      content: [
+        {
+          columns: [
+            {
+              image: 'comiteLogo', // placeholder for the logo, you need to load this as a base64 image
+              width: 100,
+              alignment: 'left'
+            },
+            {
+              text: 'Demande de Bourse',
+              style: 'header',
+              alignment: 'right',
+              margin: [0, 20, 0, 0] // adjust margin to align with the logo
+            }
+          ]
+        },
+        {
+          text: 'Monsieur le Président,',
+          style: 'subheader',
+          margin: [0, 20, 0, 0]
+        },
+        {
+          text: `Objet : Demande de Financement au titre de "${nature}" `,
+          margin: [0, 20, 0, 20]
+        },
+        {
+          text: `Dans le cadre de notre engagement continu pour le développement du sport et le soutien aux athlètes, nous, la Fédération ${federation.name}, avons l\'honneur de vous soumettre une demande de financement relative à un projet clé intitulé ${nature}. Ce projet s’inscrit dans notre objectif stratégique visant à ${descriptions[groupe]}`,
+          margin: [0, 0, 0, 20]
+        },
+        {
+          text: 'Détails du Projet :',
+          style: 'subheader',
+          margin: [0, 0, 0, 10]
+        },
+        {
+          table: {
+            body: [
+              ['Nature du projet', nature],
+              ['Domaine', domaine],
+              ['Groupe', groupe],
+              ['Budget Prévisionnel', `${budgetPrev} TND`],
+              ['Montant de financement', `${montant} TND`],
+            ]
+          },
+          margin: [0, 0, 0, 20]
+        },
+        {
+          text: 'Nous tenons à vous remercier pour l\'attention que vous porterez à cette demande. Nous restons à votre entière disposition pour toute information complémentaire.',
+          margin: [0, 0, 0, 20]
+        },
+        {
+          text: 'Veuillez agréer, Monsieur le Président, l’expression de notre considération distinguée.',
+          margin: [0, 0, 0, 40]
+        },
+        {
+          text: federation.name,
+          style: 'subheader',
+        },
+        {
+          columns: [
+            { text: '' }, // empty space for alignment
+            { text: 'Cachet', alignment: 'right' }
+          ]
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true
+        },
+        subheader: {
+          fontSize: 14,
+          bold: true
+        }
+      },
+      images: {
+        comiteLogo: base64Image, // Replace with the actual Base64 image data of the logo
+      }
+    };
+  
+    pdfMake.createPdf(docDefinition).download('demande_bourse.pdf');
   };
 
   return (
@@ -27,7 +157,24 @@ function BourseCard({ bourses, fetchBourses }) {
                 <div className="d-flex">
                   <div className="avatar-md me-4">
                     <span className="avatar-title rounded-circle text-danger font-size-16 bg-light">
-                      <img src={bourseIcon} alt="" />
+                      <img src={bourse?.groupe === 'Universalité des jeux Olympiques' ? univ :
+                         bourse?.groupe === 'Entourage' ? entourage :
+                         bourse?.groupe === 'Universalité des jeux Olympiques' ? univ :
+                         bourse?.groupe === 'Développement du sport' ? developpement :
+                         bourse?.groupe === 'Valeurs Olympiques' ? valeur :
+                         admin
+                         }
+                         style={{
+                          backgroundColor: 
+                            bourse?.groupe === 'Universalité des jeux Olympiques' ? '#0369a1' :
+                            bourse?.groupe === 'Entourage' ? '#16a34a' :
+                            bourse?.groupe === 'Développement du sport' ? '#fcd34d' :
+                            bourse?.groupe === 'Valeurs Olympiques' ? '#dc2626' :
+                            '#292524',
+                          borderRadius: bourse?.groupe === 'Entourage' ? '50%' : '0',
+                          padding: bourse?.groupe === 'Valeurs Olympiques' ? '10px' : '5px'
+                        }}
+                          alt="" />
                     </span>
                   </div>
 
@@ -58,7 +205,7 @@ function BourseCard({ bourses, fetchBourses }) {
                     <i className="mdi mdi-dots-horizontal font-size-18" />
                   </DropdownToggle>
                   <DropdownMenu end className="dropdown-menu-end">
-                    <DropdownItem>
+                    <DropdownItem onClick={() => generateBoursePDF(bourse.nature, bourse.budgetPrev, bourse.montant, bourse.Federation_Conserne, bourse.domaine, bourse.groupe)}>
                       <i className='bx bx-download font-size-16 me-1'></i> Télécharger
                     </DropdownItem>
                     <DropdownItem onClick={() => {
@@ -67,12 +214,18 @@ function BourseCard({ bourses, fetchBourses }) {
                     }}>
                       <i className='bx bx-file-find font-size-16 me-1'></i> Afficher les rapports
                     </DropdownItem>
-                    <DropdownItem onClick={async () => await acceptee(bourse._id)}>
+                    <DropdownItem onClick={async () => {
+                      toggleMontant();
+                      setSelectedBourse(bourse);
+                    }}>
                       <i className='bx bx-check-circle font-size-16 me-1 text-success' ></i> Accepter
                     </DropdownItem>
+                    {bourse.status === "attente" && (
+                      <>
                     <DropdownItem onClick={async () => await refusee(bourse._id)}>
                       <i className='bx bx-x-circle font-size-16 me-1 text-danger' ></i> Refuser
                     </DropdownItem>
+                    </>)}
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
@@ -147,16 +300,14 @@ function BourseCard({ bourses, fetchBourses }) {
         {showRapportTech &&(
           <>
           <h1 className='my-2'>Rapport Technique</h1>
-          <object data={`http://localhost:3000/${selectedBourse?.rapportTech.replace(/\\/g, '/')}`} type="application/pdf" width="100%" height="400px">
-            <a href={`http://localhost:3000/${selectedBourse?.rapportTech.replace(/\\/g, '/')}`} target="_blank" rel="noopener noreferrer">View Document</a>
+          <object data={`${url}/${selectedBourse?.rapportTech.replace(/\\/g, '/')}`} type="application/pdf" width="100%" height="400px">
           </object>
           </>
         )}
         {showRapportFinan &&(
           <>  
           <h1 className='my-2'>Rapport Financier</h1>
-          <object data={`http://localhost:3000/${selectedBourse?.rapportFinan.replace(/\\/g, '/')}`} type="application/pdf" width="100%" height="400px">
-            <a href={`http://localhost:3000/${selectedBourse?.rapportFinan.replace(/\\/g, '/')}`} target="_blank" rel="noopener noreferrer">View Document</a>
+          <object data={`${url}/${selectedBourse?.rapportFinan.replace(/\\/g, '/')}`} type="application/pdf" width="100%" height="400px">
           </object>
           </>
         )
@@ -171,6 +322,7 @@ function BourseCard({ bourses, fetchBourses }) {
           </Button>
         </ModalFooter>
       </Modal>
+      <ModalMontantAccorde modal={modalMontant} toggle={toggleMontant} id={selectedBourse?._id}/>
     </React.Fragment>
   );
 }
