@@ -63,8 +63,8 @@ function BourseListFront() {
   return (
     <section className="offer-section">
       <h2>My Bourses</h2>
-      <div className="offer-cards">
-        {bourses.map((bourse, index) => (
+      <div className='container'>
+        {bourses.reverse().map((bourse, index) => (
     <Card className="mb-3 border-0 shadow-sm bg-dark text-white" key={index}>
     <CardBody>
       <div className="d-flex justify-content-between align-items-center mb-2">
@@ -94,6 +94,9 @@ function BourseListFront() {
       <Row>
         <Col xs="12" sm="6">
           <p className="text-muted">Date: {moment(bourse.date).format('DD MMM YYYY')}</p>
+        </Col>
+        <Col xs="12" sm="6">
+          {bourse.status === 'acceptee' && <p>Montant de financement: {bourse.montant} TND</p>}
         </Col>
       </Row>
       {bourse.status === 'acceptee' && (

@@ -150,7 +150,7 @@ function BourseCard({ bourses, fetchBourses }) {
   return (
     <React.Fragment>
       {bourses.reverse().map((bourse, key) => (
-        <Col xl="4" sm="6" key={key}>
+        <Col xl="4" sm="6" key={key} className='mx-4'>
           <Card>
             <CardBody>
               <div className="d-flex justify-content-between align-items-start">

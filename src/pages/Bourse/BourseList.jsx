@@ -1,38 +1,71 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Container, Row, Col, PaginationItem, PaginationLink, } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Container, Row, Col, PaginationItem, PaginationLink, Label, Input, } from 'reactstrap';
 import { acceptee, deleteBourse, getBourses, refusee } from '../../service/bourseService';
 import BourseCard from './BourseCard';
 import ModalMontantAccorde from './modalMontantAccorde';
+import { getRoleFName } from '../../service/apiUser';
 
 function BourseList() {
     const [bourses, setBourses] = useState([]);
+    const [federationsList, setFederationsList] = useState([]);
+    const [federationFilter, setFederationFilter] = useState(null);
+    const [domaineFilter, setDomaineFilter] = useState(null);
+    const [groupeFilter, setGroupeFilter] = useState(null);
+    const [statusFilter, setStatusFilter] = useState(null);
     const [page, setPage] = useState(1);
-    const [searchQuery, setSearchQuery] = useState("");
-    const totalPage = 12
-
-    const navigate = useNavigate();
 
     const fetchBourses = async (page) =>{
       
       const response = await getBourses(page);
-      console.log(response.data);
       
       setBourses(response.data);
     };
 
+    const filterBourses = async (page, groupe, domaine, federation, status) =>{
+      
+      const response = await getBourses(page, groupe, domaine, federation, status);
+      
+      setBourses(response.data);
+    };
+
+    const fetchFederations = async () => {
+      const response = await getRoleFName();
+      const list = response.users.map(federation => ({
+          label: federation.name,
+          value: federation._id,
+      })); 
+      
+      setFederationsList(list);     
+  }
+
     useEffect(() =>{
-        fetchBourses(page)
+        fetchBourses(page);
+        fetchFederations();
     },[])
 
-   /* useEffect(() => {
-      setFilteredEvents(
-        eventList.filter((event) =>
-          event.title.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-    }, [searchQuery, eventList]);*/
+   useEffect(() =>{
+    if(groupeFilter === 'Groupe'){
+      setGroupeFilter(null)
+    }
+    if(domaineFilter === 'Domaine'){
+      setDomaineFilter(null)
+    }
+    if(federationFilter === 'Federation'){
+      console.log(federationFilter === 'Federation');
+      
+      setFederationFilter(null)
+    }
+    if(statusFilter === 'Status'){
+      setStatusFilter(null)
+    }
+    filterBourses(page, groupeFilter, domaineFilter, federationFilter, statusFilter);
+   },[federationFilter, groupeFilter, domaineFilter, statusFilter]);
+
+   useEffect(() =>{
+    fetchBourses(page)
+    },[page])
 
   return (
     <div className="page-content">
@@ -45,28 +78,72 @@ function BourseList() {
         />
 
         <Row>
-          <Col lg="6">
-            <form
-              className="app-search d-none d-lg-block mb-4"
-              style={{
-                backgroundColor: "#fff",
-                borderRadius: "25px",
-                padding: "5px",
-                boxShadow: "0 0 10px",
-              }}
-            >
-              <div className="position-relative">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <span className="bx bx-search-alt" />
-              </div>
-            </form>
-          </Col>
+        <Col className="col-3">
+        <div className="mb-3">
+                <Input
+                        name="federation"
+                        type="select"
+                        onChange={(event) => {
+                          setFederationFilter(event.target.value);
+                        }}
+                      >
+                        <option>Federation</option>
+                        {federationsList?.map((federation, index) => (
+                          <option key={index} value={federation.value}>{federation.label}</option>
+                        ))}
+                      </Input>
+                    </div>
+        </Col>
+        <Col className="col-3">
+        <div className="mb-3">
+                <Input
+                        name="status"
+                        type="select"
+                        onChange={(event) => {
+                          setStatusFilter(event.target.value);
+                        }}
+                      >
+                        <option>Status</option>
+                        <option>attente</option>
+                        <option>acceptee</option>
+                        <option>refusee</option>
+                      </Input>
+                    </div>
+        </Col>
+        <Col className="col-3">
+        <div className="mb-3">
+                <Input
+                        name="groupe"
+                        type="select"
+                        onChange={(event) => {
+                          setGroupeFilter(event.target.value);
+                        }}
+                      >
+                        <option>Groupe</option>
+                        <option>Universalité des jeux Olympiques</option>
+                        <option>Entourage</option>
+                        <option>Développement du sport</option>
+                        <option>Valeurs Olympiques</option>
+                        <option>Gestion des CNO et partage de connaissances</option>
+                      </Input>
+                    </div>
+        </Col>
+        <Col className="col-3">
+        <div className="mb-3">
+                  <Input
+                        name="domaine"
+                        type="select"
+                        onChange={(event) => {
+                          setDomaineFilter(event.target.value);
+                        }}
+                      >
+                        <option>Domaine</option>
+                        <option>Athlètes et développement du Sport</option>
+                        <option>Valeurs</option>
+                        <option>Développement des capacités et administration</option>
+                      </Input>
+                    </div>
+        </Col>
         </Row>
         <Row>
           {/* Import Cards */}
@@ -83,25 +160,28 @@ function BourseList() {
                 <PaginationLink
                   previous
                   href="#"
-                  onClick={() => handlePageClick(page - 1)}
-                />
+                  onClick={() => {
+                    const step = page - 1;
+                    fetchBourses(step);
+                    setPage(step);                        
+                    }}                />
               </PaginationItem>
-              {Array.from({ length: totalPage }, (_, i) => (
-                <PaginationItem active={i + 1 === page} key={i}>
+                <PaginationItem active={page + 1 === page}>
                   <PaginationLink
-                    onClick={() => handlePageClick(i + 1)}
                     href="#"
                   >
-                    {i + 1}
+                    {page}
                   </PaginationLink>
                 </PaginationItem>
-              ))}
-              <PaginationItem disabled={page === totalPage}>
+              <PaginationItem >
                 <PaginationLink
                   next
                   href="#"
-                  onClick={() => handlePageClick(page + 1)}
-                />
+                  onClick={() => {
+                    const step = page +1;
+                    fetchBourses(step);
+                    setPage(step);                        
+                    }}                />
               </PaginationItem>
             </ul>
           </Col>
