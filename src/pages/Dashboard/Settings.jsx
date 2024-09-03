@@ -14,11 +14,14 @@ import profile from "../../../public/assets/images/4.png";
 import TapVisitors from "./TapVisitors";
 
 const Settings = ({ popularpost }) => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   const [user, setUser] = useState({
     username: "Admin",
     profilePicture: "/path/to/default/user1.jpg", // Default image path
     jobTitle: "Membre CNOT", // Default job title
   });
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,7 +30,7 @@ const Settings = ({ popularpost }) => {
         setUser({
           username: userData.user.name || "Admin",
           profilePicture: userData.user.image
-            ? `http://localhost:3000/${userData.user.image}`
+            ? `${url}/${userData.user.image}`
             : "/path/to/default/user1.jpg",
           jobTitle: "Membre CNOT", // Assuming user data includes jobTitle
         });
