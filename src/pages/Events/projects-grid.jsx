@@ -112,7 +112,7 @@ const ProjectsGrid = (props) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search..."
+                  placeholder="Rechercher..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />

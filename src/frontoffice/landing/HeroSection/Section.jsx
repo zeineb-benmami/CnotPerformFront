@@ -21,16 +21,13 @@ const Section = () => {
               <hr />
               <div className="text-white-50">
                 <h1 className="fw-semibold hero-title mb-3 text-white">
-                  Bienvenu à
-                </h1>
-                <h1 className="fw-semibold hero-title mb-3 text-white">
                   CNOT Perform
                 </h1>
               </div>
-              <div>
+              <div style={{ marginTop: "10%" }}>
                 <a href="#about" className="cta-button mt-5">
                   {" "}
-                  Démarrer
+                  Commencer
                 </a>
               </div>
             </Col>

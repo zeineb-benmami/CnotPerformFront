@@ -49,13 +49,9 @@ import Navbar_Page from "../frontoffice/landing/Navbar/Navbar";
 import MyEvents from "../frontoffice/landing/Blog/myEvents";
 const restrictedRoutes = ["/profile", "/dashboard", "/calendar", "/federation"];
 import MailAccount from "../pages/Email/mailAccount";
-import BourseCategories from "../pages/Bourse/BourseCategories";
-import FooterLink from "../frontoffice/landing/Footer/footer-link";
 import DemandeBourse from "../pages/Bourse/DemandeBourse";
-import BourseCategoriesBack from "../pages/Bourse/BourseCategoriesBack";
 import BourseList from "../pages/Bourse/BourseList";
 import BourseListFront from "../pages/Bourse/BourseListFront";
-
 
 const authProtectedRoutes = [
   {
@@ -133,24 +129,26 @@ const publicRoutes = [
       </>
     ),
   },
-  { path: "/Chat",  component: (
-    <>
-      <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
-      <ChatFederation />
-      <FooterLink />
-    </>
-  ), 
-},
-{
-  path: "/Participations",
-  component: (
-    <>
-      <Navbar_Page isSimple={false} />
-      <MyEvents />
-      <Footer />
-    </>
-  ),
-},
+  {
+    path: "/Chat",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <ChatFederation />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/Participations",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <MyEvents />
+        <Footer />
+      </>
+    ),
+  },
 
   { path: "/articles", component: <Articles /> },
 
@@ -159,18 +157,26 @@ const publicRoutes = [
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
-  { path: "/demandebourse", component: 
-  <>
-    <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
-    <DemandeBourse/>
-    <FooterLink />
-  </> },
-  { path: "/mybourses", component: 
-    <>
-    <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
-    <BourseListFront/>
-    <FooterLink />
-    </> },
+  {
+    path: "/demandebourse",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <DemandeBourse />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/mybourses",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <BourseListFront />
+        <Footer />
+      </>
+    ),
+  },
   { path: "/unauthorized", component: <Unauthorized /> },
 
   { path: "/unblock", component: <Unblock /> },

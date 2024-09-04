@@ -237,6 +237,15 @@ button:disabled {
   text-align: left;
 }
 
+.offer-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+
 .offer-card {
   border: 2px solid rgba(255, 255, 255, 0.5);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.2));

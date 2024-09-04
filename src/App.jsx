@@ -37,6 +37,7 @@ import NonAuthLayout from "./components/NonAuthLayout";
 // initFirebaseBackend(firebaseConfig)
 
 import "./index.css";
+import { Spinner } from "reactstrap";
 
 const App = (props) => {
   const { layoutType } = useSelector((state) => ({
@@ -60,7 +61,13 @@ const App = (props) => {
 
   return (
     <React.Fragment>
-      <Suspense fallback={<p>Loading ...</p>}>
+      <Suspense
+        fallback={
+          <span style={{ textAlign: "center" }}>
+            <Spinner></Spinner>
+          </span>
+        }
+      >
         <Routes>
           {publicRoutes.map((route, idx) => (
             <Route

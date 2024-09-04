@@ -203,21 +203,27 @@ const BlogDetails = () => {
                     <hr />
                     <div className="text-center">
                       <Row>
-                        <Col sm={4}>
+                        <Col sm={6}>
                           <div>
                             <p className="text-muted mb-2  text-white">Type</p>
                             <h5 className="font-size-15">{event?.typeEvent}</h5>
                           </div>
                         </Col>
-                        <Col sm={4}>
+                        {/*<Col sm={4}>
                           <div className="mt-sm-0 mt-4">
-                            <p className="text-muted mb-2  text-white">Prix</p>
+                            <p
+                              className="text-muted mb-2  text-white"
+                              style={{ color: "white" }}
+                            >
+                              Participants
+                            </p>
                             <h5 className="font-size-15">
-                              {event?.budget} TND
+                              <i className="bx bx-user"></i>{" "}
+                              {event?.participants?.length}
                             </h5>
                           </div>
-                        </Col>
-                        <Col sm={4}>
+                        </Col>*/}
+                        <Col sm={6}>
                           <div className="mt-sm-0 mt-4">
                             <p className="text-muted mb-2  text-white">
                               Publié par
@@ -267,20 +273,16 @@ const BlogDetails = () => {
 
                     <div className="mt-4">
                       <div className="text-muted font-size-14 p-3">
-                        {event?.description?.length !== "" && (
+                        {event?.description?.length > 0 && (
                           <p className=" text-white">
                             Description: {event?.description}
                           </p>
                         )}
 
-                        <p className=" position-absolute start-0  text-white">
-                          <i className="bx bx-user"></i> Participants:{" "}
-                          {event?.participants?.length}
-                        </p>
-                        <p className=" position-absolute end-0  text-white">
+                        {/*<p className=" position-absolute end-0  text-white">
                           <i className="bx bx-task"></i> Nombre de places:{" "}
                           {event?.seats}
-                        </p>
+                        </p>*/}
                       </div>
 
                       <hr />

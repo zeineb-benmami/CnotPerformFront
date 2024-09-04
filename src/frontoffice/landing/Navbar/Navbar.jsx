@@ -23,7 +23,6 @@ const navItems = [
   { id: 3, idnm: "features", navheading: "Services" },
   { id: 4, idnm: "bourses", navheading: "Bourses" },
   { id: 5, idnm: "news", navheading: "Events" },
-  { id: 6, idnm: "contact", navheading: "Contact" },
 ];
 
 const Navbar_Page = (props) => {
@@ -123,6 +122,14 @@ const Navbar_Page = (props) => {
               </Nav>
             )}
             <div className="ms-lg-2">
+              <Link to="#" style={{ marginRight: "10px" }}>
+                <Button
+                  color="primary"
+                  className="font-16 btn-block cta-button"
+                >
+                  IA
+                </Button>
+              </Link>
               {isLoggedIn ? (
                 <ProfileMenu1 />
               ) : (

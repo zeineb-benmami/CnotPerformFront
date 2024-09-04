@@ -27,13 +27,13 @@ const AboutUs = () => {
                   </strong>
                 </p>
                 <ul>
-                  <li>suivre votre performance en temps réel</li>
+                  <li>* Suivre votre performance en temps réel</li>
                   <li>
-                    analyser vos données pour identifier vos points faibles et
+                    * Analyser vos données pour identifier vos points faibles et
                     forts
                   </li>
                   <li>
-                    recevoir des conseils personnalisés pour éviter les
+                    * Recevoir des conseils personnalisés pour éviter les
                     blessures
                   </li>
                 </ul>

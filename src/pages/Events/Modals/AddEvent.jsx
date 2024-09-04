@@ -73,27 +73,20 @@ const AddEvent = ({ show, handleClose, refresh }) => {
       Math.round(
         (new Date(endDate).getTime() - new Date(startDate).getTime()) /
           (1000 * 3600 * 24)
-      ) < 3
+      ) < 1
     ) {
-      errors.startDate = "La durée doit être au moins 3 jours";
+      errors.startDate = "La durée doit être au moins 1 jour";
     }
-    if (
-      Math.round(
-        (new Date(endDate).getTime() - new Date(startDate).getTime()) /
-          (1000 * 3600 * 24)
-      ) > 270
-    ) {
-      errors.endDate = "La durée ne peut pas dépasser 9 mois";
-    }
-    if (inputValues.description.length > 200) {
-      errors.description = "La description ne peut pas dépasser 200 caractères";
+    if (inputValues.description.length > 1000) {
+      errors.description =
+        "La description ne peut pas dépasser 1000 caractères";
     }
     if (inputValues.budget <= 0 || inputValues.budget >= 10000) {
       errors.budget = "Budget doit être compris entre 0 et 10000";
     }
-    if (inputValues.seats <= 0 || inputValues.seats >= 10000) {
+    /*if (inputValues.seats <= 0 || inputValues.seats >= 10000) {
       errors.seats = "Nombre de places des participants est invalide";
-    }
+    }*/
     return errors;
   };
 
@@ -361,7 +354,7 @@ const AddEvent = ({ show, handleClose, refresh }) => {
                 </Col>
               </FormGroup>
 
-              <FormGroup className="mb-4" row>
+              {/*<FormGroup className="mb-4" row>
                 <Label htmlFor="seats" className="col-form-label col-lg-2">
                   Tickets
                 </Label>
@@ -380,7 +373,7 @@ const AddEvent = ({ show, handleClose, refresh }) => {
                     <p className=" text-danger ">{errors.seats}</p>
                   )}
                 </Col>
-              </FormGroup>
+              </FormGroup>*/}
             </Form>
           </Col>
           <Row className="mb-4">

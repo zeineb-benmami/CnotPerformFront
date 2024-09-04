@@ -65,20 +65,24 @@ const EcommerceProductDetail = (props) => {
     }
   };
 
+  const fetchInfos = () => {
+    const fetchEvent = async () => {
+      const data = await getEvents(id);
+      setEvent(data.data.message);
+    };
+
+    const fetchEventPhotos = async () => {
+      const data = await getPhotosByEvent(id);
+      setPhotos(data.data.message);
+    };
+
+    fetchEvent();
+    fetchEventPhotos();
+  };
+
   useEffect(() => {
     try {
-      const fetchEvent = async () => {
-        const data = await getEvents(id);
-        setEvent(data.data.message);
-      };
-
-      const fetchEventPhotos = async () => {
-        const data = await getPhotosByEvent(id);
-        setPhotos(data.data.message);
-      };
-
-      fetchEvent();
-      fetchEventPhotos();
+      fetchInfos();
     } catch (err) {
       console.log(err.message);
     }
@@ -89,6 +93,8 @@ const EcommerceProductDetail = (props) => {
     const expandImg = document.getElementById("expandedImg" + id);
     expandImg.src = img;
   };
+
+  const refresh = () => fetchInfos();
 
   return (
     <React.Fragment>
@@ -148,7 +154,6 @@ const EcommerceProductDetail = (props) => {
                           </Row>
                         </div>
                       </Col>
-
                       <Col xl="4">
                         <div className="mt-xl-3 mt-4">
                           <p className="badge font-size-11 m-1 bg-primary">
@@ -160,7 +165,7 @@ const EcommerceProductDetail = (props) => {
                           <h4 className="mb-3 mt-1">{event?.title}</h4>
 
                           <h5 className="mb-4">
-                            Prix: <b>{event?.budget} TND</b>
+                            Budget: <b>{event?.budget} TND</b>
                           </h5>
                           {event?.description !== "" && (
                             <p className="text-muted mb-4">
@@ -232,7 +237,7 @@ const EcommerceProductDetail = (props) => {
                           </Row>
                         </div>
                       </Col>
-                      <Col xl="3">
+                      {/*<Col xl="3">
                         <h3 className="">
                           <i className="bx bx-user"></i>
                           Places: {event?.seats}
@@ -241,14 +246,14 @@ const EcommerceProductDetail = (props) => {
                           <i className="bx bx-user"></i>
                           Participants: {event?.participants?.length}
                         </h3>
-                      </Col>
+                      </Col>*/}
                     </Row>
                   </CardBody>
                 </Card>
               </Col>
             </Row>
           )}
-          <RecentProducts />
+          <RecentProducts refresh={refresh} />
         </Container>
       </div>
     </React.Fragment>

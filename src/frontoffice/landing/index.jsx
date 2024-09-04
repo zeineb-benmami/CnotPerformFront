@@ -74,15 +74,12 @@ const CryptoIcoLanding = () => {
 
       <Joinus />
 
-      <BourseCategories/>
-
+      <BourseCategories />
 
       {/* blog */}
       <Blog />
 
       <Events />
-
-      <Contact />
       {/* footer */}
       <Footer />
     </React.Fragment>
