@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
 import ProfileMenu1 from "../../../components/CommonForBoth/TopbarDropdown/ProfileMenu1";
-import logo from "../../../assets/images/CNOT_logo.svg"
+import logo from "../../../assets/images/CNOT_logo.svg";
 import Seclogo from "../../../../public/assets/images/logo/thunder.png";
 
 //Import Images
@@ -39,36 +39,36 @@ const Navbar_Page = (props) => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navigation fixed-top nav-sticky sticky bg-dark">
         <Container>
-        <div className="auth-logo-light d-flex align-items-center mt-5">
-  <Link to="/" className="auth-logo-light position-relative">
-    <div className="avatar-md profile-user-wid mb-4 ">
-      <span className="avatar-title rounded-circle bg-light">
-        <img
-          src={logo}
-          alt=""
-          className=""
-          height="35"
-          width="35"
-        />
-      </span>
-    </div>
-  </Link>
+          <div className="auth-logo-light d-flex align-items-center mt-3">
+            <Link to="/" className="auth-logo-light position-relative">
+              <div className="avatar-md profile-user-wid mb-2 ">
+                <span className="avatar-title rounded-circle bg-light">
+                  <img src={logo} alt="" className="" height="35" width="35" />
+                </span>
+              </div>
+            </Link>
 
-  {/* Second Circle, slightly overlapping the first */}
-  <Link to="/" className="auth-logo-light position-relative" style={{ marginLeft: '-15px' }}> {/* Negative margin to create overlap */}
-    <div className="avatar-md profile-user-wid mb-4">
-      <span className="avatar-title rounded-circle bg-light">
-        <img
-          src={Seclogo}
-          alt="Second logo"
-          className=""
-          height="75"
-          width="75"
-        />
-      </span>
-    </div>
-  </Link>
-</div>
+            {/* Second Circle, slightly overlapping the first */}
+            <Link
+              to="/"
+              className="auth-logo-light position-relative"
+              style={{ marginLeft: "-15px" }}
+            >
+              {" "}
+              {/* Negative margin to create overlap */}
+              <div className="avatar-md profile-user-wid mb-2">
+                <span className="avatar-title rounded-circle bg-light">
+                  <img
+                    src={Seclogo}
+                    alt="Second logo"
+                    className=""
+                    height="75"
+                    width="75"
+                  />
+                </span>
+              </div>
+            </Link>
+          </div>
 
           <NavbarToggler
             className="p-0"
