@@ -103,7 +103,7 @@ const Header = (props) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search..."
+                placeholder="Recherche..."
               />
               <span className="bx bx-search-alt" />
             </div>

@@ -167,8 +167,8 @@ const Login = () => {
   };
 
   const roleOptions = [
-    { value: "F", label: "Federation" },
-    { value: "MC", label: "Membre CNOT" },
+    { value: "F", label: "Féderation" },
+    { value: "MC", label: "CNOT" },
   ];
 
   const customStyles = {
@@ -239,6 +239,7 @@ const Login = () => {
                             width="35"
                           />
                         </span>
+                        
                       </div>
                     </Link>
                   </div>

@@ -76,7 +76,7 @@ const Features = () => {
                         src="/public/assets/images/CNOT_logo.svg"
                         alt="CNOT_logo"
                         style={{
-                          borderRadius: "50%",
+                          borderRadius: "100%",
                           width: "80px",
                           height: "80px",
                           backgroundColor: "white",

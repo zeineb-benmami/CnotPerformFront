@@ -277,7 +277,7 @@ const Chat = () => {
                           </h5>
                           <p className="text-muted mb-0">
                             <i className="mdi mdi-circle text-success align-middle me-2" />
-                            Active
+                            En ligne
                           </p>
                         </div>
 
@@ -307,7 +307,7 @@ const Chat = () => {
                           id="search-user"
                           type="text"
                           className="form-control"
-                          placeholder="Search..."
+                          placeholder="Recherche..."
                         />
                         <i className="bx bx-search-alt search-icon" />
                       </div>
@@ -366,89 +366,9 @@ const Chat = () => {
                             {Chat_Box_Username}
                           </h5>
 
-                          <p className="text-muted mb-0">
-                            <i
-                              className={
-                                Chat_Box_User_Status === "Active Now"
-                                  ? "mdi mdi-circle text-success align-middle me-2"
-                                  : Chat_Box_User_Status === "intermediate"
-                                    ? "mdi mdi-circle text-warning align-middle me-1"
-                                    : "mdi mdi-circle align-middle me-1"
-                              }
-                            />
-                            {Chat_Box_User_Status}
-                          </p>
+                         
                         </Col>
-                        <Col md="8" xs="3">
-                          <ul className="list-inline user-chat-nav text-end mb-0">
-                            <li className="list-inline-item d-none d-sm-inline-block">
-                              <Dropdown
-                                isOpen={search_Menu}
-                                toggle={toggleSearch}
-                              >
-                                <DropdownToggle className="btn nav-btn" tag="i">
-                                  <i className="bx bx-search-alt-2" />
-                                </DropdownToggle>
-                                <DropdownMenu className="dropdown-menu-md">
-                                  <Form className="p-3">
-                                    <FormGroup className="m-0">
-                                      <InputGroup>
-                                        <Input
-                                          type="text"
-                                          className="form-control"
-                                          placeholder="Search ..."
-                                          aria-label="Recipient's username"
-                                        />
-                                        <Button color="primary" type="submit">
-                                          <i className="mdi mdi-magnify" />
-                                        </Button>
-                                      </InputGroup>
-                                    </FormGroup>
-                                  </Form>
-                                </DropdownMenu>
-                              </Dropdown>
-                            </li>
-                            <li className="list-inline-item  d-none d-sm-inline-block">
-                              <Dropdown
-                                isOpen={settings_Menu}
-                                toggle={toggleSettings}
-                              >
-                                <DropdownToggle className="btn nav-btn" tag="i">
-                                  <i className="bx bx-cog" />
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                  <DropdownItem href="#">
-                                    View Profile
-                                  </DropdownItem>
-                                  <DropdownItem href="#">
-                                    Clear chat
-                                  </DropdownItem>
-                                  <DropdownItem href="#">Muted</DropdownItem>
-                                  <DropdownItem href="#">Delete</DropdownItem>
-                                </DropdownMenu>
-                              </Dropdown>
-                            </li>
-                            <li className="list-inline-item">
-                              <Dropdown
-                                isOpen={other_Menu}
-                                toggle={toggleOther}
-                              >
-                                <DropdownToggle className="btn nav-btn" tag="i">
-                                  <i className="bx bx-dots-horizontal-rounded" />
-                                </DropdownToggle>
-                                <DropdownMenu className="dropdown-menu-end">
-                                  <DropdownItem href="#">Action</DropdownItem>
-                                  <DropdownItem href="#">
-                                    Another Action
-                                  </DropdownItem>
-                                  <DropdownItem href="#">
-                                    Something else
-                                  </DropdownItem>
-                                </DropdownMenu>
-                              </Dropdown>
-                            </li>
-                          </ul>
-                        </Col>
+                       
                       </Row>
                     </div>
 
@@ -578,7 +498,7 @@ const Chat = () => {
                               className="btn btn-primary btn-rounded chat-send w-md "
                             >
                               <span className="d-none d-sm-inline-block me-2">
-                                Send
+                                
                               </span>{" "}
                               <i className="mdi mdi-send" />
                             </Button>

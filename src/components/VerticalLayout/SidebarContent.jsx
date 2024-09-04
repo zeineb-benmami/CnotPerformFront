@@ -167,12 +167,7 @@ const SidebarContent = (props) => {
                 <span>{props.t("Chat")}</span>
               </Link>
             </li>
-            <li>
-              <Link to="#">
-                <i className="bx bx-file"></i>
-                <span>{props.t("File Manager")}</span>
-              </Link>
-            </li>
+           
           <li>
             <Link to="/calendar">
               <i className="bx bx-calendar"></i>
@@ -197,7 +192,7 @@ const SidebarContent = (props) => {
                 <Link to="/email-inbox">{props.t("Inbox")}</Link>
               </li>
               <li>
-                <Link to="/email-account">{props.t("Set up mail account")} </Link>
+                <Link to="/email-account">{props.t("Compte email")} </Link>
               </li>
             </ul>
           </li>
@@ -217,7 +212,7 @@ const SidebarContent = (props) => {
             </ul>
           </li>
 
-          <li className="menu-title">Pages</li>
+         {/* <li className="menu-title">Pages</li>
           <li>
             <Link to="/#" className="has-arrow">
               <i className="bx bx-user-circle"></i>
@@ -300,8 +295,8 @@ const SidebarContent = (props) => {
               </li>
             </ul>
           </li>
-
-          <li className="menu-title">{props.t("Components")}</li>
+*/}
+         {/*<li className="menu-title">{props.t("Components")}</li>
 
           <li>
             <Link to="/#">
@@ -366,7 +361,7 @@ const SidebarContent = (props) => {
                 </ul>
               </li>
             </ul>
-          </li>
+          </li>*/}
         </ul>
       </div>
     </SimpleBar>
