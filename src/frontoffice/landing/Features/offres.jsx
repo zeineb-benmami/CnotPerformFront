@@ -3,32 +3,32 @@ import React from "react";
 const Offres = () => {
   return (
     <section className="offer-section">
-      <h2>Nos offres</h2>
+      <h2>Nos fonctionnalités</h2>
       <div className="offer-cards">
         <div className="offer-card">
           <h3>Suivi des performances en temps réel</h3>
           <p>
-            la plateforme permettra aux sportifs de suivre leurs performances en
-            temps réel
+            La plateforme permettra aux sportifs de suivre leurs performances en
+            temps réel.
           </p>
         </div>
         <div className="offer-card">
           <h3>Analyse des données</h3>
           <p>
-            la plateforme utilisera l'IA pour analyser les données collectées et
-            identifier les points forts et les points faibles des sportifs
+            La plateforme utilisera l'IA pour analyser les données collectées et
+            identifier les points forts et les points faibles des sportifs.
           </p>
         </div>
         <div className="offer-card">
           <h3>Prevention des blessures</h3>
           <p>
-            la plateforme identifiera les risques potentiels de blessures et
-            fournira des conseils pour les prévenir
+            La plateforme identifiera les risques potentiels de blessures et
+            fournira des conseils pour les prévenir.
           </p>
         </div>
         <div className="offer-card">
-          <h3>utilisation de IA</h3>
-          <p>utilisation de l'intellidence artificielle conversationnelle.</p>
+          <h3>L'utilisation de IA</h3>
+          <p>utilisation de l'intelligence artificielle conversationnelle.</p>
         </div>
         <div className="offer-card">
           <h3>Une plateforme IA</h3>
@@ -41,7 +41,7 @@ const Offres = () => {
           <h3>L'utilisation de l'analyse vidéo</h3>
           <p>
             L'analyse vidéo peut fournir des informations précieuses sur les
-            performances des athlètes
+            performances des athlètes.
           </p>
         </div>
       </div>

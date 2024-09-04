@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { map } from "lodash";
 import { getEvents } from "../../../service/event-service";
 
-const RecentProducts = () => {
+const RecentProducts = ({ refresh }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ const RecentProducts = () => {
                             <Link
                               to={`/events/${evt._id}`}
                               className="text-dark"
+                              onClick={refresh}
                             >
                               {evt?.title}
                             </Link>

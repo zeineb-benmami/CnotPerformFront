@@ -71,7 +71,6 @@ const CardProject = ({ events, refresh }) => {
                       {evt?.title}
                     </Link>
                   </h5>
-                  <p className="text-muted mb-4">{evt?.description}</p>
 
                   {/*<div className="avatar-group">
                     {evt.team.map((team, key) =>
@@ -139,6 +138,12 @@ const CardProject = ({ events, refresh }) => {
                     <i className="mdi mdi-dots-horizontal font-size-18" />
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-menu-end">
+                    <DropdownItem onClick={() => handleDeleteEvent(evt?._id)}>
+                      <Link to={`/events/${evt._id}`}>
+                        <i className="mdi mdi-information font-size-16 text-info me-1" />{" "}
+                        Details
+                      </Link>
+                    </DropdownItem>
                     <DropdownItem onClick={() => handleDeleteEvent(evt?._id)}>
                       <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
                       Supprimer

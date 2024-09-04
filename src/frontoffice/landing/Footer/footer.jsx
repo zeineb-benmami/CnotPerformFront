@@ -71,24 +71,27 @@ const Features = () => {
                       href="http://www.cnot.org.tn"
                       target="_blank"
                       title="CNOT.ORG"
+                      style={{
+                        borderRadius: "50%",
+                        width: "80px",
+                        height: "80px",
+                        backgroundColor: "white",
+                      }}
                     >
                       <img
                         src="/public/assets/images/CNOT_logo.svg"
                         alt="CNOT_logo"
                         style={{
-                          borderRadius: "50%",
-                          width: "80px",
-                          height: "80px",
-                          backgroundColor: "white",
+                          padding: "15px",
                         }}
                       />
                     </a>
                   </li>
                   <li>
                     <a
-                      href="https://www.instagram.com/explore/locations/751826591553960/comite-national-olympique-tunisien-cnot/"
+                      href="https://www.instagram.com/cnotunisien/"
                       target="_blank"
-                      title="Youtube"
+                      title="Instagram"
                     >
                       <img
                         src="/public/assets/images/icons/Instagram_logo.svg"

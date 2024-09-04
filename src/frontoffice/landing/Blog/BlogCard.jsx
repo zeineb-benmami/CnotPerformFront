@@ -32,14 +32,11 @@ const BlogCard = ({ evt }) => {
             </Col>
             <Col md="9" sm="6">
               <div className="text-muted mt-4">
-                <h5 className="mb-3 text-white">
-                  <i className="bx bx-task"></i>
-                  {evt?.title}
-                </h5>
-                <p className="text-white">
+                <h5 className="mb-3 text-white">{evt?.title}</h5>
+                {/*<p className="text-white">
                   <i className="bx bx-user"></i>
                   Participants: {evt?.participants?.length}
-                </p>
+                </p>*/}
                 <div className="see-more text-white">
                   <Link to={`/articles/${evt?._id}`}>Voir plus</Link>
                 </div>

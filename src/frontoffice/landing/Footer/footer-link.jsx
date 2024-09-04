@@ -30,10 +30,6 @@ const FooterLink = () => {
             {new Date().getFullYear()} © CNOT Perform Designed & Developed by
             ESPRIT Group
           </p>
-          <p>
-            It will be as simple as occidental in fact, it will be to an english
-            person, it will seem like simplified English, as a skeptical
-          </p>
         </Col>
         <Col lg="2"></Col>
         <Col lg="4">
