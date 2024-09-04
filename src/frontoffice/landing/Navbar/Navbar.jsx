@@ -12,6 +12,8 @@ import {
 import { Link } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
 import ProfileMenu1 from "../../../components/CommonForBoth/TopbarDropdown/ProfileMenu1";
+import logo from "../../../assets/images/CNOT_logo.svg"
+import Seclogo from "../../../../public/assets/images/logo/thunder.png";
 
 //Import Images
 
@@ -19,8 +21,9 @@ const navItems = [
   { id: 1, idnm: "home", navheading: "Home" },
   { id: 2, idnm: "about", navheading: "About" },
   { id: 3, idnm: "features", navheading: "Services" },
-  { id: 4, idnm: "news", navheading: "Events" },
-  { id: 5, idnm: "contact", navheading: "Contact" },
+  { id: 4, idnm: "bourses", navheading: "Bourses" },
+  { id: 5, idnm: "news", navheading: "Events" },
+  { id: 6, idnm: "contact", navheading: "Contact" },
 ];
 
 const Navbar_Page = (props) => {
@@ -37,20 +40,36 @@ const Navbar_Page = (props) => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navigation fixed-top nav-sticky sticky bg-dark">
         <Container>
-          <Link className="navbar-logo" to="/home">
-            <img
-              src="/public/assets/images/logo/thunder.png"
-              alt=""
-              style={{
-                width: "90px",
-                height: "90px",
-                padding: "10px",
-                borderRadius: "25px",
-              }}
-              className="logo logo-dark"
-              title="CNOT Perform"
-            />
-          </Link>
+        <div className="auth-logo-light d-flex align-items-center mt-5">
+  <Link to="/" className="auth-logo-light position-relative">
+    <div className="avatar-md profile-user-wid mb-4 ">
+      <span className="avatar-title rounded-circle bg-light">
+        <img
+          src={logo}
+          alt=""
+          className=""
+          height="35"
+          width="35"
+        />
+      </span>
+    </div>
+  </Link>
+
+  {/* Second Circle, slightly overlapping the first */}
+  <Link to="/" className="auth-logo-light position-relative" style={{ marginLeft: '-15px' }}> {/* Negative margin to create overlap */}
+    <div className="avatar-md profile-user-wid mb-4">
+      <span className="avatar-title rounded-circle bg-light">
+        <img
+          src={Seclogo}
+          alt="Second logo"
+          className=""
+          height="75"
+          width="75"
+        />
+      </span>
+    </div>
+  </Link>
+</div>
 
           <NavbarToggler
             className="p-0"

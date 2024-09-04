@@ -114,10 +114,7 @@ const authProtectedRoutes = [
   { path: "/email-template-alert", component: <EmailAlertTemplte /> },
   { path: "/email-template-billing", component: <EmailTemplateBilling /> },
   { path: "/email-account", component: <MailAccount /> },
-  { path: "/listbourses", component: <BourseCategoriesBack /> },
-  { path: "/listbourses/:groupe", component: <BourseList /> },
-  { path: "/addBourse/", component: <DemandeBourse /> },
-  { path: "/addBourse/:id", component: <DemandeBourse /> },
+  { path: "/bourses", component: <BourseList /> },
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   {
@@ -162,13 +159,13 @@ const publicRoutes = [
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
-  { path: "/bourses", component: 
+  { path: "/demandebourse", component: 
   <>
     <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
-    <BourseCategories/>
+    <DemandeBourse/>
     <FooterLink />
   </> },
-  { path: "/bourses/:groupe", component: 
+  { path: "/mybourses", component: 
     <>
     <Navbar_Page navClass={"nav-sticky"} imglight={false} isSimple={true} />
     <BourseListFront/>

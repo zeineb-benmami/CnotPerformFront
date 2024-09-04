@@ -26,7 +26,11 @@ import "../../../public/assets/styles/UserProfile.css";
 // API service
 import { getUserProfile, updateUser, uploadProfilePicture, updatePassword } from "../../service/apiUser";
 
+
 const UserProfile = (props) => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
+  //meta title
   document.title = "Profile | Skote - React Admin & Dashboard Template";
 
   const [userData, setUserData] = useState({
@@ -81,7 +85,7 @@ const UserProfile = (props) => {
         const response = await uploadProfilePicture(userData.userId, file);
         setUserData((prevData) => ({
           ...prevData,
-          profilePicture: `http://localhost:3000/${response.image}`,
+          profilePicture: `${url}/${response.image}`,
         }));
         setProfileError(null);
         setProfileSuccess("Votre photo de profil a été mise à jour avec succès !");

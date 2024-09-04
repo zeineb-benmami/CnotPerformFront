@@ -3,7 +3,10 @@ import { Col, Form, Input, Row, Container, Button } from "reactstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const Unblock = () => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   document.title = "Débloquer";
 
   const [code, setCode] = useState(["", "", "", "", "", ""]);
@@ -52,7 +55,7 @@ const Unblock = () => {
     const unblockCode = code.join("");
 
     try {
-      const response = await axios.post("http://localhost:3000/users/unblock", {
+      const response = await axios.post(`${url}/users/unblock`, {
         email,
         unblockCode,
       });

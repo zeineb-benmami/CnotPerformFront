@@ -28,6 +28,8 @@ import "moment/locale/fr";
 moment.locale("fr");
 
 const Chat = () => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   document.title = "Chat | CNOT PERFORM";
 
   const [currentUser, setCurrentUser] = useState({
@@ -60,14 +62,14 @@ const Chat = () => {
           ...currentUser,
           name: userData.user.name || "Henry Wells",
           image: userData.user.image
-            ? `http://localhost:3000/${userData.user.image}`
+            ? `${url}/${userData.user.image}`
             : images.avatar1,
           _id: userData.user._id,
         });
 
         // Fetch contacts with role MC
         const response = await fetch(
-          `http://localhost:3000/api/contactsMC/${userData.user._id}`
+          `${url}/api/contactsMC/${userData.user._id}`
         );
         const contactsData = await response.json();
         const sortedContacts = contactsData.sort((a, b) => {
@@ -98,7 +100,7 @@ const Chat = () => {
     const token = JSON.parse(localStorage.getItem("authUser"))?.token;
 
     if (token) {
-      const newSocket = io("http://localhost:3000", {
+      const newSocket = io(`${url}`, {
         auth: { token },
         transports: ["websocket", "polling"],
       });
@@ -143,7 +145,7 @@ const Chat = () => {
   const fetchMessages = async (userId, contactId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/messages/${userId}/${contactId}`
+        `${url}/api/messages/${userId}/${contactId}`
       );
       const data = await response.json();
       setMessages(data);
@@ -156,7 +158,7 @@ const Chat = () => {
   const updateContacts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/contactsMC/${currentUser._id}`
+        `${url}/api/contactsMC/${currentUser._id}`
       );
       const contactsData = await response.json();
       const sortedContacts = contactsData.sort((a, b) => {
@@ -186,7 +188,7 @@ const Chat = () => {
           name: contactName,
           lastMessage: message.message,
           time: message.timestamp,
-          image: `http://localhost:3000/${message.image}`,
+          image: `${url}/${message.image}`,
         };
       } else if (new Date(message.timestamp) > new Date(acc[contactId].time)) {
         acc[contactId].lastMessage = message.message;
@@ -342,7 +344,7 @@ const Chat = () => {
                                       <div className="avatar-xs me-3">
                                         <span className="rounded-circle bg-soft bg-primary text-primary">
                                           <img
-                                            src={`http://localhost:3000/${contact.image}`}
+                                            src={`${url}/${contact.image}`}
                                             alt={contact.name}
                                           />
                                         </span>

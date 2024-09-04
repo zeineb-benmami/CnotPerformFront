@@ -11,7 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../service/apiUser"; // Ensure the import path is correct
 import withRouter from "../../Common/withRouter";
 
+
 const ProfileMenu = ({ t }) => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   const [menu, setMenu] = useState(false);
   const [user, setUser] = useState({
     username: "Admin",

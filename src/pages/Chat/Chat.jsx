@@ -29,6 +29,8 @@ import 'moment/locale/fr';
 moment.locale('fr');
 
 const Chat = () => {
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   document.title = "Chat | Skote - Vite React Admin & Dashboard Template";
 
   const [messageBox, setMessageBox] = useState(null);
@@ -62,13 +64,13 @@ const Chat = () => {
           ...currentUser,
           name: userData.user.name || "Henry Wells",
           image: userData.user.image
-            ? `http://localhost:3000/${userData.user.image}`
+            ? `${url}/${userData.user.image}`
             : images.avatar1,
           _id: userData.user._id,
         });
 
         // Fetch contacts with last message time difference
-        const response = await fetch(`http://localhost:3000/api/contacts/${userData.user._id}`);
+        const response = await fetch(`${url}/api/contacts/${userData.user._id}`);
         const contactsData = await response.json();
         const sortedContacts = contactsData.sort((a, b) => {
           if (a.lastMessageTimeDiff === "Aucun message") return 1;
@@ -96,7 +98,7 @@ const Chat = () => {
     const token = JSON.parse(localStorage.getItem('authUser'))?.token;
 
     if (token) {
-      const newSocket = io('http://localhost:3000', {
+      const newSocket = io(`${url}`, {
         auth: { token },
         transports: ['websocket', 'polling']
       });
@@ -140,7 +142,7 @@ const Chat = () => {
 
   const fetchMessages = async (userId, contactId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/messages/${userId}/${contactId}`);
+      const response = await fetch(`${url}/api/messages/${userId}/${contactId}`);
       const data = await response.json();
       setMessages(data);
       updateRecentChats(data);
@@ -151,7 +153,7 @@ const Chat = () => {
 
   const updateContacts = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/contacts/${currentUser._id}`);
+      const response = await fetch(`${url}/api/contacts/${currentUser._id}`);
       const contactsData = await response.json();
       const sortedContacts = contactsData.sort((a, b) => {
         if (a.lastMessageTimeDiff === "Aucun message") return 1;
@@ -169,7 +171,7 @@ const Chat = () => {
       const contactId = message.sender === currentUser._id ? message.receiver : message.sender;
       const contactName = message.sender === currentUser._id ? message.receiverName : message.senderName;
       if (!acc[contactId]) {
-        acc[contactId] = { id: contactId, name: contactName, lastMessage: message.message, time: message.timestamp, image: `http://localhost:3000/${message.image}` };
+        acc[contactId] = { id: contactId, name: contactName, lastMessage: message.message, time: message.timestamp, image: `${url}/${message.image}` };
       } else if (new Date(message.timestamp) > new Date(acc[contactId].time)) {
         acc[contactId].lastMessage = message.message;
         acc[contactId].time = message.timestamp;
@@ -331,7 +333,7 @@ const Chat = () => {
                                       <div className="d-flex align-items-center">
                                         <div className="avatar-xs me-3">
                                           <span className="rounded-circle bg-primary bg-soft text-primary">
-                                            <img src={`http://localhost:3000/${contact.image}`} alt={contact.name} />
+                                            <img src={`${url}/${contact.image}`} alt={contact.name} />
                                           </span>
                                         </div>
                                         <div>

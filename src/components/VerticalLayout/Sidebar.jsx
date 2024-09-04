@@ -9,33 +9,30 @@ import SidebarContent from "./SidebarContent";
 
 import { Link } from "react-router-dom";
 
-import logo from "../../../public/assets/images/logo/CNOT_icon.png";
+import logo from "../../assets/images/CNOT_logo.svg";
 
 const Sidebar = (props) => {
   return (
     <React.Fragment>
       <div className="vertical-menu">
-        <div className="navbar-brand-box">
-          <Link to="/" className="logo logo-light">
-            <span
-              className="logo-lg mx-auto"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%", // Adjust as needed
-                width: "100%", // Adjust as needed
-              }}
-            >
-              <img
-                src={logo}
-                alt=""
-                width="70"
-                style={{ display: "block", margin: "auto" }}
-              />
-            </span>
-          </Link>
-        </div>
+      <div className="navbar-brand-box">
+  <Link to="/" className="logo logo-light">
+    <div className="avatar-md profile-user-wid mx-auto mt-4">
+      <span className="avatar-title rounded-circle bg-light" >
+      <img
+          src={logo}
+          alt=""
+          height="35"
+          width="35"
+          style={{
+            display: "block",
+            margin: "auto",
+          }}
+        />
+      </span>
+    </div>
+  </Link>
+</div>
         <div data-simplebar className="h-100">
           {props.type !== "condensed" ? <SidebarContent /> : <SidebarContent />}
         </div>
