@@ -43,7 +43,7 @@ const BlogList = () => {
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const eventsPerPage = 5; // Number of events per page
+  const eventsPerPage = 6; // Number of events per page
 
   // Calculate the indices of the first and last events on the current page
   const indexOfLastEvent = currentPage * eventsPerPage;

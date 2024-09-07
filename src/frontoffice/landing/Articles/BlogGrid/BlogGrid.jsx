@@ -29,7 +29,10 @@ const BlogGrid = ({ currentEvents }) => {
                 </h5>
                 <p className="text-muted mb-0">
                   <i className="mdi mdi-calendar me-1"></i>
-                  {event?.startDate.substring(0, 10)}
+                  {event?.startDate?.substring(0, 10)}{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i className="mdi mdi-calendar me-1"></i>
+                  {event?.endDate?.substring(0, 10)}
                 </p>
               </div>
 

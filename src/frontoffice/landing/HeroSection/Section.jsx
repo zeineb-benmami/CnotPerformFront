@@ -12,18 +12,18 @@ const Section = () => {
         <Container>
           <Row className="align-items-center">
             <Col lg="6" md="4">
-              <h4
-                className=" text-teal-500"
-                style={{ color: "cyan", fontStyle: "italic" }}
-              >
-                Votre chemin vers le succés
-              </h4>
-              <hr />
               <div className="text-white-50">
                 <h1 className="fw-semibold hero-title mb-3 text-white">
                   CNOT Perform
                 </h1>
               </div>
+              <hr />
+              <h4
+                className=" text-teal-500"
+                style={{ color: "cyan", fontStyle: "italic" }}
+              >
+                Votre chemin vers le succés...
+              </h4>
               <div style={{ marginTop: "10%" }}>
                 <a href="#about" className="cta-button mt-5">
                   {" "}

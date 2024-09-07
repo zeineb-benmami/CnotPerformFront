@@ -237,7 +237,7 @@ const EcommerceProductDetail = (props) => {
                           </Row>
                         </div>
                       </Col>
-                      {/*<Col xl="3">
+                      <Col xl="3">
                         <h3 className="">
                           <i className="bx bx-user"></i>
                           Places: {event?.seats}
@@ -246,7 +246,7 @@ const EcommerceProductDetail = (props) => {
                           <i className="bx bx-user"></i>
                           Participants: {event?.participants?.length}
                         </h3>
-                      </Col>*/}
+                      </Col>
                     </Row>
                   </CardBody>
                 </Card>

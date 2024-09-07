@@ -54,7 +54,7 @@ const Features = () => {
             <div className="glow-circle left"></div>
             <div className="glow-circle right"></div>
           </div>
-          <Row className="align-items-center pt-4">
+          <Row className="align-items-center pt-4 mt-5">
             <Col md="6" sm="8">
               <div>
                 <img

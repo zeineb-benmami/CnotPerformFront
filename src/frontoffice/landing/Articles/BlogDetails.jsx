@@ -203,13 +203,13 @@ const BlogDetails = () => {
                     <hr />
                     <div className="text-center">
                       <Row>
-                        <Col sm={6}>
+                        <Col sm={4}>
                           <div>
                             <p className="text-muted mb-2  text-white">Type</p>
                             <h5 className="font-size-15">{event?.typeEvent}</h5>
                           </div>
                         </Col>
-                        {/*<Col sm={4}>
+                        <Col sm={4}>
                           <div className="mt-sm-0 mt-4">
                             <p
                               className="text-muted mb-2  text-white"
@@ -222,8 +222,8 @@ const BlogDetails = () => {
                               {event?.participants?.length}
                             </h5>
                           </div>
-                        </Col>*/}
-                        <Col sm={6}>
+                        </Col>
+                        <Col sm={4}>
                           <div className="mt-sm-0 mt-4">
                             <p className="text-muted mb-2  text-white">
                               Publié par
@@ -279,10 +279,10 @@ const BlogDetails = () => {
                           </p>
                         )}
 
-                        {/*<p className=" position-absolute end-0  text-white">
+                        <p className=" position-absolute end-0  text-white">
                           <i className="bx bx-task"></i> Nombre de places:{" "}
                           {event?.seats}
-                        </p>*/}
+                        </p>
                       </div>
 
                       <hr />

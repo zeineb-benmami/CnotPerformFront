@@ -17,7 +17,6 @@ const Index = (props) => {
           <Breadcrumbs title="Blog" breadcrumbItem="Blog Grid" />
           <Row>
             <BlogGrid />
-            <RightBar />
           </Row>
         </Container>
       </div>

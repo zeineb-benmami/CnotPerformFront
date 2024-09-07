@@ -72,62 +72,6 @@ const CardProject = ({ events, refresh }) => {
                     </Link>
                   </h5>
 
-                  {/*<div className="avatar-group">
-                    {evt.team.map((team, key) =>
-                      !team.img || team.img !== "Null" ? (
-                        <React.Fragment key={key}>
-                          <div className="avatar-group-item">
-                            <Link
-                              to="#"
-                              className="d-inline-block"
-                              id={"member" + key}
-                            >
-                              <img
-                                src={images[team.img]}
-                                className="rounded-circle avatar-xs"
-                                alt=""
-                              />
-                              <UncontrolledTooltip
-                                placement="top"
-                                target={"member" + key}
-                              >
-                                {team.fullname}
-                              </UncontrolledTooltip>
-                            </Link>
-                          </div>
-                        </React.Fragment>
-                      ) : (
-                        <React.Fragment key={key}>
-                          <div className="avatar-group-item">
-                            <Link
-                              to="#"
-                              className="d-inline-block"
-                              id={"member" + key}
-                            >
-                              <div className="avatar-xs">
-                                <span
-                                  className={
-                                    "avatar-title rounded-circle bg-" +
-                                    team.color +
-                                    " text-white" +
-                                    " font-size-16"
-                                  }
-                                >
-                                  {team.name}
-                                </span>
-                                <UncontrolledTooltip
-                                  placement="top"
-                                  target={"member" + key}
-                                >
-                                  {team.fullname}
-                                </UncontrolledTooltip>
-                              </div>
-                            </Link>
-                          </div>
-                        </React.Fragment>
-                      )
-                    )}
-                  </div>*/}
                   <div className="badge font-size-11 m-1 bg-primary">
                     {evt?.category}
                   </div>

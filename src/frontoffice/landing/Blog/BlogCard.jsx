@@ -15,10 +15,10 @@ const BlogCard = ({ evt }) => {
                 className="img-fluid d-block mx-auto rounded"
               />
             </Link>
-            <div className="blog-badge font-size-11 badge m-1 bg-primary">
+            <div className="blog-badge font-size-15 badge m-1 bg-primary p-2">
               {evt?.category}
             </div>
-            <div className=" blog-badge font-size-11 badge position-absolute bg-success  end-0 m-1">
+            <div className=" blog-badge font-size-15 badge position-absolute bg-success  end-0 m-1 p-2">
               {evt?.typeEvent}
             </div>
           </div>
@@ -33,10 +33,10 @@ const BlogCard = ({ evt }) => {
             <Col md="9" sm="6">
               <div className="text-muted mt-4">
                 <h5 className="mb-3 text-white">{evt?.title}</h5>
-                {/*<p className="text-white">
+                <p className="text-white">
                   <i className="bx bx-user"></i>
                   Participants: {evt?.participants?.length}
-                </p>*/}
+                </p>
                 <div className="see-more text-white">
                   <Link to={`/articles/${evt?._id}`}>Voir plus</Link>
                 </div>

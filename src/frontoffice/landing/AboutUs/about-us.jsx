@@ -19,14 +19,14 @@ const AboutUs = () => {
             />
             <Col lg="5" className="position-relative about-us">
               <div className="about-content">
-                <h2>A propos de nous</h2>
+                <h2>À propos de nous</h2>
                 <p>
                   CNOT Perform revolutionne l'entrainement sportif grâce à{" "}
                   <strong style={{ color: "pink" }}>
                     l'Intélligence Artificielle
                   </strong>
                 </p>
-                <ul>
+                <ul className=" text-2xl ">
                   <li>* Suivre votre performance en temps réel</li>
                   <li>
                     * Analyser vos données pour identifier vos points faibles et

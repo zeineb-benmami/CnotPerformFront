@@ -63,9 +63,9 @@ const App = (props) => {
     <React.Fragment>
       <Suspense
         fallback={
-          <span style={{ textAlign: "center" }}>
-            <Spinner></Spinner>
-          </span>
+          <section className="section hero-section">
+            <Spinner color="light"></Spinner>
+          </section>
         }
       >
         <Routes>

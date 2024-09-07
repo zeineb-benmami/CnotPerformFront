@@ -33,16 +33,17 @@ const MyEvents = () => {
 
   return (
     <React.Fragment>
-      <section className="section hero-section" id="news">
+      <section className="section hero-section">
         <div className="glow-container">
           <div className="glow-circle left"></div>
           <div className="glow-circle right"></div>
         </div>
         <Container>
-          <Row>
+          <Row className="mt-5">
             <Col lg="12">
-              <div className="mb-5 text-left text-white">
-                <h3>Mes Evènements</h3>
+              <div className="mb-5 text-center text-white">
+                <div className="small-title text-white">Evènements</div>
+                <h4>Mes participations</h4>
               </div>
             </Col>
           </Row>
@@ -58,7 +59,7 @@ const MyEvents = () => {
                   color="primary"
                   className="font-16 btn-block cta-button"
                 >
-                  Afficher plus d'évènements
+                  Afficher d'autres évènements
                 </Button>
               </Link>
             </div>
