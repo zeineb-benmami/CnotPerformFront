@@ -150,7 +150,7 @@ function BourseCard({ bourses, fetchBourses }) {
   return (
     <React.Fragment>
       {bourses.reverse().map((bourse, key) => (
-        <Col xl="4" sm="6" key={key} className='mx-4'>
+        <Col xl="5" sm="6" key={key} className='mx-4'>
           <Card>
             <CardBody>
               <div className="d-flex justify-content-between align-items-start">
@@ -214,12 +214,15 @@ function BourseCard({ bourses, fetchBourses }) {
                     }}>
                       <i className='bx bx-file-find font-size-16 me-1'></i> Afficher les rapports
                     </DropdownItem>
+                    {bourse.status === "attente" && (
+                      <>
                     <DropdownItem onClick={async () => {
                       toggleMontant();
                       setSelectedBourse(bourse);
                     }}>
                       <i className='bx bx-check-circle font-size-16 me-1 text-success' ></i> Accepter
                     </DropdownItem>
+                    </>)}
                     {bourse.status === "attente" && (
                       <>
                     <DropdownItem onClick={async () => await refusee(bourse._id)}>
@@ -244,20 +247,20 @@ function BourseCard({ bourses, fetchBourses }) {
                     {bourse.status}
                   </Badge>
                 </li>
-                <li className="list-inline-item me-3" id="initDate">
-                  <i className="bx bx-calendar me-1" /> {bourse?.date.substring(0, 10)}
+                <li className="list-inline-item my-1 me-3" id="initDate">
+                  <i className="bx bx-user me-1" /> {bourse?.Federation_Conserne.name}
                   <UncontrolledTooltip placement="top" target="initDate">
-                    Start Date
+                    Fédération
                   </UncontrolledTooltip>
                 </li>
-                <li className="list-inline-item me-3" id="dueDate">
+                <li className="list-inline-item my-1 me-3" id="dueDate">
                   <i className="bx bx-calendar me-1" /> {bourse?.date.substring(0, 10)}
                   <UncontrolledTooltip placement="top" target="dueDate">
-                    Due Date
+                    Date
                   </UncontrolledTooltip>
                 </li>
-                <li className="list-inline-item me-3" id="comments">
-                  <i className="bx bx-money me-1" /> {bourse.budgetPrev}
+                <li className="list-inline-item mt-1 me-3" id="comments">
+                  <i className="bx bx-money me-1" /> {bourse.budgetPrev} TND
                   <UncontrolledTooltip placement="top" target="comments">
                     Budget Prévisionnel
                   </UncontrolledTooltip>
@@ -300,6 +303,7 @@ function BourseCard({ bourses, fetchBourses }) {
         {showRapportTech &&(
           <>
           <h1 className='my-2'>Rapport Technique</h1>
+          {selectedBourse?.rapportTech === "" && <h4>Le rapport n'a pas encore été déposé</h4>}
           <object data={`${url}/${selectedBourse?.rapportTech.replace(/\\/g, '/')}`} type="application/pdf" width="100%" height="400px">
           </object>
           </>
@@ -307,16 +311,15 @@ function BourseCard({ bourses, fetchBourses }) {
         {showRapportFinan &&(
           <>  
           <h1 className='my-2'>Rapport Financier</h1>
+          {selectedBourse?.rapportFinan === "" && <h4>Le rapport n'a pas encore été déposé</h4>}
           <object data={`${url}/${selectedBourse?.rapportFinan.replace(/\\/g, '/')}`} type="application/pdf" width="100%" height="400px">
           </object>
+          
           </>
         )
         }
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{' '}
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>

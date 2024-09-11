@@ -149,6 +149,7 @@ const EmailInbox = (props) => {
 
   const handleCloseSecondModal = () => setSecondModalOpen(false);
 
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -171,7 +172,7 @@ const EmailInbox = (props) => {
                   Entrer le mot de passe de compte ({mailAccount})
                 </ModalHeader>
                 <ModalBody>
-                <input type="text" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} className="border-stroke dark:border-form-strokedark dark:bg-form-input focus:border-primary dark:focus:border-primary active:border-primary bg-transparent w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter" />
+                <input type="password" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} className="border-stroke dark:border-form-strokedark dark:bg-form-input focus:border-primary dark:focus:border-primary active:border-primary bg-transparent w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter" />
                 </ModalBody>
                 <ModalFooter>
                   <Button color="secondary" onClick={handleCloseSecondModal}>
@@ -251,13 +252,13 @@ const EmailInbox = (props) => {
                     <div className="align-items-center text-center p-4">
                       {" "}
                       <i className="mdi mdi-email-outline me-2 display-5"></i>{" "}
-                      <h4> No Recored Found </h4>
+                      <h4> Aucun mail trouvé </h4>
                     </div>
                   )}
                 </Card>
                 {mailslists.length > 0 && (
                   <Row>
-                    <Col xs="7">Showing 1 - 20 of 1,524</Col>
+                    <Col xs="7"></Col>
                     <Col xs="5">
                       <div className="btn-group float-end">
                         <Button type="button" color="success" size="sm">
