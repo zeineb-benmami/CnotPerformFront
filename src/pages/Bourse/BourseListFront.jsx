@@ -7,7 +7,7 @@ import { uploadFile } from '../../service/fileService';
 import moment from 'moment';
 import Dropzone from "react-dropzone";
 import { Link } from 'react-router-dom';
-
+import io from 'socket.io-client';
 
 
 function BourseListFront() {
@@ -19,6 +19,7 @@ function BourseListFront() {
   const [federationId, setFederationId] = useState(null);
   const [fileDropError, setFileDropError] = useState(false);
   const [modal, setModal] = useState(false);
+  const url = process.env.REACT_APP_BACKEND_URL;
   
   const toggle = () => setModal(!modal);
 
@@ -40,6 +41,24 @@ function BourseListFront() {
     }
   }, []);
 
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem('authUser'))?.token;
+    if (token) {
+      const socket = io(`${url}`, {
+        auth: { token },
+        transports: ['websocket', 'polling']
+      });
+    // Handle new bourses
+    socket.on('bourseAccepted', (bourse) => {
+      
+    });
+
+    // Cleanup on unmount
+    return () => {
+      socket.off('bourseAccepted');
+    };
+  }}, []);
+
   const handleAcceptedFiles = useCallback((acceptedFiles) => {
     const files = acceptedFiles;
     
@@ -57,6 +76,7 @@ function BourseListFront() {
       const formData = new FormData();
       formData.append('file', selectedFiles[0]);
       await uploadFile(formData, id, selectedFileType);
+      fetchBourses(federationId)
   }
 
 
@@ -64,6 +84,7 @@ function BourseListFront() {
     <section className="offer-section">
       <h2>My Bourses</h2>
       <div className='container'>
+        {bourses.length === 0 && <h1>Vous n'avez aucune demande de bourse</h1>}
         {bourses.reverse().map((bourse, index) => (
     <Card className="mb-3 border-0 shadow-sm bg-dark text-white" key={index}>
     <CardBody>
@@ -102,33 +123,54 @@ function BourseListFront() {
       {bourse.status === 'acceptee' && (
               <Row className="mb-2">
               <Col xs="12" sm="6">
-              <Button
+              {bourse?.rapportFinan === "" ? (
+                              <Button
+                              color="primary"
+                              size="sm"
+                              onClick={() =>{
+                                toggle();
+                                setSelectedFileType('Rapport Financier');
+                                setSelectedBourse(bourse);
+                                
+                              }
+                              }
+                              >
+                              Déposer le rapport Financier
+                              </Button>
+              ) : (
+                <Button
                 color="primary"
                 size="sm"
-                onClick={() =>{
-                  toggle();
-                  setSelectedFileType('Rapport Financier');
-                  setSelectedBourse(bourse);
-                  
-                }
-                }
+                disabled={true}
                 >
-                Déposer le rapport Financier
+                le rapport Financier est déja déposé
                 </Button>
+              )}
+
               </Col>
               <Col xs="12" sm="6">
-                <Button
-                  color="primary"
-                  size="sm"
-                  onClick={() =>{
-                    toggle();
-                    setSelectedFileType('Rapport Technique');
-                    setSelectedBourse(bourse);
-                  }
-                  }
-                  >
-                  Déposer le rapport Technique
-                  </Button>
+                {bourse?.rapportTech === "" ? (
+                                  <Button
+                                  color="primary"
+                                  size="sm"
+                                  onClick={() =>{
+                                    toggle();
+                                    setSelectedFileType('Rapport Technique');
+                                    setSelectedBourse(bourse);
+                                  }
+                                  }
+                                  >
+                                  Déposer le rapport Technique
+                                  </Button>
+                                ) : (
+                                  <Button
+                                  color="primary"
+                                  size="sm"
+                                  disabled= {true}
+                                  >
+                                  le rapport Technique est déja déposé
+                                  </Button>
+                                )}
               </Col>
             </Row>
       )}

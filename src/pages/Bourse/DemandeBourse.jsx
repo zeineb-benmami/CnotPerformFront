@@ -167,7 +167,7 @@ function DemandeBourse() {
           <div className="glow-circle left"></div>
           <div className="glow-circle right"></div>
         </div>
-        <Container>
+        <Container className='mt-5'>
                         <Row className="justify-content-center">
                             <Col md={12} lg={12} xl={12}>
                                 <Card className="overflow-hidden">
