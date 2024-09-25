@@ -53,8 +53,6 @@ const EmailRead = () => {
           <Row>
             <Col xs="12">
               {/* Render Email SideBar */}
-              <EmailSideBar />
-
               <div className="email-rightbar mb-3">
                 <Card>
                   <CardBody>
@@ -98,40 +96,8 @@ const EmailRead = () => {
                             </div>
                     <hr />
 
-                    <Row>
-                      <Col xl="2" xs="6">
-                        <Card>
-                          <img
-                            className="card-img-top img-fluid"
-                            src={img3}
-                            alt="skote"
-                          />
-                          <div className="py-2 text-center">
-                            <Link to="" className="fw-medium">
-                              Download
-                            </Link>
-                          </div>
-                        </Card>
-                      </Col>
-                      <Col xl="2" xs="6">
-                        <Card>
-                          <img
-                            className="card-img-top img-fluid"
-                            src={img4}
-                            alt="skote"
-                          />
-                          <div className="py-2 text-center">
-                            <Link to="" className="fw-medium">
-                              Download
-                            </Link>
-                          </div>
-                        </Card>
-                      </Col>
-                    </Row>
 
-                    <Link to="#" className="btn btn-secondary mt-4">
-                      <i className="mdi mdi-reply"></i> Reply
-                    </Link>
+
                   </CardBody>
                 </Card>
               </div>

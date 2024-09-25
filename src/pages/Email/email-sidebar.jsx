@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import {
   Button,
@@ -22,11 +22,17 @@ import avatar4 from "../../assets/images/users/avatar-4.jpg"
 import avatar6 from "../../assets/images/users/avatar-6.jpg"
 import { send } from "../../service/mailService";
 
-const EmailSideBar = props => {
+const EmailSideBar = ({ mailaccount, password }) => {
   const [modal, setmodal] = useState(false)
   const [to, setTo] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
+
+  useEffect(() => {
+    console.log('password: ', password);
+    console.log('mail: ', mailaccount);
+    
+  },[password])
 
   return (
     <React.Fragment>
@@ -136,7 +142,7 @@ const EmailSideBar = props => {
             </Button>
             <Button type="button" color="primary" 
             onClick={async () => {
-              const response =await send({from: props.mailaccount, password:props.password, to: to, subject: subject, body: body})
+              const response =await send(mailaccount, password, to, subject, body)
               if(response.status == 200){
                 setmodal(false);
               }

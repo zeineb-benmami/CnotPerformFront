@@ -40,14 +40,11 @@ function BourseCategories() {
   const [modal, setModal] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [open, setOpen] = useState("");
-
-  const toggle = () => setModal(!modal);
-
-  const toggleAccordion = (id) => {
-    setOpen(open === id ? "" : id);
-  };
-
-  const cardsData = [
+  const [developpementDescription, setDeveloppementDescription] = useState("Les programmes mondiaux Développement du sport sont consacrés à la promotion du développement du sport, de la relève à l’élite, en collaboration avec les Fédérations Internationales et nationales et d’autres partenaires clés. Ils offrent quatre niveaux de soutien : soutien aux jeunes athlètes sur leur")
+  const [valeurDescription, setValeurDescription] = useState("Le programme des valeurs olympiques vise à fournir le soutien nécessaire aux CNO pour promouvoir le sport pour tous, ainsi que les valeurs et principes fondamentaux de l’Olympisme dans le domaine du sport et de l’éducation, tout en assurant des conditions de pratique sportive équitables sans ")
+  const [adminDescription, setAdminDescription] = useState("Les programmes mondiaux ci-dessous ont pour priorité d’aider les CNO à développer et maintenir des structures administratives solides et durables afin d’offrir à leurs athlètes et membres le soutien dont ils ont besoin. Ils visent à permettre l’accès aux dirigeants et collaborateurs des CNO à un large éventail de")
+  const [entourageDescription, setEntourageDescription] = useState("Pour tout athlète, pour toute équipe, évoluer dans le bon environnement est essentiel pour progresser. Tant de facteurs sont primordiaux pour un bon entourage : bénéficier du soutien de personnes sensibilisées à des sujets clés tels que la protection des athlètes intègres et la lutte contre le dopage, la discrimination, le harcèlement et la manipulation des compétitions. Les programmes mondiaux Entourage soutiennent les membres de l’entourage, notamment les entraîneurs, en leur proposant des outils pour améliorer leurs")
+  const [cardsData, setCardsData] = useState([
     {
       image: univ,
       title: "Universalité des Jeux Olympiques",
@@ -56,44 +53,83 @@ function BourseCategories() {
         "Les programmes mondiaux Universalité des Jeux Olympiques visent à donner la possibilité aux CNO du monde entier de soutenir des athlètes et équipes d’élite en leur apportant un soutien financier et technique dans leur préparation pour les Jeux",
       color: "#0369a1",
       domaine: "Athlètes et développement du sport",
+      voirPlus: false
     },
     {
       image: developpement,
       title: "Développement du Sport",
       subtitle: "Promotion et soutien",
-      description:
-        "Les programmes mondiaux Développement du sport sont consacrés à la promotion du développement du sport, de la relève à l’élite, en collaboration avec les Fédérations Internationales et nationales et d’autres partenaires clés. Ils offrent quatre niveaux de soutien : soutien aux jeunes athlètes sur leur chemin vers une carrière prometteuse et une qualification pour les JOJ, soutien aux athlètes dans leur transition du niveau régional ou continental au niveau mondial, soutien aux athlètes ayant dû fuir leur pays en leur permettant de concourir en tant qu’athlètes réfugiés, contribution au développement du sport à grande échelle dans différents pays en accompagnant le renforcement du système sportif national.",
+      description: developpementDescription,
       color: "#fcd34d",
       domaine: "Athlètes et développement du sport",
+      voirPlus: true
     },
     {
       image: valeur,
       title: "Valeurs Olympiques",
       subtitle: "Respect, Excellence, Amitié",
-      description:
-        "Le programme des valeurs olympiques vise à fournir le soutien nécessaire aux CNO pour promouvoir le sport pour tous, ainsi que les valeurs et principes fondamentaux de l’Olympisme dans le domaine du sport et de l’éducation, tout en assurant des conditions de pratique sportive équitables sans discrimination d’aucune sorte et en soutenant la santé et l’intégrité des athlètes. Le programme est structuré autour de deux domaines d’action principaux : au niveau des organisations( l’objectif du programme est de veiller à ce que les organisations sportives soient gérées de manière sûre, durable et inclusive), au niveau communautaire(le but est d’aider davantage de personnes à s’engager dans le sport et avoir une activité physique et de promouvoir une éducation, une culture et un héritage fondés sur l’Olympisme et ses valeurs.)",
+      description: valeurDescription,
       color: "#dc2626",
       domaine: "Valeurs",
+      voirPlus: true
     },
     {
       image: admin,
       title: "Gestion des CNO et partage de connaissances",
       subtitle: "Gestion efficace",
-      description:
-        "Les programmes mondiaux ci-dessous ont pour priorité d’aider les CNO à développer et maintenir des structures administratives solides et durables afin d’offrir à leurs athlètes et membres le soutien dont ils ont besoin. Ils visent à permettre l’accès aux dirigeants et collaborateurs des CNO à un large éventail de formations et de cours dans de nombreux domaines liés à la gestion efficace d’un CNO au quotidien. Les enseignements et le soutien mutuels sont également importants ; c’est pourquoi ces programmes encouragent aussi les partages de connaissances et d’expérience entre CNO.",
+      description: adminDescription,
       color: "#292524",
       domaine: "Développement des capacités et administration",
+      voirPlus: true
     },
     {
       image: entourage,
       title: "Entourage",
       subtitle: "Communauté et soutien",
-      description:
-        "Pour tout athlète, pour toute équipe, évoluer dans le bon environnement est essentiel pour progresser. Tant de facteurs sont primordiaux pour un bon entourage : bénéficier du soutien de personnes sensibilisées à des sujets clés tels que la protection des athlètes intègres et la lutte contre le dopage, la discrimination, le harcèlement et la manipulation des compétitions. Les programmes mondiaux Entourage soutiennent les membres de l’entourage, notamment les entraîneurs, en leur proposant des outils pour améliorer leurs compétences à tous les niveaux.",
+      description: entourageDescription,
       color: "#16a34a",
       domaine: "Athlètes et développement du sport",
+      voirPlus: true
     },
-  ];
+  ]);
+
+  const toggle = () => setModal(!modal);
+
+  const toggleAccordion = (id) => {
+    setOpen(open === id ? "" : id);
+  };
+
+
+  const voirPlus = (title) => {
+    setCardsData((prevCardsData) =>
+      prevCardsData.map((card) => {
+        if (card.title === title) {
+          switch (title) {
+            case "Développement du Sport":
+              card.description =
+                "Les programmes mondiaux Développement du sport sont consacrés à la promotion du développement du sport, de la relève à l’élite, en collaboration avec les Fédérations Internationales et nationales et d’autres partenaires clés. Ils offrent quatre niveaux de soutien : soutien aux jeunes athlètes sur leur chemin vers une carrière prometteuse et une qualification pour les JOJ, soutien aux athlètes dans leur transition du niveau régional ou continental au niveau mondial, soutien aux athlètes ayant dû fuir leur pays en leur permettant de concourir en tant qu’athlètes réfugiés, contribution au développement du sport à grande échelle dans différents pays en accompagnant le renforcement du système sportif national.";
+              break;
+            case "Valeurs Olympiques":
+              card.description =
+                "Le programme des valeurs olympiques vise à fournir le soutien nécessaire aux CNO pour promouvoir le sport pour tous, ainsi que les valeurs et principes fondamentaux de l’Olympisme dans le domaine du sport et de l’éducation, tout en assurant des conditions de pratique sportive équitables sans discrimination d’aucune sorte et en soutenant la santé et l’intégrité des athlètes. Le programme est structuré autour de deux domaines d’action principaux : au niveau des organisations( l’objectif du programme est de veiller à ce que les organisations sportives soient gérées de manière sûre, durable et inclusive), au niveau communautaire(le but est d’aider davantage de personnes à s’engager dans le sport et avoir une activité physique et de promouvoir une éducation, une culture et un héritage fondés sur l’Olympisme et ses valeurs.)";
+              break;
+            case "Gestion des CNO et partage de connaissances":
+              card.description =
+                "Les programmes mondiaux ci-dessous ont pour priorité d’aider les CNO à développer et maintenir des structures administratives solides et durables afin d’offrir à leurs athlètes et membres le soutien dont ils ont besoin. Ils visent à permettre l’accès aux dirigeants et collaborateurs des CNO à un large éventail de formations et de cours dans de nombreux domaines liés à la gestion efficace d’un CNO au quotidien. Les enseignements et le soutien mutuels sont également importants ; c’est pourquoi ces programmes encouragent aussi les partages de connaissances et d’expérience entre CNO.";
+              break;
+            case "Entourage":
+              card.description =
+                "Pour tout athlète, pour toute équipe, évoluer dans le bon environnement est essentiel pour progresser. Tant de facteurs sont primordiaux pour un bon entourage : bénéficier du soutien de personnes sensibilisées à des sujets clés tels que la protection des athlètes intègres et la lutte contre le dopage, la discrimination, le harcèlement et la manipulation des compétitions. Les programmes mondiaux Entourage soutiennent les membres de l’entourage, notamment les entraîneurs, en leur proposant des outils pour améliorer leurs compétences à tous les niveaux.";
+              break;
+            default:
+              break;
+          }
+          card.voirPlus = false;
+        }
+        return card;
+      })
+    );
+  };
 
   return (
     <React.Fragment>
@@ -121,7 +157,10 @@ function BourseCategories() {
                   </Button>
                 }
               >
-                {card.description}
+                {card.description}{card.voirPlus && <a className="text-secondary" onClick={() => {
+                  voirPlus(card.title);
+                  card.voirPlus = false;
+                }}>  Voir Plus...</a> }
               </Card>
             ))}
           </div>

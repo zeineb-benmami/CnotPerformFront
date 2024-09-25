@@ -40,6 +40,6 @@ export const verifAccountSet = async (id: string) => {
   return API.get(`mail/verifyaccountset/${id}`);
 };
 
-export const send = async (from: string , to: string, subject: string, body: string) => {
- return API.post(`mail/send`, {from: from, to: to, subject: subject, body: body})
+export const send = async (from: string, password:string, to: string, subject: string, body: string) => {
+ return API.post(`mail/send`, {from: from, password:password, to: to, subject: subject, body: body})
 }

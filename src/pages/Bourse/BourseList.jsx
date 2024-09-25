@@ -6,6 +6,7 @@ import { acceptee, deleteBourse, getBourses, refusee } from '../../service/bours
 import BourseCard from './BourseCard';
 import ModalMontantAccorde from './modalMontantAccorde';
 import { getRoleFName } from '../../service/apiUser';
+import io from 'socket.io-client';
 
 function BourseList() {
     const [bourses, setBourses] = useState([]);
@@ -14,6 +15,7 @@ function BourseList() {
     const [domaineFilter, setDomaineFilter] = useState(null);
     const [groupeFilter, setGroupeFilter] = useState(null);
     const [statusFilter, setStatusFilter] = useState(null);
+    const url = process.env.REACT_APP_BACKEND_URL;
     const [page, setPage] = useState(1);
 
     const fetchBourses = async (page) =>{
@@ -45,6 +47,10 @@ function BourseList() {
         fetchFederations();
     },[])
 
+    useEffect(() => {
+      console.log(bourses);
+      
+    },[bourses])
    useEffect(() =>{
     if(groupeFilter === 'Groupe'){
       setGroupeFilter(null)
@@ -66,6 +72,32 @@ function BourseList() {
    useEffect(() =>{
     fetchBourses(page)
     },[page])
+
+    useEffect(() => {
+      const token = JSON.parse(localStorage.getItem('authUser'))?.token;
+      if (token) {
+        const socket = io(`${url}`, {
+          auth: { token },
+          transports: ['websocket', 'polling']
+        });
+      // Handle new bourses
+      socket.on('newBourse', (newBourse) => {
+        setBourses((prevBourses) => [newBourse, ...prevBourses]);
+      });
+      socket.on('bourseAccepted', (bourse) => {
+        fetchBourses(page);
+      });
+      socket.on('bourseRefused', (bourse) => {
+        fetchBourses(page);
+      });
+  
+      // Cleanup on unmount
+      return () => {
+        socket.off('newBourse');
+        socket.off('bourseAccepted');
+        socket.off('bourseRefused');
+      };
+    }}, []);
 
   return (
     <div className="page-content">
@@ -150,7 +182,7 @@ function BourseList() {
           {bourses?.length == 0 && (
             <h3 className=" text-center">Aucune bourse trouvé</h3>
           )}
-          <BourseCard bourses={bourses} refresh={fetchBourses} />
+          <BourseCard bourses={bourses} refresh={fetchBourses} page={page} />
         </Row>
 
         <Row>
