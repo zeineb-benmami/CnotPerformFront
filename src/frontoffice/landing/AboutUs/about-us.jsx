@@ -18,27 +18,20 @@ const AboutUs = () => {
               style={{ top: 0, left: 0 }}
             />
             <Col lg="5" className="position-relative about-us">
-              <div className="about-content">
-                <h2>A propos de nous</h2>
-                <p>
-                  CNOT Perform revolutionne l'entrainement sportif grâce à{" "}
-                  <strong style={{ color: "pink" }}>
-                    l'Intélligence Artificielle
-                  </strong>
-                </p>
-                <ul>
-                  <li>* Suivre votre performance en temps réel</li>
-                  <li>
-                    * Analyser vos données pour identifier vos points faibles et
-                    forts
-                  </li>
-                  <li>
-                    * Recevoir des conseils personnalisés pour éviter les
-                    blessures
-                  </li>
-                </ul>
-              </div>
-            </Col>
+  <div className="about-content">
+    <h2>IA & Sport</h2>
+    
+    <ul>
+  <li style={{ fontSize: "2.5em" }}>• Expertise</li>
+  <li style={{ fontSize: "2.5em" }}>• Haute Performance</li>
+  <li style={{ fontSize: "2.5em" }}>• Accompagnement Scientifique des Fédérations Sportives</li>
+  <li style={{ fontSize: "2.5em" }}>• Transfert de Connaissances et de Technologies</li>
+  <li style={{ fontSize: "2.5em" }}>• Estimation de la Médaillabilité</li>
+</ul>
+
+
+  </div>
+</Col>
 
             <Col lg="6" className="position-relative ms-auto">
               <div className="mt-lg-0 position-relative z-1 mt-4">

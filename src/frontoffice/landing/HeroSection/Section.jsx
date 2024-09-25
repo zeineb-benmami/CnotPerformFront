@@ -10,56 +10,58 @@ const Section = () => {
           <div className="glow-circle right"></div>
         </div>
         <Container>
-          <Row className="align-items-center">
-            <Col lg="6" md="4">
-              <h4
-                className=" text-teal-500"
-                style={{ color: "cyan", fontStyle: "italic" }}
-              >
-                Votre chemin vers le succés
-              </h4>
-              <hr />
-              <div className="text-white-50">
-                <h1 className="fw-semibold hero-title mb-3 text-white">
-                  CNOT Perform
-                </h1>
-              </div>
-              <div style={{ marginTop: "10%" }}>
-                <a href="#about" className="cta-button mt-5">
-                  {" "}
-                  Commencer
-                </a>
-              </div>
-            </Col>
-            <Col lg="6" md="8" sm="12" className="ms-lg-auto">
-              <div className=" hero-img">
-                <UncontrolledCarousel
-                  items={[
-                    {
-                      altText: "Slide 1",
-                      caption: "Slide 1",
-                      key: 1,
-                      src: "assets/images/fares.jpg",
-                    },
-                    {
-                      altText: "Slide 2",
-                      caption: "Slide 2",
-                      key: 2,
-                      src: "assets/images/fight.jpg",
-                    },
-                    {
-                      altText: "Slide 3",
-                      caption: "Slide 3",
-                      key: 3,
-                      src: "assets/images/glory.jpg",
-                    },
-                  ]}
-                />
-              </div>
+        <Row className="align-items-center">
+  <Col lg="6" md="4">
+    <div className="text-white-50">
+      <h1 className="fw-semibold hero-title mb-3 text-white">
+        CNOT PERFORM
+      </h1>
+    </div>
+    
+    <h3
+      className="text-teal-500"
+      style={{ color: "white", fontStyle: "italic" }}
+    >
+      Votre chemin vers le succès...
+    </h3>
 
-              {/*<img src="assets/images/fares.jpg" alt="" />*/}
-            </Col>
-          </Row>
+    <hr />
+
+    <div style={{ marginTop: "10%" }}>
+      <a href="#about" className="cta-button mt-5">
+        Commencer
+      </a>
+    </div>
+  </Col>
+
+  <Col lg="6" md="8" sm="12" className="ms-lg-auto mt-5">
+    <div className="hero-img">
+      <UncontrolledCarousel
+        items={[
+          {
+            altText: "Slide 1",
+            caption: "Slide 1",
+            key: 1,
+            src: "assets/images/fares.jpg",
+          },
+          {
+            altText: "Slide 2",
+            caption: "Slide 2",
+            key: 2,
+            src: "assets/images/fight.jpg",
+          },
+          {
+            altText: "Slide 3",
+            caption: "Slide 3",
+            key: 3,
+            src: "assets/images/glory.jpg",
+          },
+        ]}
+      />
+    </div>
+  </Col>
+</Row>
+
         </Container>
       </section>
       <section className="stats-section hero-section">

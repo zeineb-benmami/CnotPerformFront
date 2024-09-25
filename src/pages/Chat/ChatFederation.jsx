@@ -5,23 +5,19 @@ import {
   Card,
   Col,
   Container,
-  Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
   Row,
   UncontrolledDropdown,
   UncontrolledTooltip,
+  Input,
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import images from "/src/assets/images";
 import { io } from "socket.io-client";
-import { getUserProfile } from "../../service/apiUser";
+import { getUserProfile, uploadFile } from "../../service/apiUser"; // Importer la fonction uploadFile
 import moment from "moment";
 import "moment/locale/fr";
 
@@ -39,11 +35,7 @@ const Chat = () => {
     _id: "",
   });
   const [search_Menu, setsearch_Menu] = useState(false);
-  const [settings_Menu, setsettings_Menu] = useState(false);
-  const [other_Menu, setother_Menu] = useState(false);
   const [Chat_Box_Username, setChat_Box_Username] = useState("");
-  const [Chat_Box_User_Status, setChat_Box_User_Status] =
-    useState("Active Now");
   const [curMessage, setcurMessage] = useState("");
   const [recentChats, setRecentChats] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -53,6 +45,10 @@ const Chat = () => {
   const navigate = useNavigate();
 
   const messageBoxRef = useRef(null);
+
+  const messageReceivedStyle = {
+    backgroundColor: "#f0f0f0", // Couleur de fond différente pour les messages reçus
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -67,7 +63,6 @@ const Chat = () => {
           _id: userData.user._id,
         });
 
-        // Fetch contacts with role MC
         const response = await fetch(
           `${url}/api/contactsMC/${userData.user._id}`
         );
@@ -81,7 +76,6 @@ const Chat = () => {
         });
         setContacts(sortedContacts);
 
-        // Set the first contact as the default chat box user
         if (sortedContacts.length > 0) {
           const firstContact = sortedContacts[0];
           setChat_Box_Username(firstContact.name);
@@ -203,23 +197,36 @@ const Chat = () => {
     );
   };
 
-  const toggleSearch = () => {
-    setsearch_Menu(!search_Menu);
-  };
-
-  const toggleSettings = () => {
-    setsettings_Menu(!settings_Menu);
-  };
-
-  const toggleOther = () => {
-    setother_Menu(!other_Menu);
-  };
-
   const userChatOpen = (id, name) => {
     setChat_Box_Username(name);
     setReceiverId(id);
     fetchMessages(currentUser._id, id);
     navigate(`/chat/${id}`);
+  };
+
+  const handleFileChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      try {
+        const result = await uploadFile(selectedFile); // Utilisation de la fonction uploadFile
+        console.log("File uploaded successfully:", result.message);
+
+        if (socket && currentUser._id && receiverId) {
+          const messageData = {
+            sender: currentUser._id,
+            senderName: currentUser.name,
+            receiver: receiverId,
+            receiverName: Chat_Box_Username,
+            message: `File: ${result.message}`, // Envoi du lien du fichier comme message
+            timestamp: new Date().toISOString(),
+          };
+          socket.emit("sendMessage", messageData);
+          setMessages((prevMessages) => [...prevMessages, messageData]);
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
   };
 
   const addMessage = () => {
@@ -240,13 +247,6 @@ const Chat = () => {
         return updatedMessages;
       });
       updateContacts();
-    } else {
-      console.error("Failed to send message:", {
-        curMessage,
-        socket,
-        currentUserId: currentUser._id,
-        receiverId,
-      });
     }
   };
 
@@ -257,8 +257,7 @@ const Chat = () => {
   };
 
   const onKeyPress = (e) => {
-    const { key } = e;
-    if (key === "Enter") {
+    if (e.key === "Enter") {
       addMessage();
     }
   };
@@ -282,10 +281,6 @@ const Chat = () => {
 
   return (
     <section className="section hero-section">
-      <div className="glow-container">
-        <div className="glow-circle left"></div>
-        <div className="glow-circle right"></div>
-      </div>
       <Container style={{ marginTop: "80px", marginBottom: "20px" }}>
         <Row>
           <Col lg="12">
@@ -324,127 +319,63 @@ const Chat = () => {
 
                   <div className="chat-leftsidebar-nav">
                     <h5 className="font-size-14 mb-3">Contacts</h5>
-                    <div>
-                      <PerfectScrollbar style={{ height: "410px" }}>
-                        {contacts.map((contact) => (
-                          <div key={contact._id}>
-                            <ul
-                              className="list-unstyled chat-list"
-                              id="recent-list"
+                    <PerfectScrollbar style={{ height: "410px" }}>
+                      {contacts.map((contact) => (
+                        <ul className="list-unstyled chat-list" id="recent-list" key={contact._id}>
+                          <li>
+                            <Link
+                              to="#"
+                              onClick={() => userChatOpen(contact._id, contact.name)}
                             >
-                              <li key={contact._id}>
-                                <Link
-                                  to="#"
-                                  onClick={() => {
-                                    userChatOpen(contact._id, contact.name);
-                                  }}
-                                >
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div className="d-flex align-items-center">
-                                      <div className="avatar-xs me-3">
-                                        <span className="rounded-circle bg-soft bg-primary text-primary">
-                                          <img
-                                            src={`${url}/${contact.image}`}
-                                            alt={contact.name}
-                                          />
-                                        </span>
-                                      </div>
-                                      <div>
-                                        <h5 className="font-size-14 mb-0">
-                                          {contact.name}
-                                        </h5>
-                                        <p className="text-muted mb-0">
-                                          {contact.lastMessageText}
-                                        </p>
-                                      </div>
-                                    </div>
+                              <div className="d-flex justify-content-between align-items-center">
+                                <div className="d-flex align-items-center">
+                                  <div className="avatar-xs me-3">
+                                    <span className="rounded-circle bg-soft bg-primary text-primary">
+                                      <img
+                                        src={`${url}/${contact.image}`}
+                                        alt={contact.name}
+                                      />
+                                    </span>
+                                  </div>
+                                  <div
+                                    style={{
+                                      maxWidth: "150px",
+                                      whiteSpace: "nowrap",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    <h5 className="font-size-14 mb-0">
+                                      {contact.name}
+                                    </h5>
                                     <p className="text-muted mb-0">
-                                      {contact.lastMessageTimeDiff}
+                                      {contact.lastMessageText?.startsWith("File:")
+                                        ? "Fichier"
+                                        : contact.lastMessageText}
                                     </p>
                                   </div>
-                                </Link>
-                              </li>
-                            </ul>
-                          </div>
-                        ))}
-                      </PerfectScrollbar>
-                    </div>
+                                </div>
+                                <p className="text-muted mb-0">
+                                  {contact.lastMessageTimeDiff}
+                                </p>
+                              </div>
+                            </Link>
+                          </li>
+                        </ul>
+                      ))}
+                    </PerfectScrollbar>
                   </div>
                 </div>
               </div>
+
               <div className="w-100 user-chat">
                 <Card className="login-card">
-                  <div className="border-bottom p-4 ">
+                  <div className="border-bottom p-4">
                     <Row>
                       <Col md="4" xs="9">
                         <h5 className="font-size-15 mb-1 text-white">
                           {Chat_Box_Username}
                         </h5>
-                      </Col>
-                      <Col md="8" xs="3">
-                        <ul className="list-inline user-chat-nav mb-0 text-end">
-                          <li className="list-inline-item d-none d-sm-inline-block">
-                            <Dropdown
-                              isOpen={search_Menu}
-                              toggle={toggleSearch}
-                            >
-                              <DropdownToggle className="btn nav-btn" tag="i">
-                                <i className="bx bx-search-alt-2" />
-                              </DropdownToggle>
-                              <DropdownMenu className="dropdown-menu-md">
-                                <Form className="p-3">
-                                  <FormGroup className="m-0">
-                                    <InputGroup>
-                                      <Input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Search ..."
-                                        aria-label="Recipient's username"
-                                      />
-                                      <Button color="primary" type="submit">
-                                        <i className="mdi mdi-magnify" />
-                                      </Button>
-                                    </InputGroup>
-                                  </FormGroup>
-                                </Form>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </li>
-                          <li className="list-inline-item  d-none d-sm-inline-block">
-                            <Dropdown
-                              isOpen={settings_Menu}
-                              toggle={toggleSettings}
-                            >
-                              <DropdownToggle className="btn nav-btn" tag="i">
-                                <i className="bx bx-cog" />
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem href="#">
-                                  View Profile
-                                </DropdownItem>
-                                <DropdownItem href="#">Clear chat</DropdownItem>
-                                <DropdownItem href="#">Muted</DropdownItem>
-                                <DropdownItem href="#">Delete</DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </li>
-                          <li className="list-inline-item">
-                            <Dropdown isOpen={other_Menu} toggle={toggleOther}>
-                              <DropdownToggle className="btn nav-btn" tag="i">
-                                <i className="bx bx-dots-horizontal-rounded" />
-                              </DropdownToggle>
-                              <DropdownMenu className="dropdown-menu-end">
-                                <DropdownItem href="#">Action</DropdownItem>
-                                <DropdownItem href="#">
-                                  Another Action
-                                </DropdownItem>
-                                <DropdownItem href="#">
-                                  Something else
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </li>
-                        </ul>
                       </Col>
                     </Row>
                   </div>
@@ -456,66 +387,78 @@ const Chat = () => {
                           style={{ height: "470px" }}
                           containerRef={(ref) => (messageBoxRef.current = ref)}
                         >
-                          {messages &&
-                            messages.map((message, index) => (
-                              <li
-                                key={`msg-${index}`}
-                                className={
-                                  message.sender === currentUser._id
-                                    ? "right"
-                                    : ""
-                                }
-                              >
-                                <div className="conversation-list">
-                                  <UncontrolledDropdown>
-                                    <DropdownToggle
-                                      href="#"
-                                      tag="a"
-                                      className="dropdown-toggle"
-                                    >
-                                      <i className="bx bx-dots-vertical-rounded" />
-                                    </DropdownToggle>
-                                    <DropdownMenu>
-                                      <DropdownItem
-                                        onClick={(e) =>
-                                          console.log("Copy message")
-                                        }
-                                        href="#"
-                                      >
-                                        Copy
-                                      </DropdownItem>
-                                      <DropdownItem href="#">Save</DropdownItem>
-                                      <DropdownItem href="#">
-                                        Forward
-                                      </DropdownItem>
-                                      <DropdownItem
-                                        onClick={(e) =>
-                                          console.log("Delete message")
-                                        }
-                                        href="#"
-                                      >
-                                        Delete
-                                      </DropdownItem>
-                                    </DropdownMenu>
-                                  </UncontrolledDropdown>
-                                  <div className="ctext-wrap">
-                                    <div className="conversation-name text-dark">
-                                      {message.senderName}
-                                    </div>
-                                    <p className=" text-dark">
-                                      {message.message}
-                                    </p>
-                                    <p className="chat-time mb-0 text-dark">
-                                      <i className="bx bx-time-five me-1 align-middle"></i>{" "}
-                                      {moment(message.timestamp).format("LT")}
-                                    </p>
+                          {messages.map((message, index) => (
+                            <li
+                              key={`msg-${index}`}
+                              className={
+                                message.sender === currentUser._id ? "right" : ""
+                              }
+                            >
+                              <div className="conversation-list">
+                                <UncontrolledDropdown>
+                                  <DropdownToggle
+                                    href="#"
+                                    tag="a"
+                                    className="dropdown-toggle"
+                                  >
+                                    <i className="bx bx-dots-vertical-rounded" />
+                                  </DropdownToggle>
+                                  <DropdownMenu>
+                                    <DropdownItem onClick={() => console.log("Copy message")}>
+                                      Copy
+                                    </DropdownItem>
+                                    <DropdownItem href="#">Save</DropdownItem>
+                                    <DropdownItem href="#">Forward</DropdownItem>
+                                    <DropdownItem onClick={() => console.log("Delete message")}>
+                                      Delete
+                                    </DropdownItem>
+                                  </DropdownMenu>
+                                </UncontrolledDropdown>
+                                <div
+                                  className="ctext-wrap"
+                                  style={
+                                    message.sender !== currentUser._id
+                                      ? messageReceivedStyle // Appliquer le style pour les messages reçus uniquement
+                                      : null
+                                  }
+                                >
+                                  <div className="conversation-name text-dark">
+                                    {message.senderName}
                                   </div>
+                                  <p className="text-dark">
+                                    {message.message.startsWith("File:") ? (
+                                      <div className="file-message">
+                                        <i className="mdi mdi-file-document-outline file-icon"></i>
+                                        <a
+                                          href={message.message.replace("File: ", "")}
+                                          download
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {decodeURIComponent(
+                                            message.message
+                                              .split("/")
+                                              .pop()
+                                              .split("?")[0]
+                                          )}
+                                        </a>
+                                      </div>
+                                    ) : (
+                                      message.message
+                                    )}
+                                  </p>
+                                  <p className="chat-time mb-0 text-dark">
+                                    <i className="bx bx-time-five me-1 align-middle"></i>{" "}
+                                    {moment(message.timestamp).format("LT")}
+                                  </p>
                                 </div>
-                              </li>
-                            ))}
+                              </div>
+                            </li>
+                          ))}
                         </PerfectScrollbar>
                       </ul>
                     </div>
+
                     <div className="chat-input-section p-3">
                       <Row>
                         <Col>
@@ -530,48 +473,31 @@ const Chat = () => {
                             />
                             <div className="chat-input-links">
                               <ul className="list-inline mb-0">
-                                <li className="list-inline-item">
-                                  <Link to="#">
-                                    <i
-                                      className="mdi mdi-emoticon-happy-outline"
-                                      id="Emojitooltip"
-                                    />
-                                    <UncontrolledTooltip
-                                      placement="top"
-                                      target="Emojitooltip"
-                                    >
-                                      Emojis
-                                    </UncontrolledTooltip>
-                                  </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                  <Link to="#">
-                                    <i
-                                      className="mdi mdi-file-image-outline"
-                                      id="Imagetooltip"
-                                    />
-                                    <UncontrolledTooltip
-                                      placement="top"
-                                      target="Imagetooltip"
-                                    >
-                                      Images
-                                    </UncontrolledTooltip>
-                                  </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                  <Link to="#">
-                                    <i
-                                      className="mdi mdi-file-document-outline"
-                                      id="Filetooltip"
-                                    />
-                                    <UncontrolledTooltip
-                                      placement="top"
-                                      target="Filetooltip"
-                                    >
-                                      Add Files
-                                    </UncontrolledTooltip>
-                                  </Link>
-                                </li>
+                               
+                                
+                              <li className="list-inline-item">
+  <input
+    type="file"
+    id="document-input"
+    className="d-none"
+    onChange={handleFileChange}
+  />
+  <label htmlFor="document-input">
+    <i
+      className="mdi mdi-file-document-outline"
+      id="Filetooltip"
+      style={{ color: 'purple' }} // Ajout du style violet ici
+    />
+  </label>
+  <UncontrolledTooltip
+    placement="top"
+    target="Filetooltip"
+   
+  >
+    Fichiers/Images
+  </UncontrolledTooltip>
+</li>
+
                               </ul>
                             </div>
                           </div>
@@ -583,9 +509,6 @@ const Chat = () => {
                             onClick={addMessage}
                             className="btn btn-primary btn-rounded chat-send w-md "
                           >
-                            <span className="d-none d-sm-inline-block me-2">
-                              Send
-                            </span>{" "}
                             <i className="mdi mdi-send" />
                           </Button>
                         </Col>

@@ -289,3 +289,19 @@ export async function searchUsersByName(name) {
     throw error.response ? error.response.data : error;
   }
 }
+
+export async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('filename', file); // 'filename' should match the key used in Postman
+
+  try {
+    const response = await axios.post(`http://localhost:3000/photos/upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data; // Return the response message
+  } catch (error) {
+    throw error.response ? error.response.data : error; // Handle errors
+  }
+}
