@@ -16,7 +16,7 @@ import {
 import { deleteEvent } from "../../service/event-service";
 import DeleteModal from "../Calendar/DeleteModal";
 
-const CardProject = ({ events, refresh }) => {
+const CardProject = ({ events, refresh, handleShowEdit }) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const [eventId, setEventId] = useState("");
@@ -82,11 +82,15 @@ const CardProject = ({ events, refresh }) => {
                     <i className="mdi mdi-dots-horizontal font-size-18" />
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-menu-end">
-                    <DropdownItem onClick={() => handleDeleteEvent(evt?._id)}>
+                    <DropdownItem>
                       <Link to={`/events/${evt._id}`}>
                         <i className="mdi mdi-information font-size-16 text-info me-1" />{" "}
                         Details
                       </Link>
+                    </DropdownItem>
+                    <DropdownItem onClick={() => handleShowEdit(evt)}>
+                      <i className="mdi mdi-pencil font-size-16 text-info me-1" />{" "}
+                      Modifier
                     </DropdownItem>
                     <DropdownItem onClick={() => handleDeleteEvent(evt?._id)}>
                       <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}

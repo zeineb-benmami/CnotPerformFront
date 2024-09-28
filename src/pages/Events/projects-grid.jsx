@@ -17,6 +17,7 @@ import CardProject from "./card-project";
 
 import AddEvent from "./Modals/AddEvent";
 import { getEvents } from "../../service/event-service";
+import EditEvent from "./Modals/EditEvent";
 
 const ProjectsGrid = (props) => {
   //meta title
@@ -25,6 +26,10 @@ const ProjectsGrid = (props) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
+  const [showEvent, setShowEvent] = useState(false);
+  const handleShowEvent = () => setShowEvent(true);
+  const handleCloseEvent = () => setShowEvent(false);
 
   const [eventList, setEventList] = useState([]);
 
@@ -85,10 +90,21 @@ const ProjectsGrid = (props) => {
       setPage(pageNumber);
     }
   };
+  const [eventData, setEventData] = useState({});
 
+  const handleShowEdit = (event) => {
+    setEventData(event);
+    if (Object.keys(eventData).length !== 0) handleShowEvent();
+  };
   return (
     <div className="page-content">
       <AddEvent show={show} handleClose={handleClose} refresh={refreshEvents} />
+      <EditEvent
+        show={showEvent}
+        handleClose={() => setShowEvent(false)}
+        refresh={refreshEvents}
+        eventData={eventData}
+      />
 
       <Container fluid>
         {/* Render Breadcrumbs */}
@@ -138,7 +154,11 @@ const ProjectsGrid = (props) => {
           {currentEvents?.length == 0 && (
             <h3 className=" text-center">Aucun évènement trouvé</h3>
           )}
-          <CardProject events={currentEvents} refresh={refreshEvents} />
+          <CardProject
+            events={currentEvents}
+            refresh={refreshEvents}
+            handleShowEdit={handleShowEdit}
+          />
         </Row>
 
         <Row>

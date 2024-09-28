@@ -13,7 +13,7 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
                 className="mdi mdi-alert-circle-outline"
                 style={{ fontSize: "9em", color: "orange" }}
               />
-              <h2>Vous êtes sur de supprimer?</h2>
+              <h2>Êtes-vous sûr de supprimer?</h2>
               <h4>{"Cette action est non inversible!"}</h4>
             </div>
           </Col>
@@ -23,8 +23,9 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
             <div className="mt-3 text-center">
               <button
                 type="button"
-                className="btn btn-secondary btn-lg ms-2"
+                className="btn btn-danger btn-lg ms-2"
                 onClick={onDeleteClick}
+                style={{ backgroundColor: "red" }}
               >
                 Confirmer
               </button>

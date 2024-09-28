@@ -39,7 +39,7 @@ const Navbar_Page = (props) => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navigation fixed-top nav-sticky sticky bg-dark">
         <Container>
-          <div className="auth-logo-light d-flex align-items-center mt-3">
+          <div className="auth-logo-light d-flex align-items-center mt-4">
             <Link to="/" className="auth-logo-light position-relative">
               <div className="avatar-md profile-user-wid mb-2 ">
                 <span className="avatar-title rounded-circle bg-light">

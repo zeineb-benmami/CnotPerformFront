@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useCallback, useEffect } from "react";
-import { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import {
@@ -18,40 +17,33 @@ import {
   Label,
   Spinner,
 } from "reactstrap";
-
-//Import Date Picker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { addEvent } from "../../../service/event-service";
+import { updateEvent } from "../../../service/event-service";
 import { uploadPhotoToEvent } from "../../../service/photo-service";
 import "/public/assets/styles/popup.css";
 
-const AddEvent = ({ show, handleClose, refresh }) => {
+const EditEvent = ({ show, handleClose, refresh, eventData }) => {
   const [eventItem, setEventItem] = useState({
-    title: "",
-    description: "",
-    startDate: new Date(),
-    endDate: new Date(),
-    budget: 0,
-    category: "Entourage",
-    typeEvent: "initiative",
-    seats: 0,
+    title: eventData?.title || "",
+    description: eventData?.description || "",
+    startDate: new Date(eventData?.startDate) || new Date(),
+    endDate: new Date(eventData?.endDate) || new Date(),
+    budget: eventData?.budget || 0,
+    category: eventData?.category || "Entourage",
+    typeEvent: eventData?.typeEvent || "initiative",
+    seats: eventData?.seats || 0,
   });
 
-  //form errors validation
   const [errors, setErrors] = useState({});
-  const [startDate, setstartDate] = useState(new Date());
-  const [endDate, setendDate] = useState(new Date());
-
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const startDateChange = (date) => {
-    setstartDate(date);
-  };
-
-  const endDateChange = (date) => {
-    setendDate(date);
-  };
+  useEffect(() => {
+    setErrors(validateValues(eventItem));
+  }, [eventItem, startDate, endDate]);
 
   const validateValues = (inputValues) => {
     let errors = {};
@@ -86,18 +78,18 @@ const AddEvent = ({ show, handleClose, refresh }) => {
     return errors;
   };
 
-  // end of form errors validation
-
   const onValueChange = (e) => {
     setEventItem({ ...eventItem, [e.target.name]: e.target.value });
     setErrors(validateValues(eventItem));
   };
 
-  useEffect(() => {
-    setErrors(validateValues(eventItem));
-  }, [eventItem, startDate, endDate]);
+  const startDateChange = (date) => {
+    setStartDate(date);
+  };
 
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const endDateChange = (date) => {
+    setEndDate(date);
+  };
 
   const handleAcceptedFiles = useCallback((acceptedFiles) => {
     const files = acceptedFiles.map((file) =>
@@ -115,33 +107,32 @@ const AddEvent = ({ show, handleClose, refresh }) => {
     );
   };
 
-  function formatBytes(bytes, decimals = 2) {
+  const formatBytes = (bytes, decimals = 2) => {
     if (bytes === 0) return "0 Bytes";
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    if (Object.keys(errors).length === 0) handleAddEvent();
   };
 
-  const handleAddEvent = async () => {
-    try {
-      eventItem.startDate = startDate;
-      eventItem.endDate = endDate;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (Object.keys(errors).length === 0) {
+      handleEditEvent();
+    }
+  };
 
-      const result = await addEvent(eventItem);
-      if (result.status === 201) {
+  const handleEditEvent = async () => {
+    try {
+      const updatedEvent = {
+        ...eventItem,
+        startDate,
+        endDate,
+      };
+
+      const result = await updateEvent(eventData._id, updatedEvent);
+      if (result.status === 200) {
         if (selectedFiles.length > 0) {
           handleUploadPhotos(result?.data.message);
         }
@@ -155,9 +146,7 @@ const AddEvent = ({ show, handleClose, refresh }) => {
 
   const handleUploadPhotos = async (id) => {
     try {
-      // Set loading state to true when upload starts
       setLoading(true);
-
       const uploadPromises = selectedFiles.map(async (file) => {
         const formData = new FormData();
         formData.append("filename", file);
@@ -168,17 +157,16 @@ const AddEvent = ({ show, handleClose, refresh }) => {
       });
 
       await Promise.all(uploadPromises);
-      // Set loading state to false when all uploads are completed
       setLoading(false);
     } catch (error) {
       alert(error.message);
-      // Set loading state to false when all uploads are completed
       setLoading(false);
     }
   };
+
   return (
     <Modal isOpen={show} toggle={handleClose} centered={true} size="xl">
-      <ModalHeader>Créer un Evènement</ModalHeader>
+      <ModalHeader>Modifier l'Evènement</ModalHeader>
       <ModalBody className="px-5 py-3">
         <Row>
           <Col lg="6">
@@ -450,11 +438,11 @@ const AddEvent = ({ show, handleClose, refresh }) => {
       <ModalFooter>
         <Button
           disabled={Object.keys(errors).length !== 0}
-          className=" btn-block cta-button"
           onClick={handleSubmit}
+          className=" btn-block cta-button"
           style={{ width: "200px" }}
         >
-          Ajouter
+          Modifier
         </Button>{" "}
         <Button
           className=" bg-slate-500"
@@ -468,10 +456,11 @@ const AddEvent = ({ show, handleClose, refresh }) => {
   );
 };
 
-AddEvent.propTypes = {
+EditEvent.propTypes = {
   handleClose: PropTypes.func,
   show: PropTypes.bool,
   refresh: PropTypes.func,
+  eventData: PropTypes.object,
 };
 
-export default AddEvent;
+export default EditEvent;
