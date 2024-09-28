@@ -8,7 +8,7 @@ import {
 } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserProfile } from "../../../service/apiUser"; // Assurez-vous que le chemin d'importation est correct
+import { getUserProfile } from "../../../service/apiUser"; // Ensure the import path is correct
 import withRouter from "../../Common/withRouter";
 
 
@@ -18,7 +18,7 @@ const ProfileMenu = ({ t }) => {
   const [menu, setMenu] = useState(false);
   const [user, setUser] = useState({
     username: "Admin",
-    profilePicture: "/path/to/default/user1.jpg", // Default image path
+    profilePicture: "/images/default-user.jpg", // Default image path
   });
   const navigate = useNavigate();
   useEffect(() => {
@@ -28,21 +28,65 @@ const ProfileMenu = ({ t }) => {
         setUser({
           username: userData.user.name || "Admin",
           profilePicture: userData.user.image
-            ? `${url}/${userData.user.image}`
-            : "/path/to/default/user1.jpg",
+            ? `http://localhost:3000/${userData.user.image}`
+            : "/images/default-user.jpg", // Default image path
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
+  
     fetchUserData();
+  
+    // Auto-logout logic
+    const authUser = JSON.parse(localStorage.getItem("authUser"));
+    if (authUser && authUser.token) {
+      const token = authUser.token;
+      const decodedToken = decodeJWT(token);
+      if (decodedToken && decodedToken.exp) {
+        const currentTime = Date.now() / 1000; // Convert current time to seconds
+        const tokenExpirationTime = decodedToken.exp; // Expiration time in seconds
+  
+        // Calculate the time remaining before the token expires
+        const timeRemaining = tokenExpirationTime - currentTime;
+  
+        // 12 hours = 43200 seconds, so we log out 12 hours before the token expires
+        const logoutTime = timeRemaining - 43200; 
+  
+        if (logoutTime > 0) {
+          // Convert the logoutTime to milliseconds for setTimeout
+          setTimeout(() => {
+            logout(); // Auto-logout function
+          }, logoutTime * 1000);
+        } else {
+          logout(); // If less than 12 hours remaining, log out immediately
+        }
+      } else {
+        logout(); // Log out if the token can't be decoded or has no expiration time
+      }
+    }
   }, []);
-
+  
+  // Function to manually decode JWT
+  const decodeJWT = (token) => {
+    try {
+      const base64Url = token.split('.')[1]; // Get the payload part of the JWT
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+  
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error("Failed to decode JWT:", error);
+      return null; // Return null on failure
+    }
+  };
+  
   const logout = () => {
-    localStorage.removeItem("authUser"); // Supprimer le token du localStorage
+    localStorage.removeItem("authUser"); // Remove the token from localStorage
     localStorage.removeItem("role");
-    navigate("/login"); // Rediriger vers la page de connexion
+    navigate("/login"); // Redirect to the login page
   };
 
   return (

@@ -33,9 +33,14 @@ const CardContact = ({ user }) => {
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000"; // Adjust the URL based on your environment
+  const defaultImage = `${baseUrl}/public/images/userImage.png`;
+
   const userName = userData?.name ?? "Unknown";
   const userColor = user?.color ?? "primary";
-  const userImage = userData?.image ?? "public/images/userImage.png";
+  const userImage = userData?.image
+    ? `${baseUrl}/${userData.image}`
+    : defaultImage;
   const userEmail = userData?.email ?? "No Email";
   const userTel = userData?.tel ?? "No Phone";
 
@@ -134,7 +139,7 @@ const CardContact = ({ user }) => {
     <Col xl="3" sm="6">
       <Card className="text-center">
         <CardBody>
-          {userImage === "public/images/userImage.png" ? (
+          {userImage === defaultImage ? (
             <div className="avatar-sm mx-auto mb-4">
               <span
                 className={`avatar-title rounded-circle bg-soft bg-${userColor} text-${userColor} font-size-16`}
@@ -148,6 +153,7 @@ const CardContact = ({ user }) => {
                 className="rounded-circle avatar-sm"
                 src={userImage}
                 alt={userName}
+                style={{ width: "50px", height: "50px" }}
               />
             </div>
           )}
@@ -213,6 +219,7 @@ const CardContact = ({ user }) => {
         </CardFooter>
       </Card>
 
+      {/* Modal for editing user */}
       <Modal isOpen={modal} toggle={toggle} className="modal-dialog-centered">
         <ModalHeader toggle={toggle} tag="h4">
           {isEdit ? "Edit User" : "Add User"}
@@ -297,6 +304,7 @@ const CardContact = ({ user }) => {
         </ModalBody>
       </Modal>
 
+      {/* Modal for password change */}
       <Modal isOpen={passwordModal} toggle={togglePasswordModal} className="modal-dialog-centered">
         <ModalHeader toggle={togglePasswordModal} tag="h4">
           Changer mot de passe
@@ -391,6 +399,7 @@ const CardContact = ({ user }) => {
         </ModalBody>
       </Modal>
 
+      {/* Modal for block/unblock confirmation */}
       <Modal isOpen={confirmationModal} toggle={toggleConfirmationModal} className="modal-dialog-centered">
         <ModalHeader toggle={toggleConfirmationModal}>
           Confirmation

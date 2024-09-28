@@ -22,7 +22,6 @@ const Settings = ({ popularpost }) => {
     jobTitle: "Membre CNOT", // Default job title
   });
 
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -51,7 +50,6 @@ const Settings = ({ popularpost }) => {
               <Col xs={7}>
                 <div className="p-4 text-primary">
                   <h5 className="text-primary">Bienvenue !</h5>
-                  <p>Connectez pour continuer</p>
                 </div>
               </Col>
               <Col className="align-self-end col-5">

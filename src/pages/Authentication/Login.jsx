@@ -17,6 +17,8 @@ import {
 import Select, { components } from "react-select";
 import profile from "../../../public/assets/images/4.png";
 import logo from "../../assets/images/CNOT_logo.svg";
+import Seclogo from "../../../public/assets/images/logo/thunder.png";
+
 import axios from "axios";
 import { getRoleMCName, getRoleFName } from "../../service/apiUser"; // Adjust the import path according to your project structure
 
@@ -170,8 +172,8 @@ const Login = () => {
   };
 
   const roleOptions = [
-    { value: "F", label: "Federation" },
-    { value: "MC", label: "Membre CNOT" },
+    { value: "F", label: "Féderation" },
+    { value: "MC", label: "CNOT" },
   ];
 
   const customStyles = {
@@ -230,21 +232,38 @@ const Login = () => {
                   </Row>
                 </div>
                 <CardBody className="pt-0">
-                  <div>
-                    <Link to="/" className="auth-logo-light">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logo}
-                            alt=""
-                            className=""
-                            height="35"
-                            width="35"
-                          />
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
+                <div className="auth-logo-light d-flex align-items-center">
+  <Link to="/" className="auth-logo-light position-relative">
+    <div className="avatar-md profile-user-wid mb-4">
+      <span className="avatar-title rounded-circle bg-light">
+        <img
+          src={logo}
+          alt=""
+          className=""
+          height="35"
+          width="35"
+        />
+      </span>
+    </div>
+  </Link>
+
+  {/* Second Circle, slightly overlapping the first */}
+  <Link to="/" className="auth-logo-light position-relative" style={{ marginLeft: '-15px' }}> {/* Negative margin to create overlap */}
+    <div className="avatar-md profile-user-wid mb-4">
+      <span className="avatar-title rounded-circle bg-light">
+        <img
+          src={Seclogo}
+          alt="Second logo"
+          className=""
+          height="75"
+          width="75"
+        />
+      </span>
+    </div>
+  </Link>
+</div>
+
+
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
@@ -379,17 +398,7 @@ const Login = () => {
                 </CardBody>
               </Card>
               <div className="mt-5 text-center">
-                <p>
-                  Vous n'avez pas un compte ?{" "}
-                  <Link
-                    to="/register"
-                    className="font-weight-medium text-primary"
-                    style={{ borderRadius: "25px" }}
-                  >
-                    {" "}
-                    Créer un compte
-                  </Link>{" "}
-                </p>
+                
                 <p>
                   © {new Date().getFullYear()} . Conçu avec{" "}
                   <i className="mdi mdi-heart text-danger" /> par les étudiants

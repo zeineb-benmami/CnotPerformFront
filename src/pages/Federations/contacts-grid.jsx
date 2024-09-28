@@ -83,7 +83,7 @@ const ContactsGrid = () => {
                 <CardContact user={user} key={user._id} />
               ))
             ) : (
-              <p className="text-center">No users found</p>
+              <p className="text-center">Aucun utilisateur trouvé</p>
             )}
           </Row>
 
