@@ -52,6 +52,15 @@ import MailAccount from "../pages/Email/mailAccount";
 import DemandeBourse from "../pages/Bourse/DemandeBourse";
 import BourseList from "../pages/Bourse/BourseList";
 import BourseListFront from "../pages/Bourse/BourseListFront";
+import ListAi from "../pages/AI/listAi";
+import AthBlessure from "../pages/AI/Athletisme/AthBlessure";
+import AthPerformance from "../pages/AI/Athletisme/AthPerformance";
+import BoxeBlessure from "../pages/AI/Boxe/BoxeBlessure";
+import BoxePerformance from "../pages/AI/Boxe/BoxePerformance";
+import NatationBlessure from "../pages/AI/Natation/NatationBlessure";
+import NatationPerformance from "../pages/AI/Natation/NatationPerformance";
+import TaekwondoBlessure from "../pages/AI/Taekwondo/TaekwondoBlessure";
+import TaekwondoPerformance from "../pages/AI/Taekwondo/TaekwondoPerformance";
 
 const authProtectedRoutes = [
   {
@@ -173,6 +182,96 @@ const publicRoutes = [
       <>
         <Navbar_Page isSimple={false} />
         <BourseListFront />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/ai",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <ListAi />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/athletismeblessure",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <AthBlessure />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/athletismeperformance",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <AthPerformance />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/boxeblessure",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <BoxeBlessure />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/boxeperformance",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <BoxePerformance />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/natationblessure",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <NatationBlessure />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/natationperformance",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <NatationPerformance />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/taekwondoblessure",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <TaekwondoBlessure />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/taekwondoperformance",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <TaekwondoPerformance />
         <Footer />
       </>
     ),

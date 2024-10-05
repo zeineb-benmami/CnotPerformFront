@@ -185,7 +185,7 @@ const Navbar_Page = (props) => {
               </Nav>
             )}
             <div className="ms-lg-2">
-              <Link to="#" style={{ marginRight: "10px" }}>
+              <Link to="/ai" style={{ marginRight: "10px" }}>
                 <Button
                   color="primary"
                   className="font-16 btn-block cta-button"
