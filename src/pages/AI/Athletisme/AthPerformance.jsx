@@ -69,7 +69,7 @@ function AthPerformance() {
             result_high_jump: Yup.number().required('Le saut en hauteur est obligatoire'),
             result_shot_put: Yup.number().required('Le lancer de poids est obligatoire'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {
                 const dateObj = new Date(values.date_of_last_competition);
                 const dateInt = parseInt(
@@ -84,6 +84,7 @@ function AthPerformance() {
                 const response = await athletismePerformPrediction(values)
                 setResult(response.data.prediction); // Display the prediction message
                 toggle();
+                resetForm();
             } catch (error) {
                 console.error('Submission error:', error);
             }

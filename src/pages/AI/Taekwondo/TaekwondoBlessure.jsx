@@ -11,19 +11,26 @@ import {
     Input,
     FormFeedback,
     Label,
+    Button, 
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from 'formik';
 import blessureIcon from "../../../assets/images/icon/blessure.png";
 import axios from 'axios';
+import { taekwondoInjuryPrediction } from '../../../service/aiService';
 
 function TaekwondoBlessure() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [predictionResult, setPredictionResult] = useState(null);
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+    const [result, setResult] = useState(null);
 
     const initialValues = {
-        sport: 'Taekwondo', // Static value for sport
         nr_sessions: '',
         nr_rest_days: '',
         total_hours_training: '',
@@ -50,7 +57,6 @@ function TaekwondoBlessure() {
     const validation = useFormik({
         initialValues: initialValues,
         validationSchema: Yup.object().shape({
-            sport: Yup.string().required('Sport is required'),
             nr_sessions: Yup.number()
                 .required('Number of sessions is required')
                 .min(1, 'Must be at least 1'),
@@ -115,36 +121,12 @@ function TaekwondoBlessure() {
                 .required('Maximum recovery is required')
                 .min(0, 'Cannot be negative'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {
-                const response = await axios.post("http://localhost:5000/predictInjuryTaekwondo", {
-                    features: [
-                        values.sport,
-                        values.nr_sessions,
-                        values.nr_rest_days,
-                        values.total_hours_training,
-                        values.max_hours_one_day,
-                        values.total_hours_high_intensity,
-                        values.nr_tough_sessions,
-                        values.nr_days_with_interval_session,
-                        values.total_hours_moderate_intensity,
-                        values.max_hours_moderate_intensity_one_day,
-                        values.max_hours_high_intensity_one_day,
-                        values.total_hours_alternative_training,
-                        values.nr_strength_trainings,
-                        values.avg_exertion,
-                        values.min_exertion,
-                        values.max_exertion,
-                        values.avg_training_success,
-                        values.min_training_success,
-                        values.max_training_success,
-                        values.avg_recovery,
-                        values.min_recovery,
-                        values.max_recovery,
-                    ]
-                });
-                
-                setPredictionResult(response.data.prediction); // Set prediction result from API response
+                const response = await taekwondoInjuryPrediction(values);
+                setResult(response.data.prediction); // Assuming prediction returns a numerical value
+                toggle();// Set prediction result from API response
+                resetForm();
             } catch (error) {
                 console.error('Submission error:', error);
             }
@@ -194,17 +176,6 @@ function TaekwondoBlessure() {
                                                 validation.handleSubmit();
                                             }}
                                         >
-
-                                            <div className="mb-3">
-                                                <Label className="form-label">Sport</Label>
-                                                <Input
-                                                    name="sport"
-                                                    className="form-control"
-                                                    type="text"
-                                                    value={validation.values.sport}
-                                                    readOnly // Read-only since it's static
-                                                />
-                                            </div>
 
                                             <div className="mb-3">
                                                 <Label className="form-label">Nombre de sessions</Label>
@@ -471,7 +442,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Effort Moyen</Label>
+                                                <Label className="form-label">Effort Moyen ( 1 - 10 )</Label>
                                                 <Input
                                                     name="avg_exertion"
                                                     className="form-control"
@@ -493,7 +464,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Effort Minimum</Label>
+                                                <Label className="form-label">Effort Minimum ( 1 - 10 )</Label>
                                                 <Input
                                                     name="min_exertion"
                                                     className="form-control"
@@ -515,7 +486,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Effort Maximum</Label>
+                                                <Label className="form-label">Effort Maximum ( 1 - 10 )</Label>
                                                 <Input
                                                     name="max_exertion"
                                                     className="form-control"
@@ -537,7 +508,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label"> Succès d'Entraînement Moyen</Label>
+                                                <Label className="form-label"> Succès d'Entraînement Moyen ( 1 - 10 )</Label>
                                                 <Input
                                                     name="avg_training_success"
                                                     className="form-control"
@@ -559,7 +530,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Succès d'Entraînement Minimum</Label>
+                                                <Label className="form-label">Succès d'Entraînement Minimum ( 1 - 10 )</Label>
                                                 <Input
                                                     name="min_training_success"
                                                     className="form-control"
@@ -581,7 +552,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Succès d'Entraînement Maximum</Label>
+                                                <Label className="form-label">Succès d'Entraînement Maximum ( 1 - 10 )</Label>
                                                 <Input
                                                     name="max_training_success"
                                                     className="form-control"
@@ -603,7 +574,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Récupération Moyenne</Label>
+                                                <Label className="form-label">Récupération Moyenne ( 1 - 10 )</Label>
                                                 <Input
                                                     name="avg_recovery"
                                                     className="form-control"
@@ -625,7 +596,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Récupération Minimum</Label>
+                                                <Label className="form-label">Récupération Minimum ( 1 - 10 )</Label>
                                                 <Input
                                                     name="min_recovery"
                                                     className="form-control"
@@ -647,7 +618,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Récupération Maximum</Label>
+                                                <Label className="form-label">Récupération Maximum ( 1 - 10 )</Label>
                                                 <Input
                                                     name="max_recovery"
                                                     className="form-control"
@@ -668,15 +639,14 @@ function TaekwondoBlessure() {
                                                 ) : null}
                                             </div>
 
-                                            <div className="mb-3">
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary w-100"
-                                                >
-                                                    Submit
-                                                </button>
-                                            </div>
-                                            {predictionResult && <div className="alert alert-info">{predictionResult}</div>}
+                                                <div className="mt-4 d-grid">
+                                                    <button
+                                                        className="btn btn-primary btn-block"
+                                                        type="submit"
+                                                    >
+                                                        Prédire
+                                                    </button>
+                                                </div>
                                         </Form>
                                     </div>
                                 </CardBody>
@@ -685,6 +655,43 @@ function TaekwondoBlessure() {
                     </Row>
                 </Container>
             </section>
+            <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Résultat</ModalHeader>
+        <ModalBody>
+          {result == 0 ? 
+          (<div className="text-center p-4">
+            <iframe 
+              src="https://lottie.host/embed/edac2dcd-33b9-4c08-b15a-56b68004a0d3/g6YcIsXoZ7.json" 
+              className="mx-auto mb-4" 
+              style={{ width: '300px', height: '300px', border: 'none' }}
+              title="Animation"
+            ></iframe>
+            <div className="alert alert-success rounded-3 shadow-sm">
+              <h4 className="alert-heading">Aucun risque de blessure détecté</h4>
+              <p className="mb-0">Continuez à vous entraîner en toute sécurité.</p>
+            </div>
+          </div>
+           ) 
+          : (<div className="text-center p-4">
+            <iframe 
+              src="https://lottie.host/embed/2f874dbb-6e8c-4c7e-b955-9b88be39f7af/ziS3nsTvG8.json" 
+              className="mx-auto mb-4" 
+              style={{ width: '300px', height: '300px', border: 'none' }}
+              title="Animation"
+            ></iframe>
+            <div className="alert alert-danger rounded-3 shadow-sm">
+              <h4 className="alert-heading">Attention, une blessure est probable</h4>
+              <p className="mb-0">Prenez les précautions nécessaires.</p>
+            </div>
+          </div> )
+          }
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
         </React.Fragment>
     );
 }

@@ -70,8 +70,7 @@ function NatationPerformance() {
             InjuryHistory: Yup.string().oneOf(Object.values(enumInjuryHistory)).required('Injury History is required'),
             CompetitionDate: Yup.date().required('Competition Date is required'),  // Add validation for Competition Date
         }),
-        onSubmit: async (values) => {
-            console.log(values);
+        onSubmit: async (values, { resetForm }) => {
             try {
                 // Format the Competition Date to YYYY-MM-DD
                 const competitionDate = values.CompetitionDate.toISOString().split('T')[0];
@@ -95,6 +94,7 @@ function NatationPerformance() {
                 const response = await natationPerformPrediction(data)
                 setResult(response.data.prediction);
                 toggle();
+                resetForm();
             } catch (error) {
                 console.error("Error while predicting:", error);
             }

@@ -58,12 +58,13 @@ function NatationBlessure() {
     const validation = useFormik({
         initialValues: initialValues,
 
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {              
                                 // Call the API
                                 const response = await natationInjuryPrediction(values)
                                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
                                 toggle();
+                                resetForm();
             } catch (error) {
                 console.error('Submission error:', error);
             }

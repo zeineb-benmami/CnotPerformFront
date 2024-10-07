@@ -2,12 +2,12 @@ import axios from "axios";
 
 //Boxing
 export const boxInjuryPrediction = async (values) => {
-    const response = await axios.post('http://localhost:5000/predictInjBoxing', values);
+    const response = await axios.post('http://localhost:5002/predictInjBoxing', values);
     return response;
   };
 
   export const boxPerformPrediction = async (data) => {
-    const response = await axios.post('http://localhost:5000/predictPerfBoxing', data);
+    const response = await axios.post('http://localhost:5003/predictPerfBoxing', data);
     console.log(response);
     
     return response;
@@ -32,5 +32,16 @@ export const athletismePerformPrediction = async (data) => {
 
 export const athletismeInjuryPrediction = async (data) => {
   const response = await axios.post('http://localhost:5000/predict', data);  
+  return response;
+};
+
+//Athletisme
+export const taekwondoPerformPrediction = async (data) => {
+  const response = await axios.post('http://localhost:5007/predictTaekwondoPerformance', data);
+  return response;
+};
+
+export const taekwondoInjuryPrediction = async (data) => {
+  const response = await axios.post('http://localhost:5006/predictInjuryTaekwondo', data);  
   return response;
 };

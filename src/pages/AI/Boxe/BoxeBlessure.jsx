@@ -88,12 +88,13 @@ function BoxeBlessure() {
                 max_recovery : Yup.number()
                 .required('Récupération maximale est obligatoire'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {              
                                 // Call the API
                                 const response = await boxInjuryPrediction(values);
                                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
                                 toggle();
+                                resetForm();
                 
             } catch (error) {
                 console.error('Submission error:', error);

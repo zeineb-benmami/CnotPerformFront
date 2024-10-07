@@ -79,7 +79,7 @@ function BoxePerformance() {
             InjuryHistory: Yup.string().oneOf(Object.values(enumInjuryHistory)).required('Injury History is required'),
             PunchesLanded: Yup.number().integer().required('Punches Landed is required'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {              
                 const data = {
                     Sex: values.Sex,
@@ -99,6 +99,7 @@ function BoxePerformance() {
                                 const response = await boxPerformPrediction(data);                                
                                 setResult(response.data.prediction);
                                 toggle();
+                                resetForm();
                 
             } catch (error) {
                 console.error('Submission error:', error);

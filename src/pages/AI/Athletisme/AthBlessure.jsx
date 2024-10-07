@@ -65,12 +65,13 @@ function AthBlessure() {
             maxKmZ3_4OneDay: Yup.number()
                 .required('Distance maximale parcourue dans les zones Z3 et Z4 en une journée d’entraînement (en km) est obligatoire'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {              
                                 // Call the API
                                 const response = await athletismeInjuryPrediction(values);
                                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
                                 toggle();
+                                resetForm();
                 
             } catch (error) {
                 console.error('Submission error:', error);

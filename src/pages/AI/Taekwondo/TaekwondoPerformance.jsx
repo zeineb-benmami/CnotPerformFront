@@ -11,21 +11,31 @@ import {
     Input,
     FormFeedback,
     Label,
+    Button, 
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter
 } from "reactstrap";
 import { useFormik } from 'formik';
 import predictionIcon from "../../../assets/images/icon/prediction.png";
 import axios from 'axios'; // Import axios for making API requests
+import { taekwondoPerformPrediction } from '../../../service/aiService';
+import { data } from 'autoprefixer';
 
 function TaekwondoPerformance() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+    const [result, setResult] = useState(null);
     
     // Initial values for the form
     const initialValues = {
-        sex: '',
-        age: '',
-        height: '',
-        weight: '',
+        Sex: '',
+        Age: '',
+        Height: '',
+        Weight: '',
         weightClass: '',
         pointsScored: '',
         techniquePoints: '',
@@ -38,10 +48,10 @@ function TaekwondoPerformance() {
     const validation = useFormik({
         initialValues: initialValues,
         validationSchema: Yup.object().shape({
-            sex: Yup.string().required('Le sexe est obligatoire'),
-            age: Yup.number().required('L\'âge est obligatoire').positive().integer(),
-            height: Yup.number().required('La taille est obligatoire').positive(),
-            weight: Yup.number().required('Le poids est obligatoire').positive(),
+            Sex: Yup.string().required('Le sexe est obligatoire'),
+            Age: Yup.number().required('L\'âge est obligatoire').positive().integer(),
+            Height: Yup.number().required('La taille est obligatoire').positive(),
+            Weight: Yup.number().required('Le poids est obligatoire').positive(),
             weightClass: Yup.string().required('La catégorie de poids est obligatoire'),
             pointsScored: Yup.number().required('Les points marqués sont obligatoires').positive().integer(),
             techniquePoints: Yup.number().required('Les points techniques sont obligatoires').positive().integer(),
@@ -49,33 +59,24 @@ function TaekwondoPerformance() {
             sleepHours: Yup.number().required('Les heures de sommeil sont obligatoires').positive(),
             injuryHistory: Yup.number().required('L\'historique des blessures est obligatoire').oneOf([0, 1], 'Doit être 0 ou 1')
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {
-                // Prepare the data for API consumption
-                const data = {
-                    features: [
-                        values.sex,
-                        values.age,
-                        values.height,
-                        values.weight,
-                        values.weightClass,
-                        values.pointsScored,
-                        values.techniquePoints,
-                        values.nutritionQualityScore,
-                        values.sleepHours,
-                        values.injuryHistory
-                    ]
-                };
-
-                // Make the API call
-                const response = await axios.post("http://localhost:5000/predictPerformanceTaekwondo", data);
-                
-                // Handle the response (for example, navigate or show a message)
-                console.log('Prediction Response:', response.data);
-                alert(`Prediction Result: ${response.data.prediction ? 'Medal' : 'No Medal'}`);
-                
-                // Navigate or perform other actions based on the response
-                navigate('/mybourses');
+                const data ={
+                    Sex : values.Sex,
+                    Age : values.Age,
+                    Weight: values.Weight,
+                    Height : values.Height,
+                    "Weight Class": values.weightClass,
+                    "Points Scored": values.pointsScored,
+                    "Technique Points": values.techniquePoints,
+                    "Nutrition Quality Score": values.nutritionQualityScore,
+                    "Sleep Hours": values.sleepHours,
+                    "Injury History": values.injuryHistory
+                }
+                const response = await taekwondoPerformPrediction(data);
+                setResult(response.data.prediction); // Assuming prediction returns a numerical value
+                toggle();
+                resetForm();
             } catch (error) {
                 console.error('Submission error:', error);
                 alert('Erreur lors de la soumission des données.');
@@ -130,69 +131,69 @@ function TaekwondoPerformance() {
                                             <div className="mb-3">
                                                 <Label className="form-label">Sexe</Label>
                                                 <Input
-                                                    name="sex"
-                                                    className="form-control"
-                                                    placeholder="Entrer le sexe (Male/Female)"
-                                                    type="text"
+                                                    name="Sex"
+                                                    type="select"
                                                     onChange={validation.handleChange}
                                                     onBlur={validation.handleBlur}
-                                                    value={validation.values.sex || ""}
-                                                    invalid={validation.touched.sex && validation.errors.sex ? true : false}
-                                                />
-                                                {validation.touched.sex && validation.errors.sex ? (
-                                                    <FormFeedback type="invalid">{validation.errors.sex}</FormFeedback>
-                                                ) : null}
+                                                    value={validation.values.Sex || ""}
+                                                    invalid={validation.touched.Sex && validation.errors.Sex}
+                                                >
+                                                    <option value="">Sélectionnez</option>
+                                                    <option value="Male">Masculin</option>
+                                                    <option value="Female">Féminin</option>
+                                                </Input>
+                                                <FormFeedback>{validation.errors.Sex}</FormFeedback>
                                             </div>
 
                                             <div className="mb-3">
                                                 <Label className="form-label">Âge</Label>
                                                 <Input
-                                                    name="age"
+                                                    name="Age"
                                                     className="form-control"
                                                     placeholder="Entrer l'âge"
                                                     type="number"
                                                     onChange={validation.handleChange}
                                                     onBlur={validation.handleBlur}
-                                                    value={validation.values.age || ""}
-                                                    invalid={validation.touched.age && validation.errors.age ? true : false}
+                                                    value={validation.values.Age || ""}
+                                                    invalid={validation.touched.Age && validation.errors.Age ? true : false}
                                                 />
-                                                {validation.touched.age && validation.errors.age ? (
-                                                    <FormFeedback type="invalid">{validation.errors.age}</FormFeedback>
+                                                {validation.touched.Age && validation.errors.Age ? (
+                                                    <FormFeedback type="invalid">{validation.errors.Age}</FormFeedback>
                                                 ) : null}
                                             </div>
 
                                             <div className="mb-3">
                                                 <Label className="form-label">Taille (en mètres)</Label>
                                                 <Input
-                                                    name="height"
+                                                    name="Height"
                                                     className="form-control"
                                                     placeholder="Entrer la taille"
                                                     type="number"
                                                     step="0.01"
                                                     onChange={validation.handleChange}
                                                     onBlur={validation.handleBlur}
-                                                    value={validation.values.height || ""}
-                                                    invalid={validation.touched.height && validation.errors.height ? true : false}
+                                                    value={validation.values.Height || ""}
+                                                    invalid={validation.touched.Height && validation.errors.Height ? true : false}
                                                 />
-                                                {validation.touched.height && validation.errors.height ? (
-                                                    <FormFeedback type="invalid">{validation.errors.height}</FormFeedback>
+                                                {validation.touched.Height && validation.errors.Height ? (
+                                                    <FormFeedback type="invalid">{validation.errors.Height}</FormFeedback>
                                                 ) : null}
                                             </div>
 
                                             <div className="mb-3">
                                                 <Label className="form-label">Poids (en kg)</Label>
                                                 <Input
-                                                    name="weight"
+                                                    name="Weight"
                                                     className="form-control"
                                                     placeholder="Entrer le poids"
                                                     type="number"
                                                     onChange={validation.handleChange}
                                                     onBlur={validation.handleBlur}
-                                                    value={validation.values.weight || ""}
-                                                    invalid={validation.touched.weight && validation.errors.weight ? true : false}
+                                                    value={validation.values.Weight || ""}
+                                                    invalid={validation.touched.Weight && validation.errors.Weight ? true : false}
                                                 />
-                                                {validation.touched.weight && validation.errors.weight ? (
-                                                    <FormFeedback type="invalid">{validation.errors.weight}</FormFeedback>
+                                                {validation.touched.Weight && validation.errors.Weight ? (
+                                                    <FormFeedback type="invalid">{validation.errors.Weight}</FormFeedback>
                                                 ) : null}
                                             </div>
 
@@ -202,12 +203,19 @@ function TaekwondoPerformance() {
                                                     name="weightClass"
                                                     className="form-control"
                                                     placeholder="Entrer la catégorie de poids"
-                                                    type="text"
+                                                    type="select"
                                                     onChange={validation.handleChange}
                                                     onBlur={validation.handleBlur}
                                                     value={validation.values.weightClass || ""}
                                                     invalid={validation.touched.weightClass && validation.errors.weightClass ? true : false}
-                                                />
+                                                >
+                                                    <option value="">Sélectionnez</option>
+                                                    <option value="Finweight">Poids fin</option>
+                                                    <option value="Lightweight">Poids Léger</option>
+                                                    <option value="Welterweight">Poids welter</option>
+                                                    <option value="Featherweight">Poids plume</option>
+                                                    <option value="Heavyweight">Poids lourd</option>
+                                                </Input>
                                                 {validation.touched.weightClass && validation.errors.weightClass ? (
                                                     <FormFeedback type="invalid">{validation.errors.weightClass}</FormFeedback>
                                                 ) : null}
@@ -284,7 +292,7 @@ function TaekwondoPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Historique des Blessures (0 ou 1)</Label>
+                                                <Label className="form-label">Historique des Blessures (1 Mineur : 2 grave pour blessure, 0 pour aucune blessure)</Label>
                                                 <Input
                                                     name="injuryHistory"
                                                     className="form-control"
@@ -305,7 +313,7 @@ function TaekwondoPerformance() {
                                                     className="btn btn-primary btn-block"
                                                     type="submit"
                                                 >
-                                                    Prédire la Performance
+                                                    Prédire
                                                 </button>
                                             </div>
                                         </Form>
@@ -316,6 +324,43 @@ function TaekwondoPerformance() {
                     </Row>
                 </Container>
             </section>
+            <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Résultat</ModalHeader>
+        <ModalBody>
+          {result == 0 ? 
+          (<div className="text-center p-4">
+            <iframe 
+              src="https://lottie.host/embed/edac2dcd-33b9-4c08-b15a-56b68004a0d3/g6YcIsXoZ7.json" 
+              className="mx-auto mb-4" 
+              style={{ width: '300px', height: '300px', border: 'none' }}
+              title="Animation"
+            ></iframe>
+            <div className="alert alert-success rounded-3 shadow-sm">
+              <h4 className="alert-heading">Aucun risque de blessure détecté</h4>
+              <p className="mb-0">Continuez à vous entraîner en toute sécurité.</p>
+            </div>
+          </div>
+           ) 
+          : (<div className="text-center p-4">
+            <iframe 
+              src="https://lottie.host/embed/2f874dbb-6e8c-4c7e-b955-9b88be39f7af/ziS3nsTvG8.json" 
+              className="mx-auto mb-4" 
+              style={{ width: '300px', height: '300px', border: 'none' }}
+              title="Animation"
+            ></iframe>
+            <div className="alert alert-danger rounded-3 shadow-sm">
+              <h4 className="alert-heading">Attention, une blessure est probable</h4>
+              <p className="mb-0">Prenez les précautions nécessaires.</p>
+            </div>
+          </div> )
+          }
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
         </React.Fragment>
     );
 }
