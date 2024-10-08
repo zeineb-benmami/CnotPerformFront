@@ -52,7 +52,6 @@ import MailAccount from "../pages/Email/mailAccount";
 import DemandeBourse from "../pages/Bourse/DemandeBourse";
 import BourseList from "../pages/Bourse/BourseList";
 import BourseListFront from "../pages/Bourse/BourseListFront";
-import ListAi from "../pages/AI/listAi";
 import AthBlessure from "../pages/AI/Athletisme/AthBlessure";
 import AthPerformance from "../pages/AI/Athletisme/AthPerformance";
 import BoxeBlessure from "../pages/AI/Boxe/BoxeBlessure";
@@ -61,6 +60,8 @@ import NatationBlessure from "../pages/AI/Natation/NatationBlessure";
 import NatationPerformance from "../pages/AI/Natation/NatationPerformance";
 import TaekwondoBlessure from "../pages/AI/Taekwondo/TaekwondoBlessure";
 import TaekwondoPerformance from "../pages/AI/Taekwondo/TaekwondoPerformance";
+import ListAi from "../pages/AI/ListAi";
+import PowerBi from "../pages/AI/Dashboard";
 
 const authProtectedRoutes = [
   {
@@ -187,11 +188,21 @@ const publicRoutes = [
     ),
   },
   {
-    path: "/ai",
+    path: "/prediction",
     component: (
       <>
         <Navbar_Page isSimple={false} />
         <ListAi />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/tableaudebord",
+    component: (
+      <>
+        <Navbar_Page isSimple={false} />
+        <PowerBi />
         <Footer />
       </>
     ),

@@ -220,13 +220,7 @@ const CardUser = ({ popularpost, dataColors }) => {
 
             <hr className="mb-4" />
             <div id="area-chart" dir="ltr">
-              <ReactApexChart
-                options={options}
-                series={series}
-                type="area"
-                height={350}
-                className="apex-charts"
-              />
+            <iframe title="dashbord final - Copie" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=881ea504-39e9-4adb-a376-334e19c8d459&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730" frameborder="0" allowFullScreen="true"></iframe>
             </div>
           </CardBody>
         </Card>

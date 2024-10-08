@@ -171,6 +171,28 @@ function NatationBlessure() {
                                                 <div className="mb-3">
                                                     <Label className="form-label">Kilomètres totaux</Label>
                                                     <Input
+                                                        name="total_kms"
+                                                        className="form-control"
+                                                        type="number"
+                                                        onChange={validation.handleChange}
+                                                        onBlur={validation.handleBlur}
+                                                        value={validation.values.total_kms || ""}
+                                                        invalid={
+                                                            validation.touched.total_kms && validation.errors.total_kms
+                                                                ? true
+                                                                : false
+                                                        }
+                                                    />
+                                                    {validation.touched.total_kms && validation.errors.total_kms ? (
+                                                        <FormFeedback type="invalid">
+                                                            {validation.errors.total_kms}
+                                                        </FormFeedback>
+                                                    ) : null}
+                                                </div>
+ 
+                                                <div className="mb-3">
+                                                    <Label className="form-label">La distance maximale parcourue en une seule journée de course</Label>
+                                                    <Input
                                                         name="max_km_one_day"
                                                         className="form-control"
                                                         type="number"

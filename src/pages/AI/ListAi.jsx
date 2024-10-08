@@ -80,6 +80,7 @@ function ListAi() {
           <div className="glow-circle right"></div>
         </div>
         <div className="container mx-auto px-4" style={{ zIndex: 1 }}>
+          {/*<iframe title="dashbord final - Copie 1" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=1e06cbdf-c229-4f38-a6c9-ebe14b81f40c&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730" frameborder="0" allowFullScreen="true"></iframe> */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {cardsData.map((card, index) => (
               <Card
