@@ -16,8 +16,9 @@ import { Link, useNavigate } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
 import ProfileMenu1 from "../../../components/CommonForBoth/TopbarDropdown/ProfileMenu1";
 import logo from "../../../assets/images/CNOT_logo.svg";
-import Seclogo from "../../../../public/assets/images/logo/thunder.png";
+import Seclogo from "../../../../public/assets/images/logo/cnotperformicon.png";
 import io from 'socket.io-client';
+import IADropdownMenu from "../../../components/CommonForBoth/TopbarDropdown/IADropdownMenu ";
 
 //Import Images
 
@@ -185,14 +186,7 @@ const Navbar_Page = (props) => {
               </Nav>
             )}
             <div className="ms-lg-2">
-              <Link to="#" style={{ marginRight: "10px" }}>
-                <Button
-                  color="primary"
-                  className="font-16 btn-block cta-button"
-                >
-                  IA
-                </Button>
-              </Link>
+              <IADropdownMenu />
               {isLoggedIn ? (
                 <ProfileMenu1 />
               ) : (

@@ -81,9 +81,8 @@ function BourseListFront() {
 
 
   return (
-    <section className="offer-section">
-      <h2>My Bourses</h2>
-      <div className='container'>
+    <section className="offer-section mt-5">
+      <div className='container mt-5'>
         {bourses.length === 0 && <h1>Vous n'avez aucune demande de bourse</h1>}
         {bourses.reverse().map((bourse, index) => (
     <Card className="mb-3 border-0 shadow-sm bg-dark text-white" key={index}>

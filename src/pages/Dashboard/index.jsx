@@ -53,9 +53,6 @@ const index = () => {
             <Settings popularpost={popularpost} />
           </Row>
           <Row>
-            <Posts />
-            <Comments />
-            <Activity />
           </Row>
           <Row>
             {" "}

@@ -15,6 +15,7 @@ import admin from "../../assets/images/icon/administration.png";
 import entourage from "../../assets/images/icon/entourage.png";
 import cnot from "../../../public/assets/images/logo/CNOT_icon.png"
 import { getUserData } from '../../service/apiUser';
+import SommeModal from './SommeModal';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -31,6 +32,7 @@ function BourseCard({ bourses, fetchBourses }) {
 
   const [modal, setModal] = useState(false);
   const [modalMontant, setModalMontant] = useState(false);
+  const [modalSomme, setModalSomme] = useState(false);
   const [selectedBourse, setSelectedBourse] = useState(null);
   const [showRapportFinan, setShowRapportFinan] = useState(true);
   const [showRapportTech, setShowRapportTech] = useState(false);
@@ -42,6 +44,7 @@ function BourseCard({ bourses, fetchBourses }) {
     setModal(!modal);
   };
   const toggleMontant = () => setModalMontant(!modalMontant);
+  const toggleSomme = () => setModalSomme(!modalSomme);
 
   function convertToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -214,6 +217,12 @@ function BourseCard({ bourses, fetchBourses }) {
                     }}>
                       <i className='bx bx-file-find font-size-16 me-1'></i> Afficher les rapports
                     </DropdownItem>
+                    <DropdownItem onClick={() => {
+                      toggleSomme();
+                      setSelectedBourse(bourse);
+                    }}>
+                      <i className='bx bx-wallet font-size-16 me-1'></i> Sommes déja accordées
+                    </DropdownItem>
                     {bourse.status === "attente" && (
                       <>
                     <DropdownItem onClick={async () => {
@@ -326,6 +335,7 @@ function BourseCard({ bourses, fetchBourses }) {
         </ModalFooter>
       </Modal>
       <ModalMontantAccorde modal={modalMontant} toggle={toggleMontant} id={selectedBourse?._id}/>
+      <SommeModal modal={modalSomme} toggle={toggleSomme} federation={selectedBourse?.Federation_Conserne._id} nomFederation={selectedBourse?.Federation_Conserne.name} />
     </React.Fragment>
   );
 }
