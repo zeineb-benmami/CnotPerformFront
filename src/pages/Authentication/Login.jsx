@@ -17,7 +17,7 @@ import {
 import Select, { components } from "react-select";
 import profile from "../../../public/assets/images/4.png";
 import logo from "../../assets/images/CNOT_logo.svg";
-import Seclogo from "../../../public/assets/images/logo/thunder.png";
+import Seclogo from "../../../public/assets/images/logo/cnotperformicon.png";
 
 import axios from "axios";
 import { getRoleMCName, getRoleFName } from "../../service/apiUser"; // Adjust the import path according to your project structure

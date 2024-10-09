@@ -5,11 +5,81 @@ import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../components/Common/ChartsDynamicColor";
 import { useSelector, useDispatch } from "react-redux";
 import { dashboardBlogVisitorData } from "../../store/actions";
+import { getBourses } from "../../service/bourseService";
 
 const CardUser = ({ popularpost, dataColors }) => {
+  const [bourses, setBourses] = useState([]);
+  const [chartSeries, setChartSeries] = useState([]);
+  const [chartCategories, setChartCategories] = useState([]);
+  const [todayAmount, setTodayAmount] = useState(0);
+  const [monthAmount, setMonthAmount] = useState(0);
+  const [yearAmount, setYearAmount] = useState(0);
   const apexCardUserChartColors = getChartColorsArray(dataColors);
   const [duration, setDuration] = useState("year");
   const dispatch = useDispatch();
+
+  const fetchBourses = async () =>{
+      
+    const response = await getBourses(null, null, null, null, 'acceptee');
+    const boursesData = response.data;
+    setBourses(boursesData);
+
+    // Extraire les montants par date pour alimenter le graphique
+    const bourseDates = boursesData.map(bourse => new Date(bourse.date));
+    const montantData = boursesData.map(bourse => bourse.montant);
+
+        // Mettre à jour les catégories (dates) et la série de données (montants)
+        setChartCategories(bourseDates);
+        setChartSeries([
+          {
+            name: "Montant",
+            data: montantData,
+          },
+        ]);
+
+    // Set current date
+    const today = new Date();
+    
+    // Calculate amounts for today, this month, and this year
+    let todaySum = 0;
+    let monthSum = 0;
+    let yearSum = 0;
+
+    boursesData.forEach(bourse => {
+      const bourseDate = new Date(bourse.date);
+      
+      // For today
+      if (
+        bourseDate.getDate() === today.getDate() &&
+        bourseDate.getMonth() === today.getMonth() &&
+        bourseDate.getFullYear() === today.getFullYear()
+      ) {
+        todaySum += bourse.montant;
+      }
+
+      // For this month
+      if (
+        bourseDate.getMonth() === today.getMonth() &&
+        bourseDate.getFullYear() === today.getFullYear()
+      ) {
+        monthSum += bourse.montant;
+      }
+
+      // For this year
+      if (bourseDate.getFullYear() === today.getFullYear()) {
+        yearSum += bourse.montant;
+      }
+    });
+
+    setTodayAmount(todaySum);
+    setMonthAmount(monthSum);
+    setYearAmount(yearSum);
+  };
+
+  useEffect(() =>{
+    fetchBourses();
+},[])
+
   const visitorDurationData = (duration) => {
     setDuration(duration);
     dispatch(dashboardBlogVisitorData(duration));
@@ -68,13 +138,11 @@ const CardUser = ({ popularpost, dataColors }) => {
       },
     },
     xaxis: {
-      categories: visitor.categories || [],
+      categories: chartCategories.map(date => date.toLocaleDateString()), // Transformer les dates en format lisible
     },
-
     markers: {
       size: 3,
       strokeWidth: 3,
-
       hover: {
         size: 4,
         sizeOffset: 2,
@@ -90,12 +158,12 @@ const CardUser = ({ popularpost, dataColors }) => {
     <React.Fragment>
       <Col xl={8}>
         <Row>
-          <Col lg={4}>
+          <Col lg={6}>
             <Card className="mini-stats-wid">
               <CardBody>
                 <div className="d-flex flex-wrap">
                   <div className="me-3">
-                    <p className="text-muted mb-2">Total Evènts</p>
+                    <p className="text-muted mb-2">Nombre total des événements</p>
                     <h5 className="mb-0">{popularpost?.length}</h5>
                   </div>
 
@@ -109,12 +177,12 @@ const CardUser = ({ popularpost, dataColors }) => {
             </Card>
           </Col>
 
-          <Col lg={4}>
+          <Col lg={6}>
             <Card className="blog-stats-wid">
               <CardBody>
                 <div className="d-flex flex-wrap">
                   <div className="me-3">
-                    <p className="text-muted mb-2">Budget Total</p>
+                    <p className="text-muted mb-2">Budget Total des événements</p>
                     <h5 className="mb-0">{bud}DT</h5>
                   </div>
 
@@ -127,92 +195,37 @@ const CardUser = ({ popularpost, dataColors }) => {
               </CardBody>
             </Card>
           </Col>
-          <Col lg={4}>
-            <Card className="blog-stats-wid">
-              <CardBody>
-                <div className="d-flex flex-wrap">
-                  <div className="me-3">
-                    <p className="text-muted mb-2">Participants</p>
-                    <h5 className="mb-0">{summ}</h5>
-                  </div>
-
-                  <div className="avatar-sm ms-auto">
-                    <div className="avatar-title rounded-circle font-size-20 bg-light text-primary">
-                      <i className="bx bxs-message-square-dots"></i>
-                    </div>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
         </Row>
 
         <Card>
           <CardBody>
             <div className="d-flex flex-wrap">
               <h5 className="card-title me-2">Bourses</h5>
-              <div className="ms-auto">
-                <div className="toolbar d-flex flex-wrap gap-2 text-end">
-                  <button
-                    type="button"
-                    className="btn btn-light btn-sm"
-                    onClick={() => visitorDurationData("all")}
-                  >
-                    ALL
-                  </button>{" "}
-                  <button
-                    type="button"
-                    className="btn btn-light btn-sm"
-                    onClick={() => visitorDurationData("onemonth")}
-                  >
-                    1M
-                  </button>{" "}
-                  <button
-                    type="button"
-                    className="btn btn-light btn-sm"
-                    onClick={() => visitorDurationData("sixmonth")}
-                  >
-                    6M
-                  </button>{" "}
-                  <button
-                    type="button"
-                    className="btn btn-light btn-sm active"
-                    onClick={() => visitorDurationData("year")}
-                  >
-                    1Y
-                  </button>{" "}
-                </div>
-              </div>
+
             </div>
 
             <Row className="text-center">
               <Col lg={4}>
                 <div className="mt-4">
-                  <p className="text-muted mb-1">Today</p>
-                  <h5>1024</h5>
+                  <p className="text-muted mb-1">Aujourd'hui</p>
+                  <h5>{todayAmount} TND</h5>
                 </div>
               </Col>
 
               <Col lg={4}>
                 <div className="mt-4">
-                  <p className="text-muted mb-1">This Month</p>
+                  <p className="text-muted mb-1">Ce mois</p>
                   <h5>
-                    12356{" "}
-                    <span className="text-success font-size-13">
-                      0.2 % <i className="mdi mdi-arrow-up ms-1"></i>
-                    </span>
+                  {monthAmount} TND{" "}
                   </h5>
                 </div>
               </Col>
 
               <Col lg={4}>
                 <div className="mt-4">
-                  <p className="text-muted mb-1">This Year</p>
+                  <p className="text-muted mb-1">Cette année</p>
                   <h5>
-                    102354{" "}
-                    <span className="text-success font-size-13">
-                      0.1 % <i className="mdi mdi-arrow-up ms-1"></i>
-                    </span>
+                  {yearAmount} TND{" "}
                   </h5>
                 </div>
               </Col>
@@ -220,7 +233,13 @@ const CardUser = ({ popularpost, dataColors }) => {
 
             <hr className="mb-4" />
             <div id="area-chart" dir="ltr">
-            <iframe title="dashbord final - Copie" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=881ea504-39e9-4adb-a376-334e19c8d459&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730" frameborder="0" allowFullScreen="true"></iframe>
+            <ReactApexChart
+                options={options}
+                series={chartSeries}
+                type="area"
+                height={350}
+                className="apex-charts"
+              />
             </div>
           </CardBody>
         </Card>

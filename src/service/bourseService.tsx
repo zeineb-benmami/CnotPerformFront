@@ -1,6 +1,6 @@
 import API from "../config/axiosConfig";
 
-export const getBourses = async (page:number, groupe?:string, domaine?:string, federation?:string, status?:string) => {
+export const getBourses = async (page?:number, groupe?:string, domaine?:string, federation?:string, status?:string) => {
   return await API.get(`bourses`,{
     params: {
       page: page,
