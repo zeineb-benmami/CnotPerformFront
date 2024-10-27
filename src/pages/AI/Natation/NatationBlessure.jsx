@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Yup from 'yup';
+import ReactApexChart from "react-apexcharts";
 import {
     Row,
     Col,
@@ -33,7 +34,9 @@ function NatationBlessure() {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [result, setResult] = useState(null);
-    
+    const [featureImportance, setFeatureImportance] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+    const [series, setSeries] = useState(null);
     // Initialisation des valeurs des champs pour les données d'entraînement
     const [initialValues, setInitialValues] = useState({
         nr_sessions: '',
@@ -63,6 +66,69 @@ function NatationBlessure() {
                                 // Call the API
                                 const response = await natationInjuryPrediction(values)
                                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
+                                const feature = response.data.feature_importance;
+                                const importance = {
+                                    "Effort maximal": feature.max_exertion,
+                                    "Maximum kilomètres en Z3 et Z4 en une journée": feature.max_km_Z3_4_one_day,
+                                    "Maximum kilomètres en Z5, T1 et T2 en une journée": feature.max_km_Z5_T1_T2_one_day,
+                                    "La distance maximale parcourue en une seule journée de course": feature.max_km_one_day,
+                                    "Récupération maximale": feature.max_recovery,
+                                    "Succès maximum de l'entraînement": feature.max_training_success,
+                                    "Nombre de jours avec session d'intervalle": feature.nr_days_with_interval_session,
+                                    "Nombre de jours de repos": feature.nr_rest_days,
+                                    "Nombre de sessions": feature.nr_sessions,
+                                    "Nombre d'entraînements de force": feature.nr_strength_trainings,
+                                    "Nombre de sessions difficiles": feature.nr_tough_sessions,
+                                    "Heures totales d'entraînement alternatif": feature.total_hours_alternative_training,
+                                    "Kilomètres totaux en Z3 et Z4": feature.total_km_Z3_4,
+                                    "Kilomètres totaux en Z3, Z4, Z5, T1, T2": feature.total_km_Z3_Z4_Z5_T1_T2,
+                                    "Kilomètres totaux en Z5, T1 et T2": feature.total_km_Z5_T1_T2,
+                                    "Kilomètres totaux": feature.total_kms
+                                };
+                                setFeatureImportance(importance);
+                                const labels = Object.keys(importance);
+                                setSeries(Object.values(importance));
+                              
+                                 setChartOptions({
+                                  chart: {
+                                    type: 'pie',
+                                    height: 500
+                                  },
+                                  responsive: [
+                                    {
+                                      breakpoint: 480,
+                                      options: {
+                                        chart: {
+                                          width: "100%", // or a specific value like 300
+                                          height: 250, // Adjust for smaller screens
+                                        },
+                                        legend: {
+                                          position: "bottom",
+                                        },
+                                      },
+                                    },
+                                    {
+                                      breakpoint: 768,
+                                      options: {
+                                        chart: {
+                                          width: "100%", // Medium screens
+                                          height: 300,
+                                        },
+                                        legend: {
+                                          position: "right",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                  labels: labels,
+                                  series: series,
+                                  tooltip: {
+                                    y: {
+                                      formatter: (val) => val.toFixed(2)
+                                    }
+                                  },
+                                  colors: ['#ff4560', '#008ffb', '#00e396', '#775dd0', '#feb019', '#ff4560', '#f15b46', '#3f51b5', '#546e7a']
+                                });
                                 toggle();
                                 resetForm();
             } catch (error) {
@@ -87,7 +153,7 @@ function NatationBlessure() {
                                         <Row>
                                             <Col xs={7}>
                                                 <div className="text-primary p-4">
-                                                    <h5 className="text-primary">Athletisme</h5>
+                                                    <h5 className="text-primary">Natation</h5>
                                                     <p>Prédiction de blessure</p>
                                                 </div>
                                             </Col>
@@ -504,7 +570,7 @@ function NatationBlessure() {
                         </Row>
         </Container>
         </section>
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Résultat</ModalHeader>
         <ModalBody>
           {result == 0 ? 
@@ -534,6 +600,16 @@ function NatationBlessure() {
             </div>
           </div> )
           }
+        <h4 className='my-2 text-center'>Importance des caractéristiques</h4>
+        {featureImportance && <div className="text-center">
+          <ReactApexChart 
+            options={chartOptions} 
+            series={series} 
+            type="pie" 
+            height={350} 
+            className='mt-3'
+          />
+        </div>}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

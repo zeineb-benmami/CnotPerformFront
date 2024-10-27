@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactApexChart from "react-apexcharts";
 import * as Yup from 'yup';
 import {
     Row,
@@ -35,6 +36,9 @@ function BoxeBlessure() {
     const { id } = useParams();
     const [bourseDate, setBourseDate] = useState(new Date());
     const [federationId, setFederationId] = useState(null);
+    const [featureImportance, setFeatureImportance] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+    const [series, setSeries] = useState(null);
     const [initialValues, setInitialValues] = useState({
         nr_sessions: 0,
         nr_rest_days: 0,
@@ -93,6 +97,68 @@ function BoxeBlessure() {
                                 // Call the API
                                 const response = await boxInjuryPrediction(values);
                                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
+                                const feature = response.data.feature_importance;
+                                const importance = {
+                                    "Effort maximal": feature.max_exertion,
+                                    "Heures maximales à haute intensité en une journée": feature.max_hours_high_intensity_one_day,
+                                    "Heures maximales à intensité modérée en une journée": feature.max_hours_moderate_intensity_one_day,
+                                    "Nombre des heures maximales en une journée": feature.max_hours_one_day,
+                                    "Récupération maximale": feature.max_recovery,
+                                    "Succès d'entraînement maximal": feature.max_training_success,
+                                    "Nombre de jours avec une séance à intervalles": feature.nr_days_with_interval_session,
+                                    "Nombre des Jours de repos": feature.nr_rest_days,
+                                    "Nombre des séances d'entraînement": feature.nr_sessions,
+                                    "Nombre d'entraînements de musculation": feature.nr_strength_trainings,
+                                    "Nombre de séances difficiles": feature.nr_tough_sessions,
+                                    "Total des heures d'entraînement alternatif": feature.total_hours_alternative_training,
+                                    "Total des heures d'entraînement à haute intensité": feature.total_hours_high_intensity,
+                                    "Total des heures d'entraînement à intensité modérée": feature.total_hours_moderate_intensity,
+                                    "Nombre des heures d'entraînement": feature.total_hours_training
+                                  };
+                                setFeatureImportance(importance);
+                                const labels = Object.keys(importance);
+                                setSeries(Object.values(importance));
+                              
+                                 setChartOptions({
+                                  chart: {
+                                    type: 'pie',
+                                    height: 500
+                                  },
+                                  responsive: [
+                                    {
+                                      breakpoint: 480,
+                                      options: {
+                                        chart: {
+                                          width: "100%", // or a specific value like 300
+                                          height: 250, // Adjust for smaller screens
+                                        },
+                                        legend: {
+                                          position: "bottom",
+                                        },
+                                      },
+                                    },
+                                    {
+                                      breakpoint: 768,
+                                      options: {
+                                        chart: {
+                                          width: "100%", // Medium screens
+                                          height: 500,
+                                        },
+                                        legend: {
+                                          position: "right",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                  labels: labels,
+                                  series: series,
+                                  tooltip: {
+                                    y: {
+                                      formatter: (val) => val.toFixed(2)
+                                    }
+                                  },
+                                  colors: ['#ff4560', '#008ffb', '#00e396', '#775dd0', '#feb019', '#ff4560', '#f15b46', '#3f51b5', '#546e7a']
+                                });
                                 toggle();
                                 resetForm();
                 
@@ -484,7 +550,7 @@ function BoxeBlessure() {
                         </Row>
         </Container>
         </section>
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Résultat</ModalHeader>
         <ModalBody>
           {result == 0 ? 
@@ -514,6 +580,16 @@ function BoxeBlessure() {
             </div>
           </div> )
           }
+        <h4 className='my-2 text-center'>Importance des caractéristiques</h4>
+        {featureImportance && <div className="text-center">
+          <ReactApexChart 
+            options={chartOptions} 
+            series={series} 
+            type="pie" 
+            height={350} 
+            className='mt-3'
+          />
+        </div>}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

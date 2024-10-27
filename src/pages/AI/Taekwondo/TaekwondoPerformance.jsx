@@ -17,11 +17,13 @@ import {
     ModalBody, 
     ModalFooter
 } from "reactstrap";
+import Select from 'react-select';
 import { useFormik } from 'formik';
 import predictionIcon from "../../../assets/images/icon/prediction.png";
 import axios from 'axios'; // Import axios for making API requests
 import { taekwondoPerformPrediction } from '../../../service/aiService';
 import { data } from 'autoprefixer';
+import ReactApexChart from "react-apexcharts";
 
 function TaekwondoPerformance() {
     const { id } = useParams();
@@ -29,6 +31,23 @@ function TaekwondoPerformance() {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [result, setResult] = useState(null);
+    const [featureImportance, setFeatureImportance] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+    const [series, setSeries] = useState(null);
+    const enumInjuryHistory = { Non: '2', Mineure: '0', Modérée: '1', Grave: '3' };
+
+    const customSelectStyles = {
+        control: (base) => ({
+            ...base,
+            height: 'calc(1.5em + 0.75rem + 2px)',
+            minHeight: 'calc(1.5em + 0.75rem + 2px)',
+        })
+    };
+    const createOptions = (enumObj) => Object.keys(enumObj).map(key => ({ label: key, value: enumObj[key] }));
+    const injuryHistoryOptions = createOptions(enumInjuryHistory);
+    const handleSelectChange = (field, option) => {
+        validation.setFieldValue(field, option ? option.value : '');
+    };
     
     // Initial values for the form
     const initialValues = {
@@ -75,6 +94,56 @@ function TaekwondoPerformance() {
                 }
                 const response = await taekwondoPerformPrediction(data);
                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
+                const feature = response.data.important_features;
+                
+                const importance = feature.reduce((acc, item) => {
+                    acc[item.feature] = item.contribution_percentage;
+                    return acc;
+                  }, {});
+                  setFeatureImportance(importance);
+                  const labels = Object.keys(importance);
+                  setSeries(Object.values(importance));
+                
+                   setChartOptions({
+                    chart: {
+                      type: 'pie',
+                      height: 500
+                    },
+                    responsive: [
+                      {
+                        breakpoint: 480,
+                        options: {
+                          chart: {
+                            width: "100%", // or a specific value like 300
+                            height: 250, // Adjust for smaller screens
+                          },
+                          legend: {
+                            position: "bottom",
+                          },
+                        },
+                      },
+                      {
+                        breakpoint: 768,
+                        options: {
+                          chart: {
+                            width: "100%", // Medium screens
+                            height: 300,
+                          },
+                          legend: {
+                            position: "right",
+                          },
+                        },
+                      },
+                    ],
+                    labels: labels,
+                    series: series,
+                    tooltip: {
+                      y: {
+                        formatter: (val) => val.toFixed(2)
+                      }
+                    },
+                    colors: ['#ff4560', '#008ffb', '#00e396', '#775dd0', '#feb019', '#ff4560', '#f15b46', '#3f51b5', '#546e7a']
+                  });
                 toggle();
                 resetForm();
             } catch (error) {
@@ -95,7 +164,7 @@ function TaekwondoPerformance() {
                                     <Row>
                                         <Col xs={7}>
                                             <div className="text-primary p-4">
-                                                <h5 className="text-primary">Athlétisme</h5>
+                                                <h5 className="text-primary">Taekwondo</h5>
                                                 <p>Prédiction de Performance</p>
                                             </div>
                                         </Col>
@@ -210,11 +279,15 @@ function TaekwondoPerformance() {
                                                     invalid={validation.touched.weightClass && validation.errors.weightClass ? true : false}
                                                 >
                                                     <option value="">Sélectionnez</option>
-                                                    <option value="Finweight">Poids fin</option>
-                                                    <option value="Lightweight">Poids Léger</option>
-                                                    <option value="Welterweight">Poids welter</option>
+                                                    <option value="Flyweight">Poids mouche</option>
                                                     <option value="Featherweight">Poids plume</option>
+                                                    <option value="Welterweight">Poids welter</option>
+                                                    <option value="Middleweight">Poids moyen</option>
                                                     <option value="Heavyweight">Poids lourd</option>
+                                                    <option value="Lightweight">Poids léger</option>
+                                                    <option value="Super Heavyweight">Super poids lourd</option>
+                                                    <option value="Super Lightweight">Super poids léger</option>
+                                                    <option value="Cruiserweight">Poids lourd-léger</option>
                                                 </Input>
                                                 {validation.touched.weightClass && validation.errors.weightClass ? (
                                                     <FormFeedback type="invalid">{validation.errors.weightClass}</FormFeedback>
@@ -275,6 +348,24 @@ function TaekwondoPerformance() {
                                             </div>
 
                                             <div className="mb-3">
+                                                <Label className="form-label">Antécédents de blessures</Label>
+                                                <Select
+                                                    name="injuryHistory"
+                                                    options={injuryHistoryOptions}
+                                                    styles={customSelectStyles}
+                                                    className='text-dark'
+                                                    onChange={(option) => handleSelectChange('injuryHistory', option)}
+                                                    value={injuryHistoryOptions.find(option => option.value === validation.values.injuryHistory)}
+                                                    isClearable
+                                                />
+                                                {validation.errors.injuryHistory && validation.touched.injuryHistory ? (
+                                                    <FormFeedback type="invalid" className="d-block">
+                                                        {validation.errors.injuryHistory}
+                                                    </FormFeedback>
+                                                ) : null}
+                                            </div>
+
+                                            <div className="mb-3">
                                                 <Label className="form-label">Heures de Sommeil</Label>
                                                 <Input
                                                     name="sleepHours"
@@ -291,22 +382,7 @@ function TaekwondoPerformance() {
                                                 ) : null}
                                             </div>
 
-                                            <div className="mb-3">
-                                                <Label className="form-label">Historique des Blessures (1 Mineur : 2 grave pour blessure, 0 pour aucune blessure)</Label>
-                                                <Input
-                                                    name="injuryHistory"
-                                                    className="form-control"
-                                                    placeholder="Entrer l'historique des blessures"
-                                                    type="number"
-                                                    onChange={validation.handleChange}
-                                                    onBlur={validation.handleBlur}
-                                                    value={validation.values.injuryHistory || ""}
-                                                    invalid={validation.touched.injuryHistory && validation.errors.injuryHistory ? true : false}
-                                                />
-                                                {validation.touched.injuryHistory && validation.errors.injuryHistory ? (
-                                                    <FormFeedback type="invalid">{validation.errors.injuryHistory}</FormFeedback>
-                                                ) : null}
-                                            </div>
+
 
                                             <div className="mt-4 d-grid">
                                                 <button
@@ -324,36 +400,46 @@ function TaekwondoPerformance() {
                     </Row>
                 </Container>
             </section>
-            <Modal isOpen={modal} toggle={toggle}>
+            <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Résultat</ModalHeader>
         <ModalBody>
           {result == 0 ? 
           (<div className="text-center p-4">
             <iframe 
-              src="https://lottie.host/embed/edac2dcd-33b9-4c08-b15a-56b68004a0d3/g6YcIsXoZ7.json" 
-              className="mx-auto mb-4" 
-              style={{ width: '300px', height: '300px', border: 'none' }}
-              title="Animation"
-            ></iframe>
-            <div className="alert alert-success rounded-3 shadow-sm">
-              <h4 className="alert-heading">Aucun risque de blessure détecté</h4>
-              <p className="mb-0">Continuez à vous entraîner en toute sécurité.</p>
-            </div>
-          </div>
-           ) 
-          : (<div className="text-center p-4">
-            <iframe 
-              src="https://lottie.host/embed/2f874dbb-6e8c-4c7e-b955-9b88be39f7af/ziS3nsTvG8.json" 
+              src="https://lottie.host/embed/ead1715c-f858-47bc-8bee-72f498cebb7b/0PVav4ymMc.json" 
               className="mx-auto mb-4" 
               style={{ width: '300px', height: '300px', border: 'none' }}
               title="Animation"
             ></iframe>
             <div className="alert alert-danger rounded-3 shadow-sm">
-              <h4 className="alert-heading">Attention, une blessure est probable</h4>
-              <p className="mb-0">Prenez les précautions nécessaires.</p>
+              <h4 className="alert-heading">Désolé, vous ne gagnerez pas de médaille cette fois-ci. Mais ne vous découragez pas,</h4>
+              <p className="mb-0">vos efforts constants vous mèneront au succès !</p>
+            </div>
+          </div>
+           ) 
+          : (<div className="text-center p-4">
+            <iframe 
+              src="https://lottie.host/embed/0cdf5268-4c54-492e-b94e-d5469ab3dc4f/HGmwar7vek.json" 
+              className="mx-auto mb-4" 
+              style={{ width: '300px', height: '300px', border: 'none' }}
+              title="Animation"
+            ></iframe>
+            <div className="alert alert-success rounded-3 shadow-sm">
+              <h4 className="alert-heading">Félicitations ! Vous gagnerez une médaille grâce à vos performances exceptionnelles.</h4>
+              <p className="mb-0">Continuez vos efforts et vous atteindrez des sommets !</p>
             </div>
           </div> )
           }
+        <h4 className='my-2 text-center'>Importance des caractéristiques</h4>
+        {featureImportance && <div className="text-center">
+          <ReactApexChart 
+            options={chartOptions} 
+            series={series} 
+            type="pie" 
+            height={350} 
+            className='mt-3'
+          />
+        </div>}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>
