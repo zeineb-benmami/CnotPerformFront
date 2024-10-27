@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ReactApexChart from "react-apexcharts";
 import * as Yup from 'yup';
 import {
     Row,
@@ -29,6 +30,9 @@ function TaekwondoBlessure() {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [result, setResult] = useState(null);
+    const [featureImportance, setFeatureImportance] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+    const [series, setSeries] = useState(null);
 
     const initialValues = {
         nr_sessions: '',
@@ -125,6 +129,70 @@ function TaekwondoBlessure() {
             try {
                 const response = await taekwondoInjuryPrediction(values);
                 setResult(response.data.prediction); // Assuming prediction returns a numerical value
+                const feature = response.data.important_features;
+                const importance = {
+                    "Effort Moyen": feature.avg_exertion,
+                    "Récupération Moyenne": feature.avg_recovery,
+                    "Effort Maximum": feature.max_exertion,
+                    "Max Heures d'Intensité Élevée en Une Journée": feature.max_hours_high_intensity_one_day,
+                    "Max Heures d'Intensité Modérée en Une Journée": feature.max_hours_moderate_intensity_one_day,
+                    "Maximum des heures en une journée": feature.max_hours_one_day,
+                    "Récupération Maximum": feature.max_recovery,
+                    "Succès d'Entraînement Maximum": feature.max_training_success,
+                    "Effort Minimum": feature.min_exertion,
+                    "Récupération Minimum": feature.min_recovery,
+                    "Succès d'Entraînement Minimum": feature.min_training_success,
+                    "Nombre de jours avec Séances d'Intervalle": feature.nr_days_with_interval_session,
+                    "Nombre de jours de repos": feature.nr_rest_days,
+                    "Nombre de Séances Difficiles": feature.nr_tough_sessions,
+                    "Heures Totales d'Entraînement Alternatif": feature.total_hours_alternative_training,
+                    "Heures Totales d'Entraînement de Intensité Modérée": feature.total_hours_moderate_intensity,
+                    "Total des heures d'entraînement": feature.total_hours_training
+                };
+                setFeatureImportance(importance);
+                const labels = Object.keys(importance);
+                setSeries(Object.values(importance));
+              
+                 setChartOptions({
+                  chart: {
+                    type: 'pie',
+                    height: 500
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: "100%", // or a specific value like 300
+                          height: 250, // Adjust for smaller screens
+                        },
+                        legend: {
+                          position: "bottom",
+                        },
+                      },
+                    },
+                    {
+                      breakpoint: 768,
+                      options: {
+                        chart: {
+                          width: "100%", // Medium screens
+                          height: 300,
+                        },
+                        legend: {
+                          position: "right",
+                        },
+                      },
+                    },
+                  ],
+                  labels: labels,
+                  series: series,
+                  tooltip: {
+                    y: {
+                      formatter: (val) => val.toFixed(2)
+                    }
+                  },
+                  colors: ['#ff4560', '#008ffb', '#00e396', '#775dd0', '#feb019', '#ff4560', '#f15b46', '#3f51b5', '#546e7a']
+                });
                 toggle();// Set prediction result from API response
                 resetForm();
             } catch (error) {
@@ -310,7 +378,7 @@ function TaekwondoBlessure() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Jours avec Séances d'Intervalle</Label>
+                                                <Label className="form-label">Nombre de jours avec Séances d'Intervalle</Label>
                                                 <Input
                                                     name="nr_days_with_interval_session"
                                                     className="form-control"
@@ -655,7 +723,7 @@ function TaekwondoBlessure() {
                     </Row>
                 </Container>
             </section>
-            <Modal isOpen={modal} toggle={toggle}>
+            <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Résultat</ModalHeader>
         <ModalBody>
           {result == 0 ? 
@@ -685,6 +753,16 @@ function TaekwondoBlessure() {
             </div>
           </div> )
           }
+                    <h4 className='my-2 text-center'>Importance des caractéristiques</h4>
+        {featureImportance && <div className="text-center">
+          <ReactApexChart 
+            options={chartOptions} 
+            series={series} 
+            type="pie" 
+            height={350} 
+            className='mt-3'
+          />
+        </div>}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

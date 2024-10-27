@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactApexChart from "react-apexcharts";
 import * as Yup from 'yup';
 import {
     Row,
@@ -34,12 +35,15 @@ function BoxePerformance() {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [result, setResult] = useState(null);
+    const [featureImportance, setFeatureImportance] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+    const [series, setSeries] = useState(null);
 
     // Enum options
-    const enumSex = { Female: 'Female', Male: 'Male' };
-    const enumWeightClass = { Lightweight: 'Lightweight', Heavyweight: 'Heavyweight', Middleweight: 'Middleweight' };
-    const enumMatchOutcome = { Loss: 'Loss', Draw: 'Draw', Win: 'Win' };
-    const enumInjuryHistory = { No: 'No', Minor: 'Minor', Moderate: 'Moderate', Severe: 'Severe' };
+    const enumSex = { Féminin: '0', Masculin: '1' };
+    const enumWeightClass = { "Poids Léger": '1', "Poids Moyen": '2', "Poids Lourd": '0'};
+    const enumMatchOutcome = { Défaite: '1', Nul: '0', Victoire: '2' };
+    const enumInjuryHistory = { Non: '2', Mineure: '0', Modérée: '1', Grave: '3' };
 
     // Convert enum to Select options
     const createOptions = (enumObj) => Object.keys(enumObj).map(key => ({ label: key, value: enumObj[key] }));
@@ -82,22 +86,78 @@ function BoxePerformance() {
         onSubmit: async (values, { resetForm }) => {
             try {              
                 const data = {
-                    Sex: values.Sex,
+                    Sex: parseInt(values.Sex),
                     Age: values.Age,
                     Height: values.Height,
                     Weight: values.Weight,
-                    'Weight Class': values.WeightClass,
-                    'Match Outcome': values.MatchOutcome,
+                    'Weight Class': parseInt(values.WeightClass),
+                    'Match Outcome': parseInt(values.MatchOutcome),
                     'Rounds Fought': values.RoundsFought,
                     'Punches Thrown': values.PunchesThrown,
                     'Nutrition Quality Score': values.NutritionQualityScore,
                     'Sleep Hours': values.SleepHours,
-                    'Injury History': values.InjuryHistory,
+                    'Injury History': parseInt(values.InjuryHistory),
                     'Punches Landed': values.PunchesLanded
                 };
                                 // Call the API
                                 const response = await boxPerformPrediction(data);                                
                                 setResult(response.data.prediction);
+                                const feature = response.data.feature_importance;
+                                const importance = {
+                                    "Antécédents de blessures": feature["Injury History"],
+                                    "Résultat du match": feature["Match Outcome"],
+                                    "Score de qualité nutritionnelle": feature["Nutrition Quality Score"],
+                                    "Coups portés": feature["Punches Landed"],
+                                    "Coups lancés": feature["Punches Thrown"],
+                                    "Rounds combattus": feature["Rounds Fought"],
+                                    "Heures de sommeil": feature["Sleep Hours"],
+                                    "Poids": feature["Weight"],
+                                    "Catégorie de poids": feature["Weight Class"]
+                                };
+                                setFeatureImportance(importance);
+                                const labels = Object.keys(importance);
+                                setSeries(Object.values(importance));
+                              
+                                 setChartOptions({
+                                  chart: {
+                                    type: 'pie',
+                                    height: 500
+                                  },
+                                  responsive: [
+                                    {
+                                      breakpoint: 480,
+                                      options: {
+                                        chart: {
+                                          width: "100%", // or a specific value like 300
+                                          height: 250, // Adjust for smaller screens
+                                        },
+                                        legend: {
+                                          position: "bottom",
+                                        },
+                                      },
+                                    },
+                                    {
+                                      breakpoint: 768,
+                                      options: {
+                                        chart: {
+                                          width: "100%", // Medium screens
+                                          height: 300,
+                                        },
+                                        legend: {
+                                          position: "right",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                  labels: labels,
+                                  series: series,
+                                  tooltip: {
+                                    y: {
+                                      formatter: (val) => val.toFixed(2)
+                                    }
+                                  },
+                                  colors: ['#ff4560', '#008ffb', '#00e396', '#775dd0', '#feb019', '#ff4560', '#f15b46', '#3f51b5', '#546e7a']
+                                });
                                 toggle();
                                 resetForm();
                 
@@ -118,7 +178,6 @@ function BoxePerformance() {
     const handleSelectChange = (field, option) => {
         validation.setFieldValue(field, option ? option.value : '');
     };
-
 
     return (
     <React.Fragment>
@@ -203,7 +262,7 @@ function BoxePerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Taille</Label>
+                                                <Label className="form-label">Taille (en cm)</Label>
                                                 <Input
                                                     name="Height"
                                                     className="form-control"
@@ -218,7 +277,7 @@ function BoxePerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Poids</Label>
+                                                <Label className="form-label">Poids (en Kg)</Label>
                                                 <Input
                                                     name="Weight"
                                                     className="form-control"
@@ -378,7 +437,7 @@ function BoxePerformance() {
                         </Row>
         </Container>
         </section>
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Résultat</ModalHeader>
         <ModalBody>
           {result == 0 ? 
@@ -408,6 +467,17 @@ function BoxePerformance() {
             </div>
           </div> )
           }
+          <h4 className='my-2 text-center'>Importance des caractéristiques</h4>
+        {featureImportance && <div className="text-center">
+          <ReactApexChart 
+            options={chartOptions} 
+            series={series} 
+            type="pie" 
+            height={350} 
+            className='mt-3'
+          />
+        </div>}
+
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

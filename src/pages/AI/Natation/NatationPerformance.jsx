@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactApexChart from "react-apexcharts";
 import * as Yup from 'yup';
 import {
     Row,
@@ -32,10 +33,13 @@ function NatationPerformance() {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [result, setResult] = useState(null);
+    const [featureImportance, setFeatureImportance] = useState(null);
+    const [chartOptions, setChartOptions] = useState(null);
+    const [series, setSeries] = useState(null);
 
     // Enum options
-    const enumSex = { Female: 'Female', Male: 'Male' };
-    const enumInjuryHistory = { No: 'No', Minor: 'Minor', Moderate: 'Moderate', Severe: 'Severe' };
+    const enumSex = { Féminin: '0', Masculin: '1' };
+    const enumInjuryHistory = { Non: '2', Mineure: '0', Modérée: '1', Grave: '3' };
 
     // Convert enum to Select options
     const createOptions = (enumObj) => Object.keys(enumObj).map(key => ({ label: key, value: enumObj[key] }));
@@ -68,7 +72,6 @@ function NatationPerformance() {
             NutritionQualityScore: Yup.number().min(0).max(10).required('Nutrition Quality Score must be between 0 and 10'),
             SleepHours: Yup.number().required('Sleep Hours is required'),
             InjuryHistory: Yup.string().oneOf(Object.values(enumInjuryHistory)).required('Injury History is required'),
-            CompetitionDate: Yup.date().required('Competition Date is required'),  // Add validation for Competition Date
         }),
         onSubmit: async (values, { resetForm }) => {
             try {
@@ -79,7 +82,6 @@ function NatationPerformance() {
                     Age: values.Age,
                     Height: values.Height,
                     Weight: values.Weight,
-                    "Competition Date": competitionDate,
                     "Nutrition Quality Score": values.NutritionQualityScore,
                     "Sleep Hours": values.SleepHours,
                     "Injury History": values.InjuryHistory,
@@ -93,6 +95,63 @@ function NatationPerformance() {
                 // Send POST request to the API
                 const response = await natationPerformPrediction(data)
                 setResult(response.data.prediction);
+                const feature = response.data.feature_importance;
+                const importance = {
+                    "Temps de 100m en nage libre": feature["100m Freestyle Time"],
+                    "Temps de 1500m en nage libre": feature["1500m Freestyle Time"],
+                    "Temps de 200m en nage libre": feature["200m Freestyle Time"],
+                    "Temps de 400m en nage libre": feature["400m Freestyle Time"],
+                    "Temps de 50m en nage libre": feature["50m Freestyle Time"],
+                    "Temps de 800m en nage libre": feature["800m Freestyle Time"],
+                    "Antécédents de blessures": feature["Injury History"],
+                    "Score de qualité nutritionnelle": feature["Nutrition Quality Score"],
+                    "Heures de sommeil": feature["Sleep Hours"],
+                    "Poids": feature["Weight"]
+                  };
+                setFeatureImportance(importance);
+                const labels = Object.keys(importance);
+                setSeries(Object.values(importance));
+              
+                 setChartOptions({
+                  chart: {
+                    type: 'pie',
+                    height: 500
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: "100%", // or a specific value like 300
+                          height: 250, // Adjust for smaller screens
+                        },
+                        legend: {
+                          position: "bottom",
+                        },
+                      },
+                    },
+                    {
+                      breakpoint: 768,
+                      options: {
+                        chart: {
+                          width: "100%", // Medium screens
+                          height: 300,
+                        },
+                        legend: {
+                          position: "right",
+                        },
+                      },
+                    },
+                  ],
+                  labels: labels,
+                  series: series,
+                  tooltip: {
+                    y: {
+                      formatter: (val) => val.toFixed(2)
+                    }
+                  },
+                  colors: ['#ff4560', '#008ffb', '#00e396', '#775dd0', '#feb019', '#ff4560', '#f15b46', '#3f51b5', '#546e7a']
+                });
                 toggle();
                 resetForm();
             } catch (error) {
@@ -180,7 +239,7 @@ function NatationPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Age</Label>
+                                                <Label className="form-label">Âge</Label>
                                                 <Input
                                                     name="Age"
                                                     className="form-control"
@@ -195,7 +254,7 @@ function NatationPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Height</Label>
+                                                <Label className="form-label">Taille (en cm)</Label>
                                                 <Input
                                                     name="Height"
                                                     className="form-control"
@@ -210,7 +269,7 @@ function NatationPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Weight</Label>
+                                                <Label className="form-label">Poids (en Kg)</Label>
                                                 <Input
                                                     name="Weight"
                                                     className="form-control"
@@ -225,21 +284,7 @@ function NatationPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Competition Date</Label>
-                                                <DatePicker
-                                                    selected={validation.values.CompetitionDate}
-                                                    onChange={(date) => validation.setFieldValue('CompetitionDate', date)}
-                                                    dateFormat="yyyy-MM-dd"  // Set the date format
-                                                    className={`form-control ${validation.touched.CompetitionDate && validation.errors.CompetitionDate ? 'is-invalid' : ''}`}
-                                                    placeholderText="Select Competition Date"
-                                                />
-                                                {validation.touched.CompetitionDate && validation.errors.CompetitionDate ? (
-                                                    <FormFeedback>{validation.errors.CompetitionDate}</FormFeedback>
-                                                ) : null}
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <Label className="form-label">Nutrition Quality Score (0-10)</Label>
+                                                <Label className="form-label">Score de qualité nutritionnelle (0-10)</Label>
                                                 <Input
                                                     name="NutritionQualityScore"
                                                     className="form-control"
@@ -254,7 +299,7 @@ function NatationPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Sleep Hours</Label>
+                                                <Label className="form-label">Heures de sommeil</Label>
                                                 <Input
                                                     name="SleepHours"
                                                     className="form-control"
@@ -270,7 +315,7 @@ function NatationPerformance() {
                                             </div>
 
                                             <div className="mb-3">
-                                                <Label className="form-label">Injury History</Label>
+                                                <Label className="form-label">Antécédents de blessures</Label>
                                                 <Select
                                                     name="InjuryHistory"
                                                     options={injuryHistoryOptions}
@@ -396,7 +441,7 @@ function NatationPerformance() {
                     </Row>
                 </Container>
             </section>
-            <Modal isOpen={modal} toggle={toggle}>
+            <Modal isOpen={modal} toggle={toggle} size="xl">
         <ModalHeader toggle={toggle}>Résultat</ModalHeader>
         <ModalBody>
           {result == 0 ? 
@@ -426,6 +471,16 @@ function NatationPerformance() {
             </div>
           </div> )
           }
+        <h4 className='my-2 text-center'>Importance des caractéristiques</h4>
+        {featureImportance && <div className="text-center">
+          <ReactApexChart 
+            options={chartOptions} 
+            series={series} 
+            type="pie" 
+            height={350} 
+            className='mt-3'
+          />
+        </div>}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>
